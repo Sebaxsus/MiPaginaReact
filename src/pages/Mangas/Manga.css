@@ -1,0 +1,58 @@
+.Manga {
+    transition: .5s;
+    width: 100px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    display: grid;
+    cursor: zoom-in;
+    place-content: center;
+}
+
+.Manga h1 {
+    font-size: large;
+    grid-area: 1;
+}
+
+.Manga p {
+    font-size: small;
+    grid-area: 2;
+}
+
+.Manga img {
+    margin: 0;
+    grid-area: 1 / 2 / 3 / 3;
+    width: fit-content;
+    border-radius: 2px;
+    align-self: center;
+    justify-self: center;
+}
+
+.Manga-View {
+    transition: .5s;
+    width: 250px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    display: grid;
+    cursor: zoom-out;
+    place-content: center;
+}
+
+.Manga-View img {
+    margin: 0;
+    grid-area: 1 / 2 / 3 / 3;
+    width: fit-content;
+    border-radius: 2px;
+    align-self: center;
+    justify-self: center;
+}
+
+.Manga-View h1 {
+    font-size: large;
+    grid-area: 1;
+    place-self: center;
+}
+
+.Manga-View p {
+    font-size: small;
+    grid-area: 2;
+}

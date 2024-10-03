@@ -65,3 +65,7 @@
     padding: 2px;
     border-radius: .5rem;
 }
+
+.nav-list ul a {
+    text-decoration: none;
+}
