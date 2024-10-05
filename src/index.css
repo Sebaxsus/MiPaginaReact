@@ -34,8 +34,7 @@
 }
 
 .Body {
-    display: flex;
-    flex-direction: column;
+    margin-inline: 5px;
     /*
     width: fit-content;
     margin: auto;
@@ -46,7 +45,7 @@
 .section-Mangas {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 25px 50px;
     margin-top: 10px;
     place-items: center;
 }

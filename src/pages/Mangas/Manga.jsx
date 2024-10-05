@@ -58,7 +58,7 @@ const MangaComp = ({children, index, estado, desc}) => {
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
 //En lugar de export function NombreFunc ({ props }) { return( code )}
 //Si se usa como export func para que wooter lo renderice toca ponerlo como children <Route > children </Route>
-export default function Mangas ({mangaList = []}) {
+export function Mangas ({mangaList = []}) {
 
     return (
         mangaList.map((_, index) => {

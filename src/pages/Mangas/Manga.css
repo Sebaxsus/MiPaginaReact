@@ -1,58 +1,81 @@
 .Manga {
     transition: .5s;
-    width: 100px;
-    border: 1px solid whitesmoke;
-    border-radius: 5px;
     display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr .5fr;
+    /*width: 15vw;  vh se refiere a viewport height vw viewport width
+        y el viewport utiliza la medida de la pantalla en porcentaje
+    */
+    outline: 1px solid whitesmoke;
+    border-radius: 5px;
     cursor: zoom-in;
     place-content: center;
+    overflow: hidden;
 }
 
 .Manga h1 {
+    display: inherit;
     font-size: large;
-    grid-area: 1;
+    grid-area: 1 / 1 / 1 / 2;
+    justify-content: center;
+    text-overflow: ellipsis;
 }
 
 .Manga p {
+    display: inherit;
     font-size: small;
-    grid-area: 2;
+    grid-area: 2 / 1 / 2 / 3;
+    text-overflow: ellipsis;
 }
-
+/*  Usar el diplay con la img para ponerla a la dercha de la box del grid
+    Aka su columna y fila
+*/
 .Manga img {
+    display: inherit;
     margin: 0;
-    grid-area: 1 / 2 / 3 / 3;
-    width: fit-content;
-    border-radius: 2px;
+    /* este shortcut de grid area hace referencia a
+    grid-area: row-start / column-start/ row-end / column-end*/
+    grid-area: 1 / 2 / 1 / 3;
+    border-radius: 3px;
+    width: 50%;
     align-self: center;
-    justify-self: center;
+    justify-self: flex-end;
 }
 
 .Manga-View {
-    transition: .5s;
-    width: 250px;
-    border: 1px solid whitesmoke;
-    border-radius: 5px;
     display: grid;
+    transition: .5s;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    outline: 1px solid whitesmoke;
+    border-radius: 5px;
     cursor: zoom-out;
     place-content: center;
+    overflow: hidden;
 }
 
 .Manga-View img {
+    display: inherit;
     margin: 0;
-    grid-area: 1 / 2 / 3 / 3;
-    width: fit-content;
+    grid-area: 1 / 2 / 1 / 3;
+    width: 50%;
     border-radius: 2px;
     align-self: center;
-    justify-self: center;
+    justify-self: flex-end;
 }
 
 .Manga-View h1 {
+    display: inherit;
     font-size: large;
-    grid-area: 1;
-    place-self: center;
+    grid-area: 1 / 1 / 1 / 2;
+    justify-content: center;
+    text-overflow: ellipsis;
 }
 
 .Manga-View p {
+    display: inherit;
     font-size: small;
-    grid-area: 2;
+    grid-area: 2 / 1 / 2 / 3;
+    text-overflow: ellipsis;
+    justify-content: flex-start;
 }

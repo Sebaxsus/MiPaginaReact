@@ -22,9 +22,12 @@ import { Mangas } from './pages/Mangas/Manga.jsx'
 export function App() {
     // Array de Mangas
     const mangaList = [
-        {title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg'},
-        {title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg'},
-        {title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg'}
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' },
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' },
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' },
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' },
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' },
+        { title: "Manga", desc: ["Bueno", "Un Anime Completo con Trama de..."], img: './Eula.jpg' }
     ]
 
     return (
@@ -39,10 +42,12 @@ export function App() {
                         Ahora mismo este renderizando un Childre <Rote>Child</Route> 
                     */}
                     {
-                        <Route 
-                            component={<Mangas mangaList={mangaList}/>} 
+                        <Route
                             path={"/Mangas"}
-                        />
+                        >
+                            <Mangas mangaList={mangaList} />
+                        </Route>
+
                     }
                 </section>
                 
