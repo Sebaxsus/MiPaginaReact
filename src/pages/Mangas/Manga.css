@@ -157,3 +157,18 @@
     text-overflow: ellipsis;
     justify-content: flex-start;
 }
+
+.Manga-mg {
+    display: inherit;
+    margin: 0;
+    grid-area: 1 / 2 / -1 / 3;
+    border-radius: 3px;
+    align-self: center;
+    justify-self: flex-end;
+    grid-template-columns: 1fr minmax(48px, 1fr);
+    grid-template-rows: minmax(80px, 1fr) 1fr;
+}
+
+.Manga-mg img {
+    grid-area: 1 / 2 / 2 / 3;
+}

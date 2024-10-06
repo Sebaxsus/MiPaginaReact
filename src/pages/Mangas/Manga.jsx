@@ -72,6 +72,7 @@ export function Mangas ({mangaList = []}) {
                 >
                     <h1>{mangaList[index].title}</h1>
                     <img src='/Eula.jpg' alt={mangaList[index].img}></img>
+
                 </MangaComp>
 
             )
