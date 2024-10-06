@@ -1,12 +1,13 @@
 //No importo react al ser jsx
 import { useState } from 'react'
+import { Link } from 'wouter'
 //Estilo
 import './Manga.css'
 
 //Componente que genera el cuerpo del manga
 
 const MangaComp = ({children, index, estado, desc}) => {
-    
+
     {/*Asi se hace un comentario dentro de un componente react */}
 
     {/*
@@ -28,7 +29,7 @@ const MangaComp = ({children, index, estado, desc}) => {
     //const style = ClassName ? 'Manga' : 'Manga-View'
 
     //HandleClick es una funcion para poner la logica del evento Click
-
+    
     const handleClick = () => {
             {/* 
                 Aqui verifico que si el Nombre en ClassName
@@ -64,16 +65,17 @@ export function Mangas ({mangaList = []}) {
         mangaList.map((_, index) => {
 
             return (
+                <Link to={`/View-${mangaList[index].title}`}>
+                    <MangaComp
+                        key={index}
+                        index={index}
+                        desc={mangaList[index].desc} 
+                    >
+                        <h1>{mangaList[index].title}</h1>
+                        <img src={mangaList[index].img} alt={`Imgaen de portada para el Manga ${mangaList[index].title}`}></img>
 
-                <MangaComp
-                    key={index}
-                    index={index}
-                    desc={mangaList[index].desc} 
-                >
-                    <h1>{mangaList[index].title}</h1>
-                    <img src='/Eula.jpg' alt={mangaList[index].img}></img>
-
-                </MangaComp>
+                    </MangaComp>
+                </Link>
 
             )
 
