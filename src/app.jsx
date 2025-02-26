@@ -25,7 +25,7 @@ import { View } from './pages/View/View.jsx'
 const lorem = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis, natus necessitatibus, fugiat dolorem quidem fuga, maiores consequatur delectus sint aut unde impedit expedita debitis. Dignissimos nemo aliquid consequuntur vel cupiditate"
 
 export function App() {
-    const [view, setView] = useState('section-' + window.location.pathname.replace('/', ''))
+    // const [view, setView] = useState('section-' + window.location.pathname.replace('/', ''))
 
     console.log(Route.className)
     const lastAdded = [

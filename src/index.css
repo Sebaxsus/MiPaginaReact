@@ -26,12 +26,24 @@
     box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+    width: 10px;
+}   
+
+
+body::-webkit-scrollbar-thumb {
+    background-color: aqua;
+    border-radius: 5px;
+    border: white solid 1px;
+}
+
  body {
     margin: 0;
     display: flex;
     flex-direction: column;
     min-width: 320px;
     min-height: 100vh;
+    scrollbar-gutter: stable;
 }
 
 .Body {
@@ -71,6 +83,7 @@
     grid-template-areas: "titulo" "contenido";
     overflow: hidden;
     gap: 15px 5px;
+    padding-left: 5px;
 }
 
 .Display-aside h1 {
@@ -96,15 +109,34 @@
     .section-Mangas {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
     }
-
-    .card-Container {
-        width: 50%;
-    }
-
-    .card-Container img { 
-        width: 50%;
-    }
 }
+
+@media (width < 950px) {
+    .card-Container p {
+        font-size: smaller;
+    }
+
+    .card-Container h1 {
+        font-size: small;
+        font-weight: 400;
+    }
+
+    .Display-aside header h1 {
+        font-size: small;
+        font-weight: 500;
+
+    }
+
+    /* .section-Mangas {
+        padding: 5px;
+        width: 90%;
+        height: 100dvh;
+        overflow-y: scroll;
+        scrollbar-width: none;
+        scrollbar-gutter: stable;
+        
+    } */
+}   
 
 /*      Utilizando flex para hacer el layout basico de las cartas y los mangas
 
