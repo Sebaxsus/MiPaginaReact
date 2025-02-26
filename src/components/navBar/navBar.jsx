@@ -4,17 +4,19 @@ import './navBar.css'
 
 const pag = "Mangas Library"
 
-export function NavBar () {
-    return(
-        <div className="nav-container">
-            <div className="nav-text">
+export function NavBar() {
+    return (
+        <>
+            <nav className="nav-text">
                 <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
                 <h1>Probando Siuu</h1>
-            </div>
-            <div className='nav-Title'>
+            </nav>
+
+            <nav className='nav-Title'>
                 <h1>Pagina { pag }</h1>
-            </div>
-            <div className="nav-list">
+            </nav>
+
+            <nav className="nav-list">
                 <ul>
                     {
                     /*  Con Wooter y Link estoy usando su funcion para que haga
@@ -34,7 +36,8 @@ export function NavBar () {
                     <Link to='/'><li>Home</li></Link>
                     <Link to='/Mangas'><li>Library</li></Link>
                 </ul>
-            </div>
-        </div>
+            </nav>
+            
+        </>
     )
 }

@@ -1,5 +1,6 @@
 //Imports de React
 import { Route } from 'wouter'
+import { useEffect, useState } from 'react'
 
 //Estilos
 
@@ -24,6 +25,9 @@ import { View } from './pages/View/View.jsx'
 const lorem = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis, natus necessitatibus, fugiat dolorem quidem fuga, maiores consequatur delectus sint aut unde impedit expedita debitis. Dignissimos nemo aliquid consequuntur vel cupiditate"
 
 export function App() {
+    const [view, setView] = useState('section-' + window.location.pathname.replace('/', ''))
+
+    console.log(Route.className)
     const lastAdded = [
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
@@ -42,12 +46,11 @@ export function App() {
 
     return (
         <>
-            <header>
+            <header className="nav-container">
                 <NavBar />
             </header>
             <div className='Body'>
-                <section className="section-Mangas">
-                    {console.log(window.location.pathname)}
+                <section className={`section-Mangas`}>
                     {/* Aqui en route Tiene una propiedad -Atributo- component={}
                         Para Renderizar el componente,
                         Ahora mismo este renderizando un Childre <Rote>Child</Route> 
@@ -67,18 +70,22 @@ export function App() {
                 </section>
                 
                 <aside className='Display-aside'>
-                    <h1>Agregados Recientemente</h1>
-                    {lastAdded.map((_, index) => {
-                        return (
-                            <Card
-                                key={index}
-                                index={index}
-                                titulo={lastAdded[index].title}
-                                desc={lastAdded[index].desc}
-                                img={lastAdded[index].img} 
-                            />
-                        )
-                    })}
+                    <header>
+                        <h1>Agregados Recientemente</h1>
+                    </header>
+                    <body className='aside-cards-container'>
+                        {lastAdded.map((_, index) => {
+                            return (
+                                <Card
+                                    key={index}
+                                    index={index}
+                                    titulo={lastAdded[index].title}
+                                    desc={lastAdded[index].desc}
+                                    img={lastAdded[index].img} 
+                                />
+                            )
+                        })}
+                    </body>
                 </aside>
             </div>
             <footer>

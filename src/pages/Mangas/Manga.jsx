@@ -1,5 +1,5 @@
 //No importo react al ser jsx
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'wouter'
 //Estilo
 import './Manga.css'
@@ -37,6 +37,7 @@ const MangaComp = ({children, index, estado, desc}) => {
                 Y si no es 'Manga' lo cambie a 'Manga'
              */
             }
+            document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
 
             setClassName(ClassName === 'Manga' ? 'Manga-View': 'Manga')
             setDescription(ClassName === 'Manga' ? desc[1]: desc[0])
@@ -60,7 +61,12 @@ const MangaComp = ({children, index, estado, desc}) => {
 //En lugar de export function NombreFunc ({ props }) { return( code )}
 //Si se usa como export func para que wooter lo renderice toca ponerlo como children <Route > children </Route>
 export function Mangas ({mangaList = []}) {
-
+    const elementHtml = document.querySelector('section')
+    useEffect(() => {
+        if (elementHtml.className === 'view-Manga') {
+            elementHtml.classList.replace('view-Manga', 'section-Mangas')
+        }
+    })
     return (
         mangaList.map((_, index) => {
 

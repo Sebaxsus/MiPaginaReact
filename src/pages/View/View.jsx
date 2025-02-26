@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import './View.css'
 
 export function View() {

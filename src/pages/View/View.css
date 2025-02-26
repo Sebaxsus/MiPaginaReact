@@ -1,15 +1,17 @@
 .view-Container {
     display: flex;
     flex-direction: column;
+    gap: 20px;
+    align-items: center;
 }
 
 .view-Header {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid whitesmoke;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin: 0px 5px 5px 0px;
-    row-gap: 10px;
+    row-gap: 20px;
     align-items: center;
 }
 
@@ -24,4 +26,8 @@
     width: 200px;
     height: 200px;
     border-radius: 10px;
+}
+
+.view-Container p {
+    width: 50%;
 }

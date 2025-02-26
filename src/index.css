@@ -17,6 +17,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    content-visibility: auto;
 }
 
 * {
@@ -54,24 +55,70 @@
     place-items: center;
 }
 
-@media (width > 950px) {
-    .section-Mangas {
-        grid-template-columns: repeat(3, minmax(200px, 1fr));
-    }
+.view-Manga {
+    display: flex;
+    flex-direction: column;
+    grid-area: 1 / 2 / 1 / 3;
+    place-content: center;
 }
 
 .Display-aside {
     display: grid;
     justify-items: center;
-    align-items: center;
-    grid-area: 1 / 1 / 1 / 2;
+    align-items: flex-start;
     grid-template-rows: 25px minmax(50px, 1fr);
     grid-template-columns: minmax(100px, 1fr);
+    grid-template-areas: "titulo" "contenido";
     overflow: hidden;
-    gap: 5px;
+    gap: 15px 5px;
 }
 
 .Display-aside h1 {
-    grid-area: 1 / 1 / 1 / 2;
+    grid-area: titulo;
     border-bottom: 2px solid hsl(35, 75%, 17%);
+    overflow-y: auto;
+    text-overflow: ellipsis;
+    min-height: 0;
+    height: 30px;
 }
+
+.aside-cards-container {
+    display: grid;
+    grid-area: contenido;
+    place-items: center;
+    gap: 5px 5px;
+    overflow-y: auto;
+}
+
+/* Obligatorio el responsive Muelto*/
+
+@media (width > 950px) {
+    .section-Mangas {
+        grid-template-columns: repeat(3, minmax(200px, 1fr));
+    }
+
+    .card-Container {
+        width: 50%;
+    }
+
+    .card-Container img { 
+        width: 50%;
+    }
+}
+
+/*      Utilizando flex para hacer el layout basico de las cartas y los mangas
+
+.Body {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+}
+
+.section-Mangas {
+    display: inherit; /*flex
+    flex-flow: row wrap;
+    flex-basis: 20%;
+    flex-shrink: 1;
+    flex-grow: 4;
+
+*/
