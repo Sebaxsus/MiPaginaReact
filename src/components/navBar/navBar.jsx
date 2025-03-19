@@ -1,6 +1,7 @@
 import { Link } from 'wouter'
 
 import './navBar.css'
+import Post from '../../pages/Mangas/MangaPost'
 
 const pag = "Mangas Library"
 
@@ -10,6 +11,7 @@ export function NavBar() {
             <nav className="nav-text">
                 <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
                 <h1>Probando Siuu</h1>
+                <Post />
             </nav>
 
             <nav className='nav-Title'>

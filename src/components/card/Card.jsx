@@ -15,9 +15,9 @@ export function Card ({index, titulo, desc = [], img}) {
 
     return (
         <div className={card} onClick={handleClick}>
-            <h2>{titulo}</h2>
-            <img src={img} alt="Imagen"></img>
-            <p>
+            <h2 className="cardTitle">{titulo}</h2>
+            <img className="cardImg" src={img} alt="Imagen"></img>
+            <p className="cardContent">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
                 Omnis, natus necessitatibus, fugiat dolorem quidem fuga, 
                 maiores consequatur delectus sint aut unde impedit expedita debitis. 

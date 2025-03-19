@@ -11,6 +11,7 @@
     cursor: zoom-in;
     place-content: center;
     overflow: hidden;
+    padding: 5px;
 }
 
 .Manga h1 {
@@ -19,6 +20,7 @@
     grid-area: 1 / 1 / 1 / 2;
     justify-content: center;
     text-overflow: ellipsis;
+    font-weight: 500;
 }
 
 .Manga p {
@@ -30,6 +32,7 @@
     scrollbar-width: none;
     scrollbar-gutter: stable;
     scrollbar-color: #244 #242424;
+    text-indent: 5px;
 }
 /*  Usar el diplay con la img para ponerla a la dercha de la box del grid
     Aka su columna y fila
@@ -43,6 +46,12 @@
     border-radius: 3px;
     align-self: center;
     justify-self: flex-end;
+}
+
+.mangaImg {
+    width: 100%;
+    aspect-ratio: 1 / 2;
+    padding: 0;
 }
 
 .Manga-View {
@@ -179,4 +188,9 @@
 
 .Manga-mg img {
     grid-area: 1 / 2 / 2 / 3;
+}
+
+.Manga:hover {
+    transform: scale(1.1);
+    box-shadow: rgb(31, 170, 170) 2px 4px 20px 0px;
 }

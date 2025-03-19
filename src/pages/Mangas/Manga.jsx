@@ -78,7 +78,7 @@ export function Mangas ({mangaList = []}) {
                         desc={mangaList[index].desc} 
                     >
                         <h1>{mangaList[index].title}</h1>
-                        <img src={mangaList[index].img} alt={`Imgaen de portada para el Manga ${mangaList[index].title}`}></img>
+                        <img className='mangaImg' src={mangaList[index].img} alt={`Imgaen de portada para el Manga ${mangaList[index].title}`}></img>
 
                     </MangaComp>
                 </Link>

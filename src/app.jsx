@@ -13,6 +13,10 @@ import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Card } from './components/card/Card.jsx'
 import { View } from './pages/View/View.jsx'
 
+// Servicios
+
+import { getMangas } from './services/api.js'
+// import Post from './pages/Mangas/MangaPost.jsx'
 
 /*
 <div className='Manga'>
@@ -35,7 +39,7 @@ export function App() {
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
     ]
     // Array de Mangas
-    const mangaList = [
+    const mangaListBack = [
         { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
         { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
         { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
@@ -43,6 +47,13 @@ export function App() {
         { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
         { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' }
     ]
+
+    const [mangaList, setMangasList] = useState(mangaListBack)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        getMangas('').then(data => {setMangasList(data);setLoading(false)})
+    }, [])
 
     return (
         <>
@@ -53,14 +64,14 @@ export function App() {
                 <section className={`section-Mangas`}>
                     {/* Aqui en route Tiene una propiedad -Atributo- component={}
                         Para Renderizar el componente,
-                        Ahora mismo este renderizando un Childre <Rote>Child</Route> 
+                        Ahora mismo este renderizando un Children <Rote>Child</Route> 
                     */}
                     {
                         <>
                             <Route
                                 path={"/Mangas"}
                             >
-                                <Mangas mangaList={mangaList} />
+                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />} 
                             </Route>
                             <Route path={`/View-${mangaList[0].title}`}>
                                 <View />
