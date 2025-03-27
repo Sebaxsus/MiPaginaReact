@@ -5,13 +5,13 @@ import Post from '../../pages/Mangas/MangaPost'
 
 const pag = "Mangas Library"
 
-export function NavBar() {
+export function NavBar(props) {
     return (
         <>
             <nav className="nav-text">
                 <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
                 <h1>Probando Siuu</h1>
-                <Post />
+                <Post setChange={props.setChange}/>
             </nav>
 
             <nav className='nav-Title'>

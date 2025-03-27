@@ -3,7 +3,7 @@ import Modal from "../../components/modal/Modal"
 import { postManga } from "../../services/api"
 
 
-export default function Post() {
+export default function Post(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [formTitle, setFormTitle] = useState('')
     const [formDescripcion, setFormDesc] = useState('')
@@ -36,6 +36,7 @@ export default function Post() {
 
             if (res.status === 201) {
                 console.warn("Se agrego el Manga Correctamente")
+                props.setChange(true)
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
             }

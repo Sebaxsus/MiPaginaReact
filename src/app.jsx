@@ -26,12 +26,13 @@ import { getMangas } from './services/api.js'
 </div>
 */
 
-const lorem = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis, natus necessitatibus, fugiat dolorem quidem fuga, maiores consequatur delectus sint aut unde impedit expedita debitis. Dignissimos nemo aliquid consequuntur vel cupiditate"
+// const lorem = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Omnis, natus necessitatibus, fugiat dolorem quidem fuga, maiores consequatur delectus sint aut unde impedit expedita debitis. Dignissimos nemo aliquid consequuntur vel cupiditate"
 
 export function App() {
     // const [view, setView] = useState('section-' + window.location.pathname.replace('/', ''))
-
-    console.log(Route.className)
+    // const [location, navigate] = useLocation() // Location se usa para obtener la ruta actual de la app
+    // navigate se usa para modificar la ruta de la app
+    //console.log("Ruta: ", location)
     const lastAdded = [
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
@@ -39,28 +40,49 @@ export function App() {
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
     ]
     // Array de Mangas
-    const mangaListBack = [
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-        { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' }
-    ]
+    // const mangaListBack = [
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
+    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' }
+    // ]
 
-    const [mangaList, setMangasList] = useState(mangaListBack)
+    const [mangaList, setMangasList] = useState([])
     const [loading, setLoading] = useState(true)
+    const [change, setChage] = useState(false)
 
     useEffect(() => {
         getMangas('').then(data => {setMangasList(data);setLoading(false)})
-    }, [])
+    }, [change])
 
     return (
         <>
             <header className="nav-container">
-                <NavBar />
+                {/* Le paso change para actualizar la info al momento de hacer un post,put,patch,delete*/}
+                <NavBar setChange={setChage}/>
             </header>
             <div className='Body'>
+                <aside className='Display-aside'>
+                    <header>
+                        <h1>Agregados Recientemente</h1>
+                    </header>
+                    <body className='aside-cards-container'>
+                        {lastAdded.map((_, index) => {
+                            return (
+                                <Card
+                                    key={index}
+                                    index={index}
+                                    titulo={lastAdded[index].title}
+                                    desc={lastAdded[index].desc}
+                                    img={lastAdded[index].img} 
+                                />
+                            )
+                        })}
+                    </body>
+                </aside>
+
                 <section className={`section-Mangas`}>
                     {/* Aqui en route Tiene una propiedad -Atributo- component={}
                         Para Renderizar el componente,
@@ -80,24 +102,6 @@ export function App() {
                     }
                 </section>
                 
-                <aside className='Display-aside'>
-                    <header>
-                        <h1>Agregados Recientemente</h1>
-                    </header>
-                    <body className='aside-cards-container'>
-                        {lastAdded.map((_, index) => {
-                            return (
-                                <Card
-                                    key={index}
-                                    index={index}
-                                    titulo={lastAdded[index].title}
-                                    desc={lastAdded[index].desc}
-                                    img={lastAdded[index].img} 
-                                />
-                            )
-                        })}
-                    </body>
-                </aside>
             </div>
             <footer>
 
