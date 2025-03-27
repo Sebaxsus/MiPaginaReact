@@ -22,7 +22,7 @@ const MangaComp = ({children, index, estado, desc}) => {
     // La posicion 1 es la funcion para modificar el valor que se guarda
 
     const [ClassName, setClassName] = useState('Manga')
-    const [Description, setDescription] = useState(desc[0])
+    const [Description, setDescription] = useState(desc)
 
     //Aqui lo uso ClassName como Bool y si es true lo ponga en manga
     //Si es False lo ponga en Manga-View
@@ -68,17 +68,16 @@ export function Mangas ({mangaList = []}) {
         }
     })
     return (
-        mangaList.map((_, index) => {
-
+        mangaList.map((manga, index) => {
+            //console.log(manga)
             return (
-                <Link to={`/View-${mangaList[index].title}`}>
+                <Link key={manga.id} to={`/View-${manga.title}`}>
                     <MangaComp
-                        key={index}
                         index={index}
-                        desc={mangaList[index].desc} 
+                        desc={manga.description} 
                     >
-                        <h1>{mangaList[index].title}</h1>
-                        <img className='mangaImg' src={mangaList[index].img} alt={`Imgaen de portada para el Manga ${mangaList[index].title}`}></img>
+                        <h1>{manga.title}</h1>
+                        <img className='mangaImg' src={manga.img} alt={`Imgaen de portada para el Manga ${manga.title}`}></img>
 
                     </MangaComp>
                 </Link>
