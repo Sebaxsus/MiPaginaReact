@@ -12,6 +12,7 @@ import { NavBar } from './components/navBar/navBar.jsx'
 import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Card } from './components/card/Card.jsx'
 import { View } from './pages/View/View.jsx'
+import { Anime } from './pages/Animes/Anime.jsx'
 
 // Servicios
 
@@ -39,6 +40,11 @@ export function App() {
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
     ]
+    const Animesdata = [
+        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+    ]
     // Array de Mangas
     // const mangaListBack = [
     //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
@@ -54,8 +60,15 @@ export function App() {
     const [change, setChage] = useState(false)
 
     useEffect(() => {
-        getMangas('').then(data => {setMangasList(data);setLoading(false)})
+        console.log("Effect")
+        getMangas("").then(data => {setMangasList(data);setLoading(false)})
     }, [change])
+
+    if (loading) {
+        return (
+            <h2>Cargando...</h2>
+        )
+    }
 
     return (
         <>
@@ -68,7 +81,7 @@ export function App() {
                     <header>
                         <h1>Agregados Recientemente</h1>
                     </header>
-                    <body className='aside-cards-container'>
+                    <main className='aside-cards-container'>
                         {lastAdded.map((_, index) => {
                             return (
                                 <Card
@@ -76,11 +89,12 @@ export function App() {
                                     index={index}
                                     titulo={lastAdded[index].title}
                                     desc={lastAdded[index].desc}
-                                    img={lastAdded[index].img} 
+                                    img={lastAdded[index].img}
+                                    cardClass={'w-1/2'}
                                 />
                             )
                         })}
-                    </body>
+                    </main>
                 </aside>
 
                 <section className={`section-Mangas`}>
@@ -97,6 +111,11 @@ export function App() {
                             </Route>
                             <Route path={`/View-${mangaList[0].title}`}>
                                 <View />
+                            </Route>
+                            <Route
+                                path={"/Animes"}
+                            >
+                                <Anime data={Animesdata} />
                             </Route>
                         </>
                     }

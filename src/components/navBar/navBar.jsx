@@ -35,8 +35,9 @@ export function NavBar(props) {
                         <Link to='link'></Link>
                     */
                     }
-                    <Link to='/'><li>Home</li></Link>
-                    <Link to='/Mangas'><li>Library</li></Link>
+                    <li><Link to='/'>Home</Link></li>
+                    <li><Link to='/Mangas'>Mangas</Link></li>
+                    <li><Link to='/Animes'>Anime</Link></li>
                 </ul>
             </nav>
             
