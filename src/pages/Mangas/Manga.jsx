@@ -31,20 +31,27 @@ const MangaComp = ({children, index, estado, desc}) => {
     //HandleClick es una funcion para poner la logica del evento Click
     
     const handleClick = () => {
-            {/* 
-                Aqui verifico que si el Nombre en ClassName
-                es Igual a 'Manga' lo cambie a 'Manga-View'
-                Y si no es 'Manga' lo cambie a 'Manga'
-             */
-            }
-            document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
+        {/* 
+            Aqui verifico que si el Nombre en ClassName
+            es Igual a 'Manga' lo cambie a 'Manga-View'
+            Y si no es 'Manga' lo cambie a 'Manga'
+            */
+           // ###### NOTAAAA
+           // No estoy verificando nada ya que hardcodeo el cambio apenas entra al evento onClick con el manejador handleClick
+           // Efectiva mente cambio el state de Classname y Description pero no los uso en ningun lado 🤣
+        }
+        document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
 
-            setClassName(ClassName === 'Manga' ? 'Manga-View': 'Manga')
-            setDescription(ClassName === 'Manga' ? desc[1]: desc[0])
+        setClassName(ClassName === 'Manga' ? 'Manga-View': 'Manga')
+        setDescription(ClassName === 'Manga' ? "Desc Corta" : "Desc Larga")
+        console.log(Description, "Condicion: ", ClassName === 'Manga' ? "Desc Corta" : "Desc Larga")
+        // ^^^ Descripcion no cambia | Ya que dentro del handleClick no modifico ningun elemento
+        // Html o vuelvo a renderizar algo, Solo ejecuto la funcion y cambio el nombre de la clase del elemento con id "section".
+        // Usando el document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
     }
 
     return (
-
+        //console.log("Return: ",Description),
         <div className={ClassName} onClick={handleClick}>
 
             {children}

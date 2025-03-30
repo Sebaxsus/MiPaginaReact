@@ -33,6 +33,9 @@
     scrollbar-gutter: stable;
     scrollbar-color: #244 #242424;
     text-indent: 5px;
+    text-wrap: pretty;
+    padding-right: 10px;
+    height: 17ch;
 }
 /*  Usar el diplay con la img para ponerla a la dercha de la box del grid
     Aka su columna y fila
@@ -123,6 +126,9 @@
     font-size: small;
     grid-area: 2 / 1 / 3 / 2;
     text-overflow: ellipsis;
+    text-wrap: pretty;
+    padding-right: 10px;
+    height: 17ch;
 }
 /*  Usar el diplay con la img para ponerla a la dercha de la box del grid
     Aka su columna y fila
