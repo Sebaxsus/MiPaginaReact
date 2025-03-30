@@ -2,13 +2,30 @@
     display: grid;
     /*grid-template-rows: repeat(2, minmax(50px, .5fr));*/
     grid-template-areas: 
-        "titulo imagen" 
-        "contenido contenido"
+        "titulo"
+        "imagen" 
+        "contenido"
     ;
+
+    /* 3 estilos distintos de grid
+    grid-template-areas: 
+        "titulo"
+        "imagen" 
+        "contenido"
+    ; Aqui toca cambiar el estilo de la img { width: 40%;justify-self: center; }
+    estilo <p> {margin: 0px 5px;border-top: #244 solid 2px;}
+
+    grid-template-areas: 
+        "titulo titulo "
+        "contenido imagen " 
+        "contenido imagen"
+    ;
+
+    */
 
     box-sizing: border-box;
     border: 1px solid whitesmoke;
-    width: 50%;
+    /*width: 50%; */
     border-radius: 10px;
 
     overflow: hidden;
@@ -18,24 +35,30 @@
 
 .cardTitle {
     grid-area: titulo;
+    text-align: center;
     justify-self: center;
+    border-bottom: #244 solid 2px;
+    width: 80%;
 }
 
 .cardImg {
     grid-area: imagen;
-    width: 50%;
-    justify-self: flex-end;
+    width: 40%;
+    justify-self: center;
+    margin: 5px 0px;
 }
 
 .cardContent {
     grid-area: contenido;
     overflow: auto;
+    text-overflow: clip;
+    text-indent: 2ch;
     scrollbar-width: none;
     scrollbar-gutter: stable;
     scrollbar-color: #244 #242424;
-    min-width: 0;
-    min-height: 0;
-    height: 120px;
+    height: 14ch;
+    margin: 0px 5px;
+    border-top: #244 solid 2px;
 }
 
 .card-Container-view {
@@ -79,4 +102,8 @@
     min-width: 0;
     min-height: 0;
     height: 120px;
+} */
+
+/* .cardBackgroudnPer {
+    background-image: var(--card-bg-img);
 } */

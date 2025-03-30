@@ -1,0 +1,143 @@
+.card-Container {
+    display: grid;
+    /*grid-template-rows: repeat(2, minmax(50px, .5fr));*/
+    grid-template-areas: 
+        "titulo"
+        "contenido"
+    ;
+
+    /* 3 estilos distintos de grid
+    grid-template-areas: 
+        "titulo"
+        "imagen" 
+        "contenido"
+    ; Aqui toca cambiar el estilo de la img { width: 40%;justify-self: center; }
+    estilo <p> {margin: 0px 5px;border-top: #244 solid 2px;}
+
+    grid-template-areas: 
+        "titulo titulo "
+        "contenido imagen " 
+        "contenido imagen"
+    ;
+
+    */
+
+    box-sizing: border-box;
+    border: 1px solid whitesmoke;
+    /*width: 50%; */
+    border-radius: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: .5s;
+
+    background-image: url("CasualEula.png");
+    background-size: cover;
+
+}
+
+.cardTitle {
+    text-align: center;
+    justify-self: center;
+    border-bottom: #244 solid 2px;
+    width: 80%;
+    backdrop-filter: blur(6px) brightness(0.7);
+    margin-bottom: 40%;
+    margin-top: 5px;
+    border-radius: 20px;
+}
+
+.cardImg {
+    grid-area: imagen;
+    width: 40%;
+    justify-self: center;
+    margin: 5px 0px;
+}
+
+.cardContent {
+    grid-area: contenido;
+    overflow: auto;
+    text-overflow: clip;
+    text-indent: 2ch;
+    scrollbar-width: none;
+    scrollbar-gutter: stable;
+    scrollbar-color: #244 #242424;
+    height: 22ch;
+    margin: 0px 5px;
+    padding: 10px 5px;
+    border-top: #244 solid 2px;
+    backdrop-filter: blur(9px) brightness(0.3);
+    border-radius: 15px;
+}
+
+.card-Container {
+    display: grid;
+    /*grid-template-rows: repeat(2, minmax(50px, .5fr));*/
+    grid-template-areas: 
+        "titulo"
+        "contenido"
+    ;
+
+    /* 3 estilos distintos de grid
+    grid-template-areas: 
+        "titulo"
+        "imagen" 
+        "contenido"
+    ; Aqui toca cambiar el estilo de la img { width: 40%;justify-self: center; }
+    estilo <p> {margin: 0px 5px;border-top: #244 solid 2px;}
+
+    grid-template-areas: 
+        "titulo titulo "
+        "contenido imagen " 
+        "contenido imagen"
+    ;
+
+    */
+
+    box-sizing: border-box;
+    border: 1px solid whitesmoke;
+    /*width: 50%; */
+    border-radius: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: .5s;
+
+    background-image: url("CasualEula.png");
+    background-size: cover;
+
+}
+
+.cardTitle2 {
+    text-align: center;
+    justify-self: center;
+    border-bottom: #244 solid 2px;
+    width: 80%;
+    backdrop-filter: blur(6px) brightness(0.7);
+    margin-bottom: 40%;
+    margin-top: 5px;
+    border-radius: 20px;
+}
+
+.cardImg2 {
+    grid-area: imagen;
+    width: 40%;
+    justify-self: center;
+    margin: 5px 0px;
+}
+
+.cardContent2 {
+    grid-area: contenido;
+    overflow: auto;
+    text-overflow: clip;
+    text-indent: 2ch;
+    scrollbar-width: none;
+    scrollbar-gutter: stable;
+    scrollbar-color: #244 #242424;
+    height: 22ch;
+    margin: 0px 5px;
+    padding: 10px 5px;
+    border-top: #244 solid 2px;
+    backdrop-filter: blur(9px) brightness(0.3);
+    border-radius: 15px;
+}
