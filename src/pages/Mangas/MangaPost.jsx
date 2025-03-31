@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Modal from "../../components/modal/Modal"
-import { postManga } from "../../services/api"
+// import { postManga } from "../../services/api"
+import { mangasController } from "../../services/newApi"
 
 
 export default function Post(props) {
@@ -32,7 +33,7 @@ export default function Post(props) {
         }
             // console.log(newManga)
         try{
-            const res = await postManga(JSON.stringify(newManga))
+            const res = await mangasController.postManga(JSON.stringify(newManga))
 
             if (res.status === 201) {
                 console.warn("Se agrego el Manga Correctamente")
