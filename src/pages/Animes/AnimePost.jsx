@@ -2,6 +2,14 @@ import { useState } from "react"
 import Modal from "../../components/modal/Modal"
 import { postManga } from "../../services/api"
 
+function campoForm({ nombre }) {
+    return (
+        <div>
+            <input type="checkbox" name={nombre} id={nombre} />
+            <label>{nombre}</label>
+        </div>
+    )
+}
 
 export default function Post(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,7 +32,7 @@ export default function Post(props) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const newManga = {
+        const newAnime = {
             title: formTitle,
             desc: formDescripcion,
             img: formUrl,
@@ -32,7 +40,7 @@ export default function Post(props) {
         }
             // console.log(newManga)
         try{
-            const res = await postManga(JSON.stringify(newManga))
+            const res = await postManga(JSON.stringify(newAnime))
 
             if (res.status === 201) {
                 console.warn("Se agrego el Manga Correctamente")
@@ -53,7 +61,7 @@ export default function Post(props) {
                     ➕
                 </a>
                 <Modal isOpen={isModalOpen} onClose={() =>  setIsModalOpen(false)}>
-                    <h2 className="font-bold underline underline-offset-2 decoration-[#2f3acc]">Añadir un Manga!</h2>
+                    <h2 className="font-bold underline underline-offset-2 decoration-[#2f3acc]">Añadir un Anime!</h2>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 justify-center w-[inherit]">
                         <label className="flex flex-col gap-y-4">
                             <h2>Titulo</h2>
@@ -91,6 +99,18 @@ export default function Post(props) {
                                 onKeyDown={(e) => {validateFormText(e, "https://ejemplo.mdn")}}
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
                                 />
+                        </label>
+                        <label className="flex flex-col gap-y-4">
+                            <fieldset>
+                                <legend>Escoja el genero:</legend>
+                                {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
+                                
+                                {
+                                    ["Drama","Action","Crime","Adventure","Sci-Fi","Romance","Isekai","Slice of Life"].map(genero => {
+                                        campoForm({nombre: genero})
+                                    })
+                                }
+                            </fieldset>
                         </label>
                         <button 
                             type="submit"
