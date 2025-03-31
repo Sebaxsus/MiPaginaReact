@@ -16,7 +16,8 @@ import { Anime } from './pages/Animes/Anime.jsx'
 
 // Servicios
 
-import { getMangas } from './services/api.js'
+// import { getMangas } from './services/api.js'
+import { mangasController, animesController } from './services/newApi.js'
 // import Post from './pages/Mangas/MangaPost.jsx'
 
 /*
@@ -40,11 +41,11 @@ export function App() {
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
     ]
-    const Animesdata = [
-        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-        {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-    ]
+    // const Animesdata = [
+    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
+    // ]
     // Array de Mangas
     // const mangaListBack = [
     //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
@@ -56,12 +57,18 @@ export function App() {
     // ]
 
     const [mangaList, setMangasList] = useState([])
+    const [animeList, setAnimeList] = useState([])
     const [loading, setLoading] = useState(true)
     const [change, setChage] = useState(false)
 
     useEffect(() => {
         console.log("Effect")
-        getMangas("").then(data => {setMangasList(data);setLoading(false)})
+        Promise.all([mangasController.getMangas(""), animesController.getAnimes("")]).then((data => {
+            setMangasList(data[0])
+            setAnimeList(data[1])
+            setLoading(false)
+        }))
+        // mangasController.getMangas("").then(data => {setMangasList(data);setLoading(false)})
     }, [change])
 
     if (loading) {
@@ -115,7 +122,7 @@ export function App() {
                             <Route
                                 path={"/Animes"}
                             >
-                                <Anime data={Animesdata} />
+                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} />}
                             </Route>
                         </>
                     }
