@@ -1,6 +1,7 @@
 //No importo react al ser jsx
 import { useEffect, useState } from 'react'
 import { Link } from 'wouter'
+import { Card } from '../../components/card/Card'
 //Estilo
 import './Manga.css'
 
@@ -40,14 +41,14 @@ const MangaComp = ({children, index, estado, desc}) => {
            // No estoy verificando nada ya que hardcodeo el cambio apenas entra al evento onClick con el manejador handleClick
            // Efectiva mente cambio el state de Classname y Description pero no los uso en ningun lado 🤣
         }
-        document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
+        document.querySelector('main').classList.replace('main-Mangas', 'view-Manga')
 
         setClassName(ClassName === 'Manga' ? 'Manga-View': 'Manga')
         setDescription(ClassName === 'Manga' ? "Desc Corta" : "Desc Larga")
         console.log(Description, "Condicion: ", ClassName === 'Manga' ? "Desc Corta" : "Desc Larga")
         // ^^^ Descripcion no cambia | Ya que dentro del handleClick no modifico ningun elemento
-        // Html o vuelvo a renderizar algo, Solo ejecuto la funcion y cambio el nombre de la clase del elemento con id "section".
-        // Usando el document.querySelector('section').classList.replace('section-Mangas', 'view-Manga')
+        // Html o vuelvo a renderizar algo, Solo ejecuto la funcion y cambio el nombre de la clase del elemento con id "main".
+        // Usando el document.querySelector('main').classList.replace('main-Mangas', 'view-Manga')
     }
 
     return (
@@ -68,30 +69,47 @@ const MangaComp = ({children, index, estado, desc}) => {
 //En lugar de export function NombreFunc ({ props }) { return( code )}
 //Si se usa como export func para que wooter lo renderice toca ponerlo como children <Route > children </Route>
 export function Mangas ({mangaList = []}) {
-    const elementHtml = document.querySelector('section')
+    const elementHtml = document.querySelector('main')
     useEffect(() => {
         if (elementHtml.className === 'view-Manga') {
-            elementHtml.classList.replace('view-Manga', 'section-Mangas')
+            elementHtml.classList.replace('view-Manga', 'main-Mangas')
         }
     })
-    return (
-        mangaList.map((manga, index) => {
-            //console.log(manga)
-            return (
-                <Link key={manga.id} to={`/View-${manga.title}`}>
-                    <MangaComp
-                        index={index}
-                        desc={manga.description} 
-                    >
-                        <h1>{manga.title}</h1>
-                        <img className='mangaImg' src={manga.img} alt={`Imgaen de portada para el Manga ${manga.title}`}></img>
 
-                    </MangaComp>
-                </Link>
+    // return (
+    //     mangaList.map((manga, index) => {
+    //         //console.log(manga)
+    //         return (
+    //             <Link key={manga.id} to={`/View-${manga.title}`}>
+    //                 <MangaComp
+    //                     index={index}
+    //                     desc={manga.description} 
+    //                 >
+    //                     <h1>{manga.title}</h1>
+    //                     <img className='mangaImg' src={manga.img} alt={`Imgaen de portada para el Manga ${manga.title}`}></img>
 
-            )
+    //                 </MangaComp>
+    //             </Link>
 
-        })
+    //         )
+
+    //     })
         
+    // )
+    return (
+        mangaList.map( (manga) => {
+            return (
+                <Link key={manga.id} to={`/View-${manga.title}`} className={"justify-items-center"}>
+                    <Card
+                        titulo={manga.title}
+                        desc={manga.description}
+                        img={manga.img}
+                        genre={manga.genre}
+                        cardClass={"w-4/5 hover:scale-105 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
+                        type={"Manga"}
+                    />
+                </Link>
+            )
+        })
     )
 }
