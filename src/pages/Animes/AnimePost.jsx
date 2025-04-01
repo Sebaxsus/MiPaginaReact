@@ -4,14 +4,14 @@ import { postManga } from "../../services/api"
 
 function campoForm({ nombre }) {
     return (
-        <div>
+        <div className="flex gap-2">
             <input type="checkbox" name={nombre} id={nombre} />
             <label>{nombre}</label>
         </div>
     )
 }
 
-export default function Post(props) {
+export default function AnimePost(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [formTitle, setFormTitle] = useState('')
     const [formDescripcion, setFormDesc] = useState('')
@@ -101,13 +101,13 @@ export default function Post(props) {
                                 />
                         </label>
                         <label className="flex flex-col gap-y-4">
-                            <fieldset>
+                            <fieldset className="grid grid-cols-3 gap-2">
                                 <legend>Escoja el genero:</legend>
                                 {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
                                 
                                 {
                                     ["Drama","Action","Crime","Adventure","Sci-Fi","Romance","Isekai","Slice of Life"].map(genero => {
-                                        campoForm({nombre: genero})
+                                        return campoForm({nombre: genero})
                                     })
                                 }
                             </fieldset>
