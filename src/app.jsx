@@ -41,20 +41,6 @@ export function App() {
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
         { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
     ]
-    // const Animesdata = [
-    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-    //     {title: "Hola",desc: "DESC",img: './CasualEula.png'}, {title: "Hola",desc: "DESC",img: './CasualEula.png'},
-    // ]
-    // Array de Mangas
-    // const mangaListBack = [
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' },
-    //     { title: "Manga", desc: ["Bueno", lorem], img: './Eula.jpg' }
-    // ]
 
     const [mangaList, setMangasList] = useState([])
     const [animeList, setAnimeList] = useState([])
@@ -95,16 +81,16 @@ export function App() {
                                     key={index}
                                     index={index}
                                     titulo={lastAdded[index].title}
-                                    desc={lastAdded[index].desc}
                                     img={lastAdded[index].img}
-                                    cardClass={'w-1/2'}
+                                    cardClass={"text-sm w-[150px]"}
+                                    type={lastAdded[index].type}
                                 />
                             )
                         })}
                     </main>
                 </aside>
 
-                <section className={`section-Mangas`}>
+                <main className={`main-Mangas`}>
                     {/* Aqui en route Tiene una propiedad -Atributo- component={}
                         Para Renderizar el componente,
                         Ahora mismo este renderizando un Children <Rote>Child</Route> 
@@ -126,7 +112,7 @@ export function App() {
                             </Route>
                         </>
                     }
-                </section>
+                </main>
                 
             </div>
             <footer>
