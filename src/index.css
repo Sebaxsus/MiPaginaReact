@@ -57,7 +57,7 @@ body {
     */
 }
 
-.section-Mangas {
+.main-Mangas {
     display: grid;
     grid-area: 1 / 2 / 1 / 3;
     grid-template-rows: repeat(4, minmax(300px, 1fr));
@@ -108,7 +108,7 @@ body {
 /* Obligatorio el responsive Muelto*/
 
 @media (width > 950px) {
-    .section-Mangas {
+    .main-Mangas {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
     }
 }
@@ -129,7 +129,7 @@ body {
 
     }
 
-    /* .section-Mangas {
+    /* .main-Mangas {
         padding: 5px;
         width: 90%;
         height: 100dvh;
@@ -148,7 +148,7 @@ body {
     gap: 10px;
 }
 
-.section-Mangas {
+.main-Mangas {
     display: inherit; /*flex
     flex-flow: row wrap;
     flex-basis: 20%;
