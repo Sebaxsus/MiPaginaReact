@@ -113,6 +113,7 @@ export class animesController {
                     "Content-Type": "application/json",
                 },
             })
+            return res
         } catch (e) {
             console.error("Fallo el metodo POST anime, Error: ", e)
             return e
