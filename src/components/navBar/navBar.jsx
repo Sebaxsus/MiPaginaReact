@@ -8,7 +8,7 @@ const pag = "Mangas Library"
 
 export function NavBar(props) {
     const [location, navigate] = useLocation()
-    console.log("Ubi: ",location)
+    location.includes("View") ? props.setMainClass("view") : props.setMainClass("main-Cards")
     return (
         <>
             <nav className="nav-text">
