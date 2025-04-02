@@ -1,21 +1,23 @@
 import { useState } from "react"
 import Modal from "../../components/modal/Modal"
-import { postManga } from "../../services/api"
+import { animesController } from "../../services/newApi.js"
 
 function campoForm({ nombre }) {
     return (
         <div className="flex gap-2">
-            <input type="checkbox" name={nombre} id={nombre} />
+            <input type="checkbox" name="generos" id={nombre} value={nombre}/>
             <label>{nombre}</label>
         </div>
     )
 }
+
 
 export default function AnimePost(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [formTitle, setFormTitle] = useState('')
     const [formDescripcion, setFormDesc] = useState('')
     const [formUrl, setFormUrl] = useState('')
+    const [formGenres, setGenres] = useState([])
 
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
@@ -28,28 +30,50 @@ export default function AnimePost(props) {
         }
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        const genreElements = Array.from(document.getElementsByName("generos").values())
+
+        genreElements.map( (input) => {
+            if (input.checked === true) {
+                setGenres(formGenres.push(input.value))
+            }
+        })
 
         const newAnime = {
             title: formTitle,
             desc: formDescripcion,
             img: formUrl,
-            genre: ["Drama"]
-        }
-            // console.log(newManga)
+            genre: formGenres,
+        }  
+        // Limpiando los campos, Incluyendo los checkbox
+        // console.log("Objeto Post: ",newAnime)
+        // e.target.reset();setFormTitle("");setFormDesc("")
+        // setFormUrl("");setGenres([]);
         try{
-            const res = await postManga(JSON.stringify(newAnime))
+            // No estoy esperando la promesa 🤨
+            const res = await animesController.postAnime({body: JSON.stringify(newAnime)})
 
             if (res.status === 201) {
-                console.warn("Se agrego el Manga Correctamente")
+                console.warn("Se agrego el Anime Correctamente")
+                alert("Se agrego el Anime Correctamente")
+                // Limpiando los campos del Formulario
+                setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
+                // Devolviendo el Formulario a su estado por defecto
+                // Esto lo uso para reiniciar las checkbox
+                e.target.reset()
+                // Cambiando el Estado del change en App.jsx
+                // Para usar el Effecto que se encarga de pedir los datos a la api
+                // Ya que change es parte de las dependencias de este efecto
                 props.setChange(true)
             } else {
-                console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
+                console.error("Error al crear el Anime, Code: ", res.status, " Body: ", res.data, res.headers)
+                setGenres([])
             }
         } catch (err) {
-            console.error("Error al crear el Manga: ", err)
+            console.error("Error al crear el Anime: ", err)
+            setGenres([])
         }
 
     }
@@ -60,7 +84,7 @@ export default function AnimePost(props) {
                 <a id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="fixed top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg">
                     ➕
                 </a>
-                <Modal isOpen={isModalOpen} onClose={() =>  setIsModalOpen(false)}>
+                <Modal isOpen={isModalOpen} onClose={() =>  {setIsModalOpen(false)}}>
                     <h2 className="font-bold underline underline-offset-2 decoration-[#2f3acc]">Añadir un Anime!</h2>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 justify-center w-[inherit]">
                         <label className="flex flex-col gap-y-4">
@@ -79,12 +103,12 @@ export default function AnimePost(props) {
                         <label className="flex flex-col gap-y-4">
                             <h2>Descripcion: </h2>
                             <textarea 
-                                placeholder="Descripcion del Manga"
+                                placeholder="Descripcion del Anime"
                                 required
                                 id="modalBody"
                                 value={formDescripcion}
                                 onChange={(e) => {setFormDesc(e.target.value)}}
-                                onKeyDown={(e) => {validateFormText(e, "Descripcion del Manga")}}
+                                onKeyDown={(e) => {validateFormText(e, "Descripcion del Anime")}}
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-2xl indent-2 py-2 ml-6"
                             />
                         </label>
@@ -106,7 +130,11 @@ export default function AnimePost(props) {
                                 {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
                                 
                                 {
-                                    ["Drama","Action","Crime","Adventure","Sci-Fi","Romance","Isekai","Slice of Life"].map(genero => {
+                                    [
+                                        'Action','Adventure','Comedy','Crime','Dark Fantasy','Drama',
+                                        'Fantasy','Historical','Isekai','Mystery','Romance','Sci-Fi',
+                                        'Slice of Life','Supernatural'
+                                    ].map(genero => {
                                         return campoForm({nombre: genero})
                                     })
                                 }

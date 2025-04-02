@@ -3,12 +3,21 @@ import Modal from "../../components/modal/Modal"
 // import { postManga } from "../../services/api"
 import { mangasController } from "../../services/newApi"
 
+function campoForm({ nombre }) {
+    return (
+        <div className="flex gap-2">
+            <input type="checkbox" name="generos" id={nombre} value={nombre}/>
+            <label>{nombre}</label>
+        </div>
+    )
+}
 
 export default function Post(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [formTitle, setFormTitle] = useState('')
     const [formDescripcion, setFormDesc] = useState('')
     const [formUrl, setFormUrl] = useState('')
+    const [formGenres, setGenres] = useState([])
 
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
@@ -25,24 +34,45 @@ export default function Post(props) {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        const genreElements = Array.from(document.getElementsByName("generos").values())
+
+        genreElements.map( (input) => {
+            if (input.checked === true) {
+                setGenres(formGenres.push(input.value))
+            }
+        })
+
+
         const newManga = {
             title: formTitle,
             desc: formDescripcion,
             img: formUrl,
-            genre: ["Drama"]
+            genre: formGenres,
         }
             // console.log(newManga)
         try{
+            // No estoy esperando la promesa 🤨
             const res = await mangasController.postManga(JSON.stringify(newManga))
 
             if (res.status === 201) {
                 console.warn("Se agrego el Manga Correctamente")
+                alert("Se agrego el Anime Correctamente")
+                // Limpiando los campos del Formulario
+                setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
+                // Devolviendo el Formulario a su estado por defecto
+                // Esto lo uso para reiniciar las checkbox
+                e.target.reset()
+                // Cambiando el Estado del change en App.jsx
+                // Para usar el Effecto que se encarga de pedir los datos a la api
+                // Ya que change es parte de las dependencias de este efecto
                 props.setChange(true)
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
+                setGenres([])
             }
         } catch (err) {
             console.error("Error al crear el Manga: ", err)
+            setGenres([])
         }
 
     }
@@ -92,6 +122,22 @@ export default function Post(props) {
                                 onKeyDown={(e) => {validateFormText(e, "https://ejemplo.mdn")}}
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
                                 />
+                        </label>
+                        <label className="flex flex-col gap-y-4">
+                            <fieldset className="grid grid-cols-3 gap-2">
+                                <legend>Escoja el genero:</legend>
+                                {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
+                                
+                                {
+                                    [
+                                        'Action','Adventure','Comedy','Crime','Dark Fantasy','Drama',
+                                        'Fantasy','Historical','Isekai','Mystery','Romance','Sci-Fi',
+                                        'Slice of Life','Supernatural'
+                                    ].map(genero => {
+                                        return campoForm({nombre: genero})
+                                    })
+                                }
+                            </fieldset>
                         </label>
                         <button 
                             type="submit"
