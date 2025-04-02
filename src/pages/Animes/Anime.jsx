@@ -24,15 +24,12 @@ export function Anime(props) {
     return (
         props.data.map((anime, index) => {
             return (
-                <Link key={anime.id} to={`/View-${anime.title}`} className={"justify-items-center"}>
+                <Link key={anime.id} to={`/View/Anime/${anime.id}`} className={"justify-items-center"}>
                     <Card
                         className="border-red-50"
                         key={index}
-                        titulo={anime.title}
-                        desc={anime.description}
-                        img={anime.img}
-                        genre={anime.genre}
-                        cardClass={"w-4/5 hover:scale-105 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
+                        data={anime}
+                        cardClass={"w-4/5 hover:scale-110 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
                         type={"Anime"}
                     />
                 </Link>

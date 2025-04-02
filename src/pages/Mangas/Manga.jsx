@@ -97,14 +97,12 @@ export function Mangas ({mangaList = []}) {
         
     // )
     return (
-        mangaList.map( (manga) => {
+        mangaList.map( (manga, index) => {
             return (
-                <Link key={manga.id} to={`/View-${manga.title}`} className={"justify-items-center"}>
+                <Link key={manga.id} to={`/View/Manga/${manga.id}`} className={"justify-items-center"}>
                     <Card
-                        titulo={manga.title}
-                        desc={manga.description}
-                        img={manga.img}
-                        genre={manga.genre}
+                        key={index}
+                        data={manga}
                         cardClass={"w-4/5 hover:scale-105 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
                         type={"Manga"}
                     />
