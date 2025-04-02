@@ -36,19 +36,19 @@ export function App() {
     // navigate se usa para modificar la ruta de la app
     //console.log("Ruta: ", location)
     const lastAdded = [
-        { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
-        { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
-        { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
-        { type: "Anime", title: "Anime", desc: ["Suave", "No me termino de convencer por..."], img: './CasualEula.png'},
+        { id: 1, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
+        { id: 2, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
+        { id: 3, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
+        { id: 4, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
     ]
 
     const [mangaList, setMangasList] = useState([])
     const [animeList, setAnimeList] = useState([])
     const [loading, setLoading] = useState(true)
     const [change, setChage] = useState(false)
-
+    const [mainClass, setMainClass] = useState("main-Cards")
     useEffect(() => {
-        console.log("Effect")
+        //console.log("Effect")
         Promise.all([mangasController.getMangas(""), animesController.getAnimes("")]).then((data => {
             setMangasList(data[0])
             setAnimeList(data[1])
@@ -67,30 +67,29 @@ export function App() {
         <>
             <header className="nav-container">
                 {/* Le paso change para actualizar la info al momento de hacer un post,put,patch,delete*/}
-                <NavBar setChange={setChage}/>
+                <NavBar setChange={setChage} setMainClass={setMainClass}/>
             </header>
             <div className='Body'>
                 <aside className='Display-aside'>
                     <header>
                         <h1>Agregados Recientemente</h1>
                     </header>
-                    <main className='aside-cards-container'>
+                    <section className='aside-cards-container'>
+                        {/* Esto actualmente no tiene sentido ya que el mismo lastAdded[index] seria _ */}
                         {lastAdded.map((_, index) => {
                             return (
                                 <Card
                                     key={index}
-                                    index={index}
-                                    titulo={lastAdded[index].title}
-                                    img={lastAdded[index].img}
+                                    data={lastAdded[index]}
                                     cardClass={"text-sm w-[150px]"}
                                     type={lastAdded[index].type}
                                 />
                             )
                         })}
-                    </main>
+                    </section>
                 </aside>
 
-                <main className={`main-Mangas`}>
+                <main className={mainClass}>
                     {/* Aqui en route Tiene una propiedad -Atributo- component={}
                         Para Renderizar el componente,
                         Ahora mismo este renderizando un Children <Rote>Child</Route> 
@@ -102,7 +101,7 @@ export function App() {
                             >
                                {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />} 
                             </Route>
-                            <Route path={`/View-${mangaList[0].title}`}>
+                            <Route path={`/View/:type/:id`}>
                                 <View />
                             </Route>
                             <Route
