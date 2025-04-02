@@ -12,6 +12,12 @@ const BASE_URL = "http://localhost:3000"
     No se estan teniendo en cuenta los codigos de respuesta del servidor
 
     Ya que puedo recuperar el codigo de respuesta con el metodo .status()
+
+    Al Obtner un error por parte de la peticion, Axios genera un Objeto de Error
+    Llamado AxiosError el cual posee varias propiedades de Objeto.
+    
+    Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+
 */
 
 export class mangasController {
@@ -26,7 +32,19 @@ export class mangasController {
             return data
         } catch (err) {
             console.error("Fallo el get Mangas: ", err)
-            return err
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return err.response
+        }
+    }
+
+    static async getById ({ id }) {
+        try {
+            const res = await axios.get(`${BASE_URL}/mangas/${id}`)
+            return res.data
+        } catch (e) {
+            console.log("Fallo el get Manga By Id, Error: ", e)
+            return e.response
         }
     }
     
@@ -52,7 +70,7 @@ export class mangasController {
             return res
         } catch (err) {
             console.error("Fallo el delete Manga: ", err)
-            return err
+            return err.response
         }
     }
     
@@ -67,7 +85,7 @@ export class mangasController {
             return res
         } catch (err) {
             console.error("Fallo el PATCH Manga: ", err)
-            return err
+            return err.response
         }
     }
 
@@ -84,7 +102,9 @@ export class animesController {
             return res.data
         } catch (e) {
             console.error("Fallo el metodo get Anime, Error: ", e)
-            return e
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
         }
     }
 
@@ -94,7 +114,9 @@ export class animesController {
             return res.data
         } catch (e) {
             console.error("Fallo el GET ID Anime, Error: ", e)
-            return e
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
         }
     }
 
@@ -116,7 +138,9 @@ export class animesController {
             return res
         } catch (e) {
             console.error("Fallo el metodo POST anime, Error: ", e)
-            return e
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
         }
     }
 
@@ -129,7 +153,9 @@ export class animesController {
             return res
         } catch (e) {
             console.error("Fallo el metodo DELETE anime, Error: ", e)
-            return e
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
         }
     }
 
@@ -151,7 +177,9 @@ export class animesController {
             return res.data
         } catch (e) {
             console.error("Fallo el PATCH Anime, Error: ", e)
-            return e
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
         }
     }
 }
@@ -235,4 +263,136 @@ await in getAnimes
 
 
 
+*/
+
+// ################# OBJETO AXIOS ERROR
+/*
+{
+    "message": "Request failed with status code 400",
+    "name": "AxiosError",
+    "stack": "AxiosError: Request failed with status code 400\n    at settle (http://localhost:5173/node_modules/.vite/deps/axios.js?v=362e8310:1218:12)\n    at XMLHttpRequest.onloadend (http://localhost:5173/node_modules/.vite/deps/axios.js?v=362e8310:1550:7)\n    at Axios.request (http://localhost:5173/node_modules/.vite/deps/axios.js?v=362e8310:2108:41)\n    at async animesController.postAnime (http://localhost:5173/src/services/newApi.js:111:25)\n    at async handleSubmit (http://localhost:5173/src/pages/Animes/AnimePost.jsx?t=1743576801757:78:25)",
+    "config": {
+        "transitional": {
+            "silentJSONParsing": true,
+            "forcedJSONParsing": true,
+            "clarifyTimeoutError": false
+        },
+        "adapter": [
+            "xhr",
+            "http",
+            "fetch"
+        ],
+        "transformRequest": [
+            null
+        ],
+        "transformResponse": [
+            null
+        ],
+        "timeout": 0,
+        "xsrfCookieName": "XSRF-TOKEN",
+        "xsrfHeaderName": "X-XSRF-TOKEN",
+        "maxContentLength": -1,
+        "maxBodyLength": -1,
+        "env": {},
+        "headers": {
+            "Accept": "application/json, text/plain, * / *",
+            "Content-Type": "application/json"
+        },
+        "method": "post",
+        "url": "http://localhost:3000/animes",
+        "data": "{\"title\":\"One Piece\",\"desc\":\"Esta historia se sitúa en el momento más álgido de la Gran Era de los Piratas, cuando el joven Monkey D. Luffy quiere llegar a ser el Rey de los Piratas y hacerse al fin con un legendario tesoro, el One Piece.\",\"img\":\"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTfccULK6AgKWW9SVSfl-ignZFu2ArX-sw5a-wgo55lnDdEXEbDpk3WYmwEMhc67Dud5ZswhqOuRrCeGOxyuY1DJqbiD5vI8Ru8-A2eUDtwjQ\",\"genre\":[\"Action\",\"Adventure\",\"Comedy\",\"Fantasy\"]}",
+        "allowAbsoluteUrls": true
+    },
+    "request": {
+        "m_isAborted": false
+    },
+    "response": {
+        "data": {
+            "message": "Error!, No se pudo crear el Anime",
+            "error": [
+                {
+                    "received": "Comedy",
+                    "code": "invalid_enum_value",
+                    "options": [
+                        "Drama",
+                        "Action",
+                        "Crime",
+                        "Adventure",
+                        "Sci-Fi",
+                        "Romance",
+                        "Isekai",
+                        "Slice of Life"
+                    ],
+                    "path": [
+                        "genre",
+                        2
+                    ],
+                    "message": "Invalid enum value. Expected 'Drama' | 'Action' | 'Crime' | 'Adventure' | 'Sci-Fi' | 'Romance' | 'Isekai' | 'Slice of Life', received 'Comedy'"
+                },
+                {
+                    "received": "Fantasy",
+                    "code": "invalid_enum_value",
+                    "options": [
+                        "Drama",
+                        "Action",
+                        "Crime",
+                        "Adventure",
+                        "Sci-Fi",
+                        "Romance",
+                        "Isekai",
+                        "Slice of Life"
+                    ],
+                    "path": [
+                        "genre",
+                        3
+                    ],
+                    "message": "Invalid enum value. Expected 'Drama' | 'Action' | 'Crime' | 'Adventure' | 'Sci-Fi' | 'Romance' | 'Isekai' | 'Slice of Life', received 'Fantasy'"
+                }
+            ]
+        },
+        "status": 400,
+        "statusText": "Bad Request",
+        "headers": {
+            "content-length": "693",
+            "content-type": "application/json; charset=utf-8"
+        },
+        "config": {
+            "transitional": {
+                "silentJSONParsing": true,
+                "forcedJSONParsing": true,
+                "clarifyTimeoutError": false
+            },
+            "adapter": [
+                "xhr",
+                "http",
+                "fetch"
+            ],
+            "transformRequest": [
+                null
+            ],
+            "transformResponse": [
+                null
+            ],
+            "timeout": 0,
+            "xsrfCookieName": "XSRF-TOKEN",
+            "xsrfHeaderName": "X-XSRF-TOKEN",
+            "maxContentLength": -1,
+            "maxBodyLength": -1,
+            "env": {},
+            "headers": {
+                "Accept": "application/json, text/plain, * /*",
+                "Content-Type": "application/json"
+            },
+            "method": "post",
+            "url": "http://localhost:3000/animes",
+            "data": "{\"title\":\"One Piece\",\"desc\":\"Esta historia se sitúa en el momento más álgido de la Gran Era de los Piratas, cuando el joven Monkey D. Luffy quiere llegar a ser el Rey de los Piratas y hacerse al fin con un legendario tesoro, el One Piece.\",\"img\":\"https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTfccULK6AgKWW9SVSfl-ignZFu2ArX-sw5a-wgo55lnDdEXEbDpk3WYmwEMhc67Dud5ZswhqOuRrCeGOxyuY1DJqbiD5vI8Ru8-A2eUDtwjQ\",\"genre\":[\"Action\",\"Adventure\",\"Comedy\",\"Fantasy\"]}",
+            "allowAbsoluteUrls": true
+        },
+        "request": {
+            "m_isAborted": false
+        }
+    }
+    "code": "ERR_BAD_REQUEST",
+    "status": 400
+}
 */
