@@ -12,7 +12,7 @@ function campoForm({ nombre }) {
     )
 }
 
-export default function Post(props) {
+export default function MangaPost(props) {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [formTitle, setFormTitle] = useState('')
     const [formDescripcion, setFormDesc] = useState('')
