@@ -65,7 +65,7 @@ export default function MangaPost(props) {
                 // Cambiando el Estado del change en App.jsx
                 // Para usar el Effecto que se encarga de pedir los datos a la api
                 // Ya que change es parte de las dependencias de este efecto
-                props.setChange(true)
+                props.reload()
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
                 setGenres([])

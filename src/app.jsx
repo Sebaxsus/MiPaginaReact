@@ -20,6 +20,7 @@ import { Anime } from './pages/Animes/Anime.jsx'
 import { mangasController, animesController } from './services/newApi.js'
 
 // Paginas
+
 import AnimePost from './pages/Animes/AnimePost.jsx'
 import MangaPost from './pages/Mangas/MangaPost.jsx'
 
@@ -48,30 +49,39 @@ export function App() {
     const [mangaList, setMangasList] = useState([])
     const [animeList, setAnimeList] = useState([])
     const [loading, setLoading] = useState(true)
-    const [change, setChage] = useState(false)
-    const [mainClass, setMainClass] = useState("main-Cards")
-
-    // No se porque pero usar el estado de useLocation
-    // Y luego hacer un condicional con una ternaria
-    // location.includes("view") ? setMainClass("view") : setMainClass("main-Cards")
-    // Me genera un loop infinito de renders
-    // Sera porque no lo evalue con {} ???
-    // ###### Actualizacion
     const [location] = useLocation()
 
-    useEffect(() => {
-        location.includes("View") ? setMainClass("view") : setMainClass("main-Cards")
-    }, [location])
+    const mainClass = location.includes("view") ? "view" : "main-Cards"
+
+    // Remplazando el estado `change` por una funcion
+    // Que maneje la misma logica que usar de dependencia
+    // Change en el effect
+    const reloadData = () => {
+        setLoading(true)
+
+        Promise.all([
+            mangasController.getMangas("").catch(() => []),
+            animesController.getAnimes("").catch(() => [])
+        ]).then(([mangas, animes]) => {
+            setMangasList(mangas)
+            setAnimeList(animes)
+        }).finally(() => setLoading(false))
+    }
 
     useEffect(() => {
         // console.log("Effect", change)
-        Promise.all([mangasController.getMangas(""), animesController.getAnimes("")]).then((data => {
-            setMangasList(data[0])
-            setAnimeList(data[1])
-            setLoading(false)
-        }))
+        setLoading(true)
+
+        Promise.all([
+            mangasController.getMangas("").catch(() => []),
+            animesController.getAnimes("").catch(() => [])
+        ]).then(([mangas, animes]) => {
+            setMangasList(mangas)
+            setAnimeList(animes)
+        }).finally(() => setLoading(false))
+
         // mangasController.getMangas("").then(data => {setMangasList(data);setLoading(false)})
-    }, [change])
+    }, [])
 
     if (loading) {
         return (
@@ -116,7 +126,7 @@ export function App() {
                                 path={"/Mangas"}
                             >
                                {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />}
-                               <MangaPost setChage={setChage} />
+                               <MangaPost reaload={reloadData} />
                             </Route>
                             <Route path={`/View/:type/:id`}>
                                 <View />
@@ -124,8 +134,8 @@ export function App() {
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} setChage={setChage}/>}
-                                <AnimePost setChage={setChage} />
+                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList}/>}
+                                <AnimePost reload={reloadData} />
                             </Route>
                         </>
                     }
