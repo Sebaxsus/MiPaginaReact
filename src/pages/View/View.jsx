@@ -39,22 +39,24 @@ export function View() {
                     {data.title}
                 </h1>
             </header>
-            <img src={data.img.startsWith('.') ? data.img.slice(1,) : data.img} alt={`Imgagen de portada del ${routeParams.type} ${data.title}`}/>
+            <section>
+                <img src={data.img.startsWith('.') ? data.img.slice(1,) : data.img} alt={`Imgagen de portada del ${routeParams.type} ${data.title}`}/>
+                <ul className='generos'>
+                    {data.genre.map((genero, index) => {
+                        return (
+                            <li 
+                                key={index}
+                                className="generosItem"
+                            >
+                                {genero}
+                            </li>
+                        )
+                    })}
+                </ul>
+            </section>
             <p className='descripcion'>
                 {data.description}
             </p>
-            <ul className='generos'>
-                {data.genre.map((genero, index) => {
-                    return (
-                        <li 
-                            key={index}
-                            className="generosItem"
-                        >
-                            {genero}
-                        </li>
-                    )
-                })}
-            </ul>
         </article>
     )
 }
