@@ -80,13 +80,13 @@ export default function AnimePost(props) {
 
     return (
         <>
-            <article className=" grid [grid-template-columns:repeat(auto-fit,minmax(400px,1fr))] gap-2 mx-[10px] my-[15px] justify-items-center max-sm:[grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
-                <a id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="fixed top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg">
+            <article className="sticky top-20 z-[1] mx-[10px] justify-items-center">
+                <button id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg">
                     ➕
-                </a>
+                </button>
                 <Modal isOpen={isModalOpen} onClose={() =>  {setIsModalOpen(false)}}>
-                    <h2 className="font-bold underline underline-offset-2 decoration-[#2f3acc]">Añadir un Anime!</h2>
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 justify-center w-[inherit]">
+                    <h2 className="font-bold underline underline-offset-2 decoration-[#2fadcc] text-xl pb-2">Añadir un Anime!</h2>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 justify-center w-4/5">
                         <label className="flex flex-col gap-y-4">
                             <h2>Titulo</h2>
                             <input 
@@ -142,7 +142,7 @@ export default function AnimePost(props) {
                         </label>
                         <button 
                             type="submit"
-                            className="border rounded-md border-cyan-600"
+                            className="border rounded-md border-cyan-600 self-center p-1"
                             >
                                 Crear Post
                         </button>

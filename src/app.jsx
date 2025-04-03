@@ -95,6 +95,7 @@ export function App() {
                 {/* Le paso change para actualizar la info al momento de hacer un post,put,patch,delete*/}
                 <NavBar/>
             </header>
+            {location !== '/' ? (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : <AnimePost reload={reloadData}/> : <></>}
             <div className='Body'>
                 <aside className='Display-aside'>
                     <header>
@@ -126,7 +127,7 @@ export function App() {
                                 path={"/Mangas"}
                             >
                                {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />}
-                               <MangaPost reaload={reloadData} />
+                               {/* <MangaPost reaload={reloadData} /> */}
                             </Route>
                             <Route path={`/View/:type/:id`}>
                                 <View />
@@ -135,15 +136,16 @@ export function App() {
                                 path={"/Animes"}
                             >
                                 {loading ? <h1>Cargando...</h1> : <Anime data={animeList}/>}
-                                <AnimePost reload={reloadData} />
+                                {/* <AnimePost reload={reloadData} /> */}
                             </Route>
                         </>
                     }
                 </main>
                 
             </div>
+           
             <footer>
-
+           
             </footer>
         </>
     )
