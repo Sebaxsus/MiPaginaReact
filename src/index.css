@@ -112,6 +112,11 @@ body {
     .main-Cards {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
     }
+
+    .view-Container {
+        width: 800px;
+        height: 550px;
+    }
 }
 
 @media (width < 950px) {
