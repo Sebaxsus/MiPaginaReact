@@ -1,20 +1,17 @@
-import { Link, useLocation } from 'wouter'
+import { Link,  } from 'wouter'
 
 import './navBar.css'
-import Post from '../../pages/Mangas/MangaPost'
-import AnimePost from '../../pages/Animes/AnimePost'
 
 const pag = "Mangas Library"
 
-export function NavBar(props) {
-    const [location, navigate] = useLocation()
-    location.includes("View") ? props.setMainClass("view") : props.setMainClass("main-Cards")
+export function NavBar() {
+
     return (
         <>
             <nav className="nav-text">
                 <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
                 <h1>Probando Siuu</h1>
-                {(location === '/Mangas') ? <Post setChange={props.setChange}/> : <AnimePost setChange={props.setChange}/>}
+                {/* {(location === '/Mangas') ? <Post setChange={props.setChange}/> : <AnimePost setChange={props.setChange}/>} */}
             </nav>
 
             <nav className='nav-Title'>

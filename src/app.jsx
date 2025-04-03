@@ -1,5 +1,5 @@
 //Imports de React
-import { Route } from 'wouter'
+import { Route, useLocation } from 'wouter'
 import { useEffect, useState } from 'react'
 
 //Estilos
@@ -18,7 +18,10 @@ import { Anime } from './pages/Animes/Anime.jsx'
 
 // import { getMangas } from './services/api.js'
 import { mangasController, animesController } from './services/newApi.js'
-// import Post from './pages/Mangas/MangaPost.jsx'
+
+// Paginas
+import AnimePost from './pages/Animes/AnimePost.jsx'
+import MangaPost from './pages/Mangas/MangaPost.jsx'
 
 /*
 <div className='Manga'>
@@ -47,8 +50,21 @@ export function App() {
     const [loading, setLoading] = useState(true)
     const [change, setChage] = useState(false)
     const [mainClass, setMainClass] = useState("main-Cards")
+
+    // No se porque pero usar el estado de useLocation
+    // Y luego hacer un condicional con una ternaria
+    // location.includes("view") ? setMainClass("view") : setMainClass("main-Cards")
+    // Me genera un loop infinito de renders
+    // Sera porque no lo evalue con {} ???
+    // ###### Actualizacion
+    const [location] = useLocation()
+
     useEffect(() => {
-        //console.log("Effect")
+        location.includes("View") ? setMainClass("view") : setMainClass("main-Cards")
+    }, [location])
+
+    useEffect(() => {
+        // console.log("Effect", change)
         Promise.all([mangasController.getMangas(""), animesController.getAnimes("")]).then((data => {
             setMangasList(data[0])
             setAnimeList(data[1])
@@ -67,7 +83,7 @@ export function App() {
         <>
             <header className="nav-container">
                 {/* Le paso change para actualizar la info al momento de hacer un post,put,patch,delete*/}
-                <NavBar setChange={setChage} setMainClass={setMainClass}/>
+                <NavBar/>
             </header>
             <div className='Body'>
                 <aside className='Display-aside'>
@@ -99,7 +115,8 @@ export function App() {
                             <Route
                                 path={"/Mangas"}
                             >
-                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />} 
+                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />}
+                               <MangaPost setChage={setChage} />
                             </Route>
                             <Route path={`/View/:type/:id`}>
                                 <View />
@@ -107,7 +124,8 @@ export function App() {
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} />}
+                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} setChage={setChage}/>}
+                                <AnimePost setChage={setChage} />
                             </Route>
                         </>
                     }
