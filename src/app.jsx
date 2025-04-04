@@ -9,20 +9,18 @@ import './index.css'
 //Componentes
 
 import { NavBar } from './components/navBar/navBar.jsx'
-import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Card } from './components/card/Card.jsx'
-import { View } from './pages/View/View.jsx'
-import { Anime } from './pages/Animes/Anime.jsx'
+
 
 // Servicios
 
-// import { getMangas } from './services/api.js'
+// import { get } from './services/api.js'
 import { mangasController, animesController } from './services/newApi.js'
 
 // Paginas
-
-import AnimePost from './pages/Animes/AnimePost.jsx'
-import MangaPost from './pages/Mangas/MangaPost.jsx'
+import { View } from './pages/View/View.jsx'
+import { Anime } from './pages/Animes/Anime.jsx'
+import { Mangas } from './pages/Mangas/Manga.jsx'
 
 /*
 <div className='Manga'>
@@ -51,7 +49,7 @@ export function App() {
     const [loading, setLoading] = useState(true)
     const [location] = useLocation()
 
-    const mainClass = location.includes("view") ? "view" : "main-Cards"
+    const mainClass = location.includes("View") ? "view" : "main-Cards"
 
     // Remplazando el estado `change` por una funcion
     // Que maneje la misma logica que usar de dependencia
@@ -60,8 +58,8 @@ export function App() {
         setLoading(true)
 
         Promise.all([
-            mangasController.getMangas("").catch(() => []),
-            animesController.getAnimes("").catch(() => [])
+            mangasController.get("").catch(() => []),
+            animesController.get("").catch(() => [])
         ]).then(([mangas, animes]) => {
             setMangasList(mangas)
             setAnimeList(animes)
@@ -73,14 +71,14 @@ export function App() {
         setLoading(true)
 
         Promise.all([
-            mangasController.getMangas("").catch(() => []),
-            animesController.getAnimes("").catch(() => [])
+            mangasController.get("").catch(() => []),
+            animesController.get("").catch(() => [])
         ]).then(([mangas, animes]) => {
             setMangasList(mangas)
             setAnimeList(animes)
         }).finally(() => setLoading(false))
 
-        // mangasController.getMangas("").then(data => {setMangasList(data);setLoading(false)})
+        // mangasController.get("").then(data => {setMangasList(data);setLoading(false)})
     }, [])
 
     if (loading) {
@@ -89,13 +87,18 @@ export function App() {
         )
     }
 
+    console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
+
     return (
         <>
             <header className="nav-container">
                 {/* Le paso change para actualizar la info al momento de hacer un post,put,patch,delete*/}
                 <NavBar/>
             </header>
-            {location !== '/' ? (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : <AnimePost reload={reloadData}/> : <></>}
+            <div className='sticky top-20 z-[1]' id='modalDiv'>
+                {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
+            </div>
+            
             <div className='Body'>
                 <aside className='Display-aside'>
                     <header>
@@ -126,16 +129,16 @@ export function App() {
                             <Route
                                 path={"/Mangas"}
                             >
-                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} />}
+                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} reload={reloadData}/>}
                                {/* <MangaPost reaload={reloadData} /> */}
                             </Route>
                             <Route path={`/View/:type/:id`}>
-                                <View />
+                                <View/>
                             </Route>
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList}/>}
+                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} reload={reloadData}/>}
                                 {/* <AnimePost reload={reloadData} /> */}
                             </Route>
                         </>
