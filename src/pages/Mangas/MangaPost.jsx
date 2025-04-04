@@ -52,7 +52,7 @@ export default function MangaPost(props) {
             // console.log(newManga)
         try{
             // No estoy esperando la promesa 🤨
-            const res = await mangasController.postManga(JSON.stringify(newManga))
+            const res = await mangasController.post(JSON.stringify(newManga))
 
             if (res.status === 201) {
                 console.warn("Se agrego el Manga Correctamente")
@@ -80,9 +80,9 @@ export default function MangaPost(props) {
     return (
         <>
             <article className="sticky top-20 z-[1] mx-[10px] justify-items-center">
-                <a id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg">
+                <button disabled id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
                     ➕
-                </a>
+                </button>
                 <Modal isOpen={isModalOpen} onClose={() =>  setIsModalOpen(false)}>
                     <h2 className="font-bold underline underline-offset-2 decoration-[#2f3acc] text-xl pb-2">Añadir un Manga!</h2>
                     <form onSubmit={handleSubmit} className="flex flex-col gap-y-4 justify-center w-4/5">

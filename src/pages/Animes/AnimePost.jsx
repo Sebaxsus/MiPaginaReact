@@ -53,7 +53,7 @@ export default function AnimePost(props) {
         // setFormUrl("");setGenres([]);
         try{
             // No estoy esperando la promesa 🤨
-            const res = await animesController.postAnime({body: JSON.stringify(newAnime)})
+            const res = await animesController.post({body: JSON.stringify(newAnime)})
 
             if (res.status === 201) {
                 console.warn("Se agrego el Anime Correctamente")
@@ -81,7 +81,7 @@ export default function AnimePost(props) {
     return (
         <>
             <article className="sticky top-20 z-[1] mx-[10px] justify-items-center">
-                <button id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg">
+                <button disabled id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
                     ➕
                 </button>
                 <Modal isOpen={isModalOpen} onClose={() =>  {setIsModalOpen(false)}}>
