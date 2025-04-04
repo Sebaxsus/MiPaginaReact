@@ -22,7 +22,7 @@ const BASE_URL = "http://localhost:3000"
 
 export class mangasController {
 
-    static async getMangas (title) {
+    static async get (title) {
         try {
             const res = await axios.get(`${BASE_URL}/mangas`)
             // const data = res.data.filter((manga) => {
@@ -48,7 +48,7 @@ export class mangasController {
         }
     }
     
-    static async postManga (body = {}) {
+    static async post (body = {}) {
         //console.log("data Post Manga: ", body)
         try {
             const res = await axios.post(`${BASE_URL}/mangas`, body, {
@@ -63,7 +63,7 @@ export class mangasController {
         }
     }
     
-    static async deleteManga ({ id }) {
+    static async delete ({ id }) {
         // console.log(id)
         try {
             const res = await axios.delete(`${BASE_URL}/mangas/${id}`)
@@ -74,7 +74,7 @@ export class mangasController {
         }
     }
     
-    static async updateManga ({ id, body}) {
+    static async update ({ id, body}) {
         // console.log(id, body)
         try {
             const res = await axios.patch(`${BASE_URL}/mangas/${id}`, body, {
@@ -93,7 +93,7 @@ export class mangasController {
 
 export class animesController {
 
-    static async getAnimes ({ title }) {
+    static async get ({ title }) {
         try {
             const res = await axios.get(`${BASE_URL}/animes`)
             console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
@@ -120,7 +120,7 @@ export class animesController {
         }
     }
 
-    static async postAnime ({ body = {}}) {
+    static async post ({ body = {}}) {
         if (body.length === undefined) {
             console.error(
                 "El metodo postAnime no esta recibiendo un body o esta vacio\nBody: ",
@@ -144,7 +144,7 @@ export class animesController {
         }
     }
 
-    static async deleteAnime({ id }) {
+    static async delete({ id }) {
         try {
             const res = await axios.delete(`${BASE_URL}/animes/${id}`)
             if (res.status === 204) {
@@ -159,7 +159,7 @@ export class animesController {
         }
     }
 
-    static async updateAnime ({id, body = {}}) {
+    static async update ({id, body = {}}) {
         if (body.length === undefined) {
             console.error(
                 "El metodo updateAnime no esta recibiendo un body o esta vacio\nbody: ",
