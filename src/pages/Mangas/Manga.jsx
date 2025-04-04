@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'wouter'
 import { Card } from '../../components/card/Card'
+import { createPortal } from 'react-dom'
+import MangaPost from './MangaPost'
 //Estilo
 import './Manga.css'
 
@@ -68,13 +70,7 @@ const MangaComp = ({children, index, estado, desc}) => {
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
 //En lugar de export function NombreFunc ({ props }) { return( code )}
 //Si se usa como export func para que wooter lo renderice toca ponerlo como children <Route > children </Route>
-export function Mangas ({mangaList = []}) {
-    const elementHtml = document.querySelector('main')
-    useEffect(() => {
-        if (elementHtml.className === 'view-Manga') {
-            elementHtml.classList.replace('view-Manga', 'main-Mangas')
-        }
-    })
+export function Mangas (props) {
 
     // return (
     //     mangaList.map((manga, index) => {
@@ -96,10 +92,15 @@ export function Mangas ({mangaList = []}) {
     //     })
         
     // )
+    // props.postM(<MangaPost reload={props.reload} />)
+
+    
     return (
-        mangaList.map( (manga, index) => {
+        props.mangaList.map( (manga, index) => {
             return (
-                <Link key={manga.id} to={`/View/Manga/${manga.id}`} className={"justify-items-center"}>
+                <>
+                
+                <Link key={manga.id} to={`/View/Manga/${manga.id}`} className={"justify-items-center w-full"}>
                     <Card
                         key={index}
                         data={manga}
@@ -107,6 +108,8 @@ export function Mangas ({mangaList = []}) {
                         type={"Manga"}
                     />
                 </Link>
+                {createPortal(<MangaPost reload={props.reload} />, document.getElementById("modalDiv"))}
+                </>
             )
         })
     )

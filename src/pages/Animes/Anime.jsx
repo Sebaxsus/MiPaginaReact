@@ -1,5 +1,7 @@
 import { Link } from "wouter";
 import { Card } from "../../components/card/Card";
+import AnimePost from "./AnimePost";
+import { createPortal } from "react-dom";
 
 
 export function Anime(props) {
@@ -21,9 +23,11 @@ export function Anime(props) {
     //         })}
     //     </main>
     // )
+    // props.postA(<AnimePost reload={props.reload} />)
     return (
         props.data.map((anime, index) => {
             return (
+                <>
                 <Link key={anime.id} to={`/View/Anime/${anime.id}`} className={"justify-items-center"}>
                     <Card
                         className="border-red-50"
@@ -33,6 +37,8 @@ export function Anime(props) {
                         type={"Anime"}
                     />
                 </Link>
+                {createPortal(<AnimePost reload={props.reload} />, document.getElementById("modalDiv"))}
+                </>
             )
         })
     )
