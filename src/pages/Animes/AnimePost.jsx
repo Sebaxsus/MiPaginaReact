@@ -37,7 +37,7 @@ export default function AnimePost(props) {
 
         genreElements.map( (input) => {
             if (input.checked === true) {
-                setGenres(formGenres.push(input.value))
+                setGenres(formGenres.push(Number.parseInt(input.value)))
             }
         })
 
