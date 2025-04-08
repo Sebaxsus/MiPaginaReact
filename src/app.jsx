@@ -91,7 +91,7 @@ export function App() {
         )
     }
 
-    console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
+    // console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
 
     return (
         <>
@@ -137,7 +137,7 @@ export function App() {
                                {/* <MangaPost reaload={reloadData} /> */}
                             </Route>
                             <Route path={`/View/:type/:id`}>
-                                <View/>
+                                <View reload={reloadData}/>
                             </Route>
                             <Route
                                 path={"/Animes"}
