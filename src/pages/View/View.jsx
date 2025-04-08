@@ -60,6 +60,7 @@ export function View(props) {
         //     .finally(() => {
         //         setLoading(false)
         //     })
+        props.reload()
     }
 
     if (loading) {
