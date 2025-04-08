@@ -6,10 +6,11 @@ import './View.css'
 
 import Modal from '../../components/modal/ModalPatch.jsx'
 
-import { mangasController, animesController } from '../../services/newApi'
+import { mangasController, animesController, generosController } from '../../services/newApi'
 
 export function View(props) {
     const [data, setData] = useState({})
+    const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
     const [isModalOpen, setIsModalOpen] = useState(false)
     // Al ver que voy a usar varias veces el typo de controlador
@@ -21,31 +22,44 @@ export function View(props) {
         setLoading(true)
 
         const controller = routeParams.type === "Manga" ? mangasController : animesController
-
-        controller.getById({ id: routeParams.id }).then(data => {
-            // console.log("View data: ",data)
+        Promise.all([
+            controller.getById({ id: routeParams.id }).catch(() => []),
+            generosController.get().catch(() => []).catch(() => [])
+        ]).then(([data, generos]) => {
             setData(data)
-        }).catch(e => {
-            console.error("Error Obteniendo la informacion: ", e)
-        })
-            .finally(() => {
-                setLoading(false)
-            })
+            setGeneros(generos)
+        }).finally(() => setLoading(false))
+        // controller.getById({ id: routeParams.id }).then(data => {
+        //     // console.log("View data: ",data)
+        //     setData(data)
+        // }).catch(e => {
+        //     console.error("Error Obteniendo la informacion: ", e)
+        // })
+        //     .finally(() => {
+        //         setLoading(false)
+        //     })
 
     }, [routeParams.id, routeParams.type])
 
     const reloadData = () => {
         setLoading(true)
         const controller = routeParams.type === "Manga" ? mangasController : animesController
-        controller.getById({ id: routeParams.id }).then(data => {
-            // console.log("View data: ",data)
+        Promise.all([
+            controller.getById({ id: routeParams.id }).catch(() => []),
+            generosController.get().catch(() => []).catch(() => [])
+        ]).then(([data, generos]) => {
             setData(data)
-        }).catch(e => {
-            console.error("Error Obteniendo la informacion: ", e)
-        })
-            .finally(() => {
-                setLoading(false)
-            })
+            setGeneros(generos)
+        }).finally(() => setLoading(false))
+        // controller.getById({ id: routeParams.id }).then(data => {
+        //     // console.log("View data: ",data)
+        //     setData(data)
+        // }).catch(e => {
+        //     console.error("Error Obteniendo la informacion: ", e)
+        // })
+        //     .finally(() => {
+        //         setLoading(false)
+        //     })
     }
 
     if (loading) {
@@ -69,13 +83,13 @@ export function View(props) {
                 <section>
                     <img src={data.img.startsWith('.') ? data.img.slice(1,) : data.img} alt={`Imgagen de portada del ${routeParams.type} ${data.title}`} />
                     <ul className='generos'>
-                        {data.genre.map((genero, index) => {
+                        {data.genre.map((genero) => {
                             return (
                                 <li
-                                    key={index}
+                                    key={genero.id}
                                     className="generosItem"
                                 >
-                                    {genero}
+                                    {genero.name}
                                 </li>
                             )
                         })}
@@ -92,6 +106,7 @@ export function View(props) {
                         isOpen={isModalOpen}
                         onClose={() => setIsModalOpen(false)}
                         data={data}
+                        generos={generos}
                         reload={reloadData}
                     />, document.getElementById("modalDiv"))}
             </article>

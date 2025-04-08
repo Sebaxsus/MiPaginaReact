@@ -3,11 +3,11 @@ import Modal from "../../components/modal/Modal"
 // import { postManga } from "../../services/api"
 import { mangasController } from "../../services/newApi"
 
-function campoForm({ nombre }) {
+function campoForm({ genero }) {
     return (
         <div className="flex gap-2">
-            <input type="checkbox" name="generos" id={nombre} value={nombre}/>
-            <label>{nombre}</label>
+            <input type="checkbox" name="generos" id={genero.id} value={genero.id}/>
+            <label>{genero.name}</label>
         </div>
     )
 }
@@ -80,7 +80,7 @@ export default function MangaPost(props) {
     return (
         <>
             <article className="sticky top-20 z-[1] mx-[10px] justify-items-center">
-                <button disabled id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
+                <button id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
                     ➕
                 </button>
                 <Modal isOpen={isModalOpen} onClose={() =>  setIsModalOpen(false)}>
@@ -129,12 +129,8 @@ export default function MangaPost(props) {
                                 {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
                                 
                                 {
-                                    [
-                                        'Action','Adventure','Comedy','Crime','Dark Fantasy','Drama',
-                                        'Fantasy','Historical','Isekai','Mystery','Romance','Sci-Fi',
-                                        'Slice of Life','Supernatural'
-                                    ].map(genero => {
-                                        return campoForm({nombre: genero})
+                                    props.generos.map(genero => {
+                                        return campoForm({genero: genero})
                                     })
                                 }
                             </fieldset>

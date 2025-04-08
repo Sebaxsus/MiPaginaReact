@@ -2,11 +2,11 @@ import { useState } from "react"
 import Modal from "../../components/modal/Modal"
 import { animesController } from "../../services/newApi.js"
 
-function campoForm({ nombre }) {
+function campoForm({ genero }) {
     return (
         <div className="flex gap-2">
-            <input type="checkbox" name="generos" id={nombre} value={nombre}/>
-            <label>{nombre}</label>
+            <input type="checkbox" name="generos" id={genero.id} value={genero.id}/>
+            <label>{genero.name}</label>
         </div>
     )
 }
@@ -130,12 +130,8 @@ export default function AnimePost(props) {
                                 {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
                                 
                                 {
-                                    [
-                                        'Action','Adventure','Comedy','Crime','Dark Fantasy','Drama',
-                                        'Fantasy','Historical','Isekai','Mystery','Romance','Sci-Fi',
-                                        'Slice of Life','Supernatural'
-                                    ].map(genero => {
-                                        return campoForm({nombre: genero})
+                                    props.generos.map(genero => {
+                                        return campoForm({genero: genero})
                                     })
                                 }
                             </fieldset>

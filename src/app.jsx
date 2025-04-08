@@ -15,7 +15,7 @@ import { Card } from './components/card/Card.jsx'
 // Servicios
 
 // import { get } from './services/api.js'
-import { mangasController, animesController } from './services/newApi.js'
+import { mangasController, animesController, generosController } from './services/newApi.js'
 
 // Paginas
 import { View } from './pages/View/View.jsx'
@@ -46,6 +46,7 @@ export function App() {
 
     const [mangaList, setMangasList] = useState([])
     const [animeList, setAnimeList] = useState([])
+    const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
     const [location] = useLocation()
 
@@ -59,10 +60,12 @@ export function App() {
 
         Promise.all([
             mangasController.get("").catch(() => []),
-            animesController.get("").catch(() => [])
-        ]).then(([mangas, animes]) => {
+            animesController.get("").catch(() => []),
+            generosController.get().catch(() => [])
+        ]).then(([mangas, animes, generos]) => {
             setMangasList(mangas)
             setAnimeList(animes)
+            setGeneros(generos)
         }).finally(() => setLoading(false))
     }
 
@@ -72,12 +75,13 @@ export function App() {
 
         Promise.all([
             mangasController.get("").catch(() => []),
-            animesController.get("").catch(() => [])
-        ]).then(([mangas, animes]) => {
+            animesController.get("").catch(() => []),
+            generosController.get().catch(() => [])
+        ]).then(([mangas, animes, generos]) => {
             setMangasList(mangas)
             setAnimeList(animes)
+            setGeneros(generos)
         }).finally(() => setLoading(false))
-
         // mangasController.get("").then(data => {setMangasList(data);setLoading(false)})
     }, [])
 
@@ -129,7 +133,7 @@ export function App() {
                             <Route
                                 path={"/Mangas"}
                             >
-                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} reload={reloadData}/>}
+                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} reload={reloadData} generos={generos}/>}
                                {/* <MangaPost reaload={reloadData} /> */}
                             </Route>
                             <Route path={`/View/:type/:id`}>
@@ -138,7 +142,7 @@ export function App() {
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} reload={reloadData}/>}
+                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} reload={reloadData} generos={generos}/>}
                                 {/* <AnimePost reload={reloadData} /> */}
                             </Route>
                         </>

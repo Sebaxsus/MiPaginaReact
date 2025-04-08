@@ -24,6 +24,7 @@ export function Anime(props) {
     //     </main>
     // )
     // props.postA(<AnimePost reload={props.reload} />)
+    console.log("Generos: ", props.generos)
     return (
         props.data.map((anime, index) => {
             return (
@@ -37,7 +38,7 @@ export function Anime(props) {
                         type={"Anime"}
                     />
                 </Link>
-                {createPortal(<AnimePost reload={props.reload} />, document.getElementById("modalDiv"))}
+                {createPortal(<AnimePost reload={props.reload} generos={props.generos}/>, document.getElementById("modalDiv"))}
                 </>
             )
         })

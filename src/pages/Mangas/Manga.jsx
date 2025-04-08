@@ -94,7 +94,7 @@ export function Mangas (props) {
     // )
     // props.postM(<MangaPost reload={props.reload} />)
 
-    
+    console.log("Generos: ", props.generos)
     return (
         props.mangaList.map( (manga, index) => {
             return (
@@ -108,7 +108,7 @@ export function Mangas (props) {
                         type={"Manga"}
                     />
                 </Link>
-                {createPortal(<MangaPost reload={props.reload} />, document.getElementById("modalDiv"))}
+                {createPortal(<MangaPost reload={props.reload} generos={props.generos}/>, document.getElementById("modalDiv"))}
                 </>
             )
         })

@@ -5,11 +5,12 @@ import { useState } from "react"
 
 import { useParams } from "wouter"
 
-function campoForm({ nombre, data = [] }) {
+function campoForm({ genero, data = [] }) {
+    // console.log(genero.name, data, data.find((g) => {return g.id === genero.id}) ? true : false)
     return (
         <div className="flex gap-2">
-            <input type="checkbox" name="generos" id={nombre} value={nombre} defaultChecked={data.includes(nombre) ? true : false}/>
-            <label>{nombre}</label>
+            <input type="checkbox" name="generos" id={genero.id} value={genero.id} defaultChecked={data.find((g) => {return g.id === genero.id}) ? true : false}/>
+            <label>{genero.name}</label>
         </div>
     )
 }
@@ -41,19 +42,19 @@ export default function Modal(props) {
     const handleSubmit = async (e) => {
             e.preventDefault()
 
-            setGenres([])
-
             const genreElements = Array.from(document.getElementsByName("generos").values())
 
             genreElements.map( (input) => {
                 if (input.checked === true) {
-                    formGenres.push(input.value)
+                    formGenres.find((genero) => {return genero.id === input.value}) ? null : formGenres.push(Number.parseInt(input.value))
+                } else {
+                    formGenres.find((genero) => {return genero.id === input.value}) ? formGenres.splice(formGenres.findIndex((genero) => {return genero.id === input.value}), 1) : null
                 }
             })
     
             const data = {
                 title: formTitle,
-                desc: formDescripcion,
+                description: formDescripcion,
                 img: formUrl,
                 genre: formGenres,
             }  
@@ -62,7 +63,6 @@ export default function Modal(props) {
             // e.target.reset();setFormTitle("");setFormDesc("")
             // setFormUrl("");setGenres([]);
             try{
-                // No estoy esperando la promesa 🤨
                 const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
     
                 if (res.status === 201) {
@@ -79,6 +79,7 @@ export default function Modal(props) {
                     props.reload()
                 } else {
                     console.error(`Error al modificar el ${titulo}, Code: `, res.status, " Body: ", res.data, res.headers)
+                    alert(`Error al modificar el ${titulo}, Code: `, res.status)
                     setGenres([])
                 }
             } catch (err) {
@@ -138,12 +139,8 @@ export default function Modal(props) {
                                 {/* Para generar los generos usar la respuesta de la api seria optimo en mi opinion ya que me asegurario de usar valores que pueda almacenar */}
 
                                 {
-                                    [
-                                        'Action', 'Adventure', 'Comedy', 'Crime', 'Dark Fantasy', 'Drama',
-                                        'Fantasy', 'Historical', 'Isekai', 'Mystery', 'Romance', 'Sci-Fi',
-                                        'Slice of Life', 'Supernatural'
-                                    ].map(genero => {
-                                        return campoForm({ nombre: genero, data: formGenres })
+                                    props.generos.map(genero => {
+                                        return campoForm({ genero: genero, data: formGenres })
                                     })
                                 }
                             </fieldset>
@@ -152,7 +149,7 @@ export default function Modal(props) {
                             type="submit"
                             className="border rounded-md border-cyan-600 self-center p-1"
                         >
-                            Modificar
+                            Editar
                         </button>
                     </form>
                 </article>

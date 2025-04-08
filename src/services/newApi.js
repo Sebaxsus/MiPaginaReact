@@ -183,6 +183,23 @@ export class animesController {
         }
     }
 }
+
+export class generosController {
+    static async get () {
+        try {
+
+            const res = await axios.get(`${BASE_URL}/generos`)
+
+            return res.data
+            
+        } catch (e) {
+            console.error("Fallo el get Generos: ", e)
+            // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
+            // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
+        }
+    }
+}
 /*
 newApi.js:82 Fallo el metodo get Anime, Error:  
 AxiosError {message: 'Network Error', name: 'AxiosError', code: 'ERR_NETWORK', config: {…}, request: XMLHttpRequest, …}

@@ -28,7 +28,7 @@ export function Card({ data = {}, cardClass, type }) {
     // o no tengo una funcion getter compleja que acceda muchas veces a la misma propiedad dentro del render
 
     // La unica propiedad que voy a poner en memoria va a ser el arreglo de generos
-    const genre = data.genre?.length ? data.genre : ["Not Found!"]
+    const genre = data.genre?.length ? data.genre : [{name:"Not Found!"}]
     // Aqui se usa el Encadenamiento opcional, Este metodo `?.` me permite verificar el valor de una propiedad dentro de una cadena de objetos
     // y verifica que el valor no sea null o undefined | si llega a ser null o undefined retornara undefined
     // Pero yo modifico el retorno a ["Not Found!"]
@@ -78,7 +78,7 @@ export function Card({ data = {}, cardClass, type }) {
                                 key={index}
                                 className="bg-black/20 rounded-xl font-semibold backdrop-blur-[24px] brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px]"
                             >
-                                {genero}
+                                {genero.name}
                             </li>
                         )
                     })}
