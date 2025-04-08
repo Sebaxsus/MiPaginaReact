@@ -41,33 +41,35 @@ export default function Modal(props) {
 
     const handleSubmit = async (e) => {
             e.preventDefault()
-
+            const genreData = []
+            // setGenres([]) 😡😡 Por que no se limpia, solo lo hace cuando oprimo el boton editar por segunda vez
             const genreElements = Array.from(document.getElementsByName("generos").values())
 
+            
             genreElements.map( (input) => {
                 if (input.checked === true) {
-                    formGenres.find((genero) => {return genero.id === input.value}) ? null : formGenres.push(Number.parseInt(input.value))
-                } else {
-                    formGenres.find((genero) => {return genero.id === input.value}) ? formGenres.splice(formGenres.findIndex((genero) => {return genero.id === input.value}), 1) : null
+                    // setGenres(formGenres.push(Number.parseInt(input.value)))
+                    genreData.push(Number.parseInt(input.value))
                 }
             })
-    
+
             const data = {
                 title: formTitle,
                 description: formDescripcion,
                 img: formUrl,
-                genre: formGenres,
+                genre: genreData,
             }  
             // Limpiando los campos, Incluyendo los checkbox
             console.log("Objeto Post: ",data)
             // e.target.reset();setFormTitle("");setFormDesc("")
             // setFormUrl("");setGenres([]);
+
             try{
                 const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
-    
-                if (res.status === 201) {
+                console.log(res)
+                if (res.code === 200) {
                     console.warn(`Se modifico el ${titulo} Correctamente`)
-                    alert(`Se modifico el ${titulo} Correctamente`)
+                    alert(res.message)
                     // Limpiando los campos del Formulario
                     setFormTitle("");setFormDesc("");setFormUrl("");setGenres([]);
                     // Devolviendo el Formulario a su estado por defecto
