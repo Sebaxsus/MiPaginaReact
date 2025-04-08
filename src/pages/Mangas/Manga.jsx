@@ -94,7 +94,7 @@ export function Mangas (props) {
     // )
     // props.postM(<MangaPost reload={props.reload} />)
 
-    console.log("Generos: ", props.generos)
+    // console.log("Generos: ", props.generos)
     return (
         props.mangaList.map( (manga, index) => {
             return (

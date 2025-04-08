@@ -24,12 +24,12 @@ export function Anime(props) {
     //     </main>
     // )
     // props.postA(<AnimePost reload={props.reload} />)
-    console.log("Generos: ", props.generos)
+    // console.log("Generos: ", props.generos)
     return (
         props.data.map((anime, index) => {
             return (
                 <>
-                <Link key={anime.id} to={`/View/Anime/${anime.id}`} className={"justify-items-center"}>
+                <Link key={anime.id} to={`/View/Anime/${anime.id}`} className={"justify-items-center w-full"}>
                     <Card
                         className="border-red-50"
                         key={index}
