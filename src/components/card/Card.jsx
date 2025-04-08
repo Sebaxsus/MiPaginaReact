@@ -66,17 +66,17 @@ export function Card({ data = {}, cardClass, type }) {
                 {data.title}
             </h2>
 
-            <section className="flex flex-col gap-y-4 px-2 pt-2 justify-end">
-                <p className={data.description === undefined ? "hidden" : "text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-1 backdrop-blur-md backdrop-brightness-[0.6] rounded-2xl"} aria-label={`Descripcion del ${type} ${data.titulo}`}>
+            <section className="flex flex-col gap-y-4 px-2 pt-2 justify-evenly">
+                <p className={data.description === undefined ? "hidden" : "text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-1 backdrop-blur-md backdrop-brightness-[0.6] rounded-2xl min-h-32"} aria-label={`Descripcion del ${type} ${data.titulo}`}>
                     {data.description}
                 </p>
 
-                <ul className="flex gap-x-3 pb-1 justify-center items-end" aria-label={`Lista de Genero del ${type} ${data.title}`}>
+                <ul className="flex gap-x-3 pb-1 justify-center items-end flex-wrap" aria-label={`Lista de Genero del ${type} ${data.title}`}>
                     {genre.map((genero, index) => {
                         return (
                             <li
                                 key={index}
-                                className="bg-black/20 rounded-xl font-semibold backdrop-blur-[24px] brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px]"
+                                className="bg-black/20 rounded-xl font-semibold backdrop-blur-[24px] brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px] text-sm"
                             >
                                 {genero.name}
                             </li>
