@@ -67,7 +67,7 @@ export function Card({ data = {}, cardClass, type }) {
             </h2>
 
             <section className="flex flex-col gap-y-4 px-2 pt-2 justify-evenly">
-                <p className={data.description === undefined ? "hidden" : "text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-1 backdrop-blur-md backdrop-brightness-[0.6] rounded-2xl min-h-32"} aria-label={`Descripcion del ${type} ${data.titulo}`}>
+                <p className={data.description === undefined ? "hidden" : "text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-1 backdrop-blur-md backdrop-brightness-[0.6] rounded-2xl"} aria-label={`Descripcion del ${type} ${data.titulo}`}>
                     {data.description}
                 </p>
 
