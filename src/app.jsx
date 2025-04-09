@@ -1,5 +1,5 @@
 //Imports de React
-import { Route, useLocation } from 'wouter'
+import { Route, useLocation, Link } from 'wouter'
 import { useEffect, useState } from 'react'
 
 //Estilos
@@ -21,6 +21,8 @@ import { mangasController, animesController, generosController } from './service
 import { View } from './pages/View/View.jsx'
 import { Anime } from './pages/Animes/Anime.jsx'
 import { Mangas } from './pages/Mangas/Manga.jsx'
+// import { Home } from './pages/Landing/Landing.jsx'
+import { Search } from './pages/Search/Search.jsx'
 
 /*
 <div className='Manga'>
@@ -37,18 +39,13 @@ export function App() {
     // const [location, navigate] = useLocation() // Location se usa para obtener la ruta actual de la app
     // navigate se usa para modificar la ruta de la app
     //console.log("Ruta: ", location)
-    const lastAdded = [
-        { id: 1, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
-        { id: 2, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
-        { id: 3, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
-        { id: 4, type: "Anime", title: "Anime", desc: [], img: '/CasualEula.png' },
-    ]
+    const [lastAdded, setLastAdded] = useState([])
 
     const [mangaList, setMangasList] = useState([])
     const [animeList, setAnimeList] = useState([])
     const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
-    const [location] = useLocation()
+    const [location, navigate] = useLocation()
 
     const mainClass = location.includes("View") ? "view" : "main-Cards"
 
@@ -65,6 +62,7 @@ export function App() {
         ]).then(([mangas, animes, generos]) => {
             setMangasList(mangas)
             setAnimeList(animes)
+            setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
             setGeneros(generos)
         }).finally(() => setLoading(false))
     }
@@ -80,9 +78,10 @@ export function App() {
         ]).then(([mangas, animes, generos]) => {
             setMangasList(mangas)
             setAnimeList(animes)
+            setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
             setGeneros(generos)
         }).finally(() => setLoading(false))
-        // mangasController.get("").then(data => {setMangasList(data);setLoading(false)})
+        // mangasController.get().then(data => {setMangasList(data);setLoading(false)})
     }, [])
 
     if (loading) {
@@ -110,14 +109,17 @@ export function App() {
                     </header>
                     <section className='aside-cards-container'>
                         {/* Esto actualmente no tiene sentido ya que el mismo lastAdded[index] seria _ */}
-                        {lastAdded.map((_, index) => {
+                        {lastAdded.map((item, index) => {
+                            const type = index < 2 ? "Manga" : "Anime"
                             return (
-                                <Card
-                                    key={index}
-                                    data={lastAdded[index]}
-                                    cardClass={"text-sm w-[150px]"}
-                                    type={lastAdded[index].type}
-                                />
+                                <Link key={item.id} to={`/View/${type}/${item.id}`}>
+                                    <Card
+                                        key={item.id}
+                                        data={item}
+                                        cardClass={"aside-card text-sm w-[150px]"}
+                                        type={type}
+                                    />
+                                </Link>
                             )
                         })}
                     </section>
@@ -137,13 +139,16 @@ export function App() {
                                {/* <MangaPost reaload={reloadData} /> */}
                             </Route>
                             <Route path={`/View/:type/:id`}>
-                                <View reload={reloadData}/>
+                                <View reload={reloadData} navigate={navigate}/>
                             </Route>
                             <Route
                                 path={"/Animes"}
                             >
                                 {loading ? <h1>Cargando...</h1> : <Anime data={animeList} reload={reloadData} generos={generos}/>}
                                 {/* <AnimePost reload={reloadData} /> */}
+                            </Route>
+                            <Route path={"/Search/:type"}>
+                                {loading ? <h1>Cargando...</h1> : <Search />}
                             </Route>
                         </>
                     }
@@ -152,7 +157,34 @@ export function App() {
             </div>
            
             <footer>
-           
+                    <section>
+                        <ul>
+                            <li className='footerAncor'>
+                                <a 
+                                    href='https://github.com/Sebaxsus' 
+                                    target='_blank'
+                                    referrerPolicy='no-referrer'
+                                >
+                                    GitHub
+                                </a>
+                            </li>
+                            <li>
+                                <p>
+                                    No Poseo los derechos de las Imagenes aqui usadas,
+                                    ya que esta pagina es para uso personal y educativo.
+                                </p>
+                            </li>
+                            <li className='footerAncor'>
+                                <a
+                                    href='https://portafolio-astro-phi.vercel.app/'
+                                    target='_blank'
+                                    referrerPolicy='no-referrer'
+                                >
+                                    About Me
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
             </footer>
         </>
     )
