@@ -22,14 +22,27 @@ const BASE_URL = "http://localhost:3000"
 
 export class mangasController {
 
-    static async get (title) {
+    static async get ({title, genre}) {
+        // console.log(title, genre)
         try {
-            const res = await axios.get(`${BASE_URL}/mangas`)
-            // const data = res.data.filter((manga) => {
-            //     if (manga.title.toLowerCase().includes(title)) return manga
-            // })
-            const data = res.data
-            return data
+            if (title === undefined && genre === undefined) {
+                const res = await axios.get(`${BASE_URL}/mangas`)
+                return res.data
+            }
+
+            if (title && genre) {
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}`)
+                return res.data
+            }
+
+            if (title) {
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}`)
+                return res.data
+            } else {
+                const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}`)
+                return res.data
+            }
+
         } catch (err) {
             console.error("Fallo el get Mangas: ", err)
             // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
@@ -93,13 +106,29 @@ export class mangasController {
 
 export class animesController {
 
-    static async get ({ title }) {
+    static async get ({ title, genre }) {
+        console.log(title, genre)
         try {
-            const res = await axios.get(`${BASE_URL}/animes`)
-            console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
-            // const data = res.data
-            // return data
-            return res.data
+            if (title === undefined && genre === undefined) {
+                const res = await axios.get(`${BASE_URL}/animes`)
+                // console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
+                return res.data
+            }
+
+            if (title && genre) {
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}`)
+                return res.data
+            }
+
+            if (title) {
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}`)
+                return res.data
+            } else {
+                const res = await axios.get(`${BASE_URL}/animes?genre=${genre}`)
+                return res.data
+            }
+
+            
         } catch (e) {
             console.error("Fallo el metodo get Anime, Error: ", e)
             // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
