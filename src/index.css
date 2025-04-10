@@ -60,7 +60,7 @@ body {
 .main-Cards {
     display: grid;
     grid-area: 1 / 2 / 1 / 3;
-    grid-template-rows: repeat(4, minmax(300px, 1fr));
+    grid-template-rows: auto repeat(2, minmax(300px, 1fr));
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px 50px;
     margin-top: 10px;
@@ -104,6 +104,27 @@ body {
     gap: 5px 5px;
     overflow-y: auto;
     transition: .5s;
+}
+
+footer {
+    padding: .5rem .2rem;
+    backdrop-filter: blur(5px) brightness(.5);
+}
+
+footer > section > ul {
+    display: flex;
+    gap: 5px;
+    justify-content: space-evenly;
+}
+
+.footerAncor {
+
+    border-bottom: #fff solid 1px;
+}
+
+.footerAncor:hover {
+    border-color: rgb(126, 178, 255);
+    transform: scale(1.1, 1.1);
 }
 
 /* Obligatorio el responsive Muelto*/
