@@ -82,6 +82,11 @@
     background-color: #242424;
 }
 
+.aside-card > section > p {
+    /* visibility: hidden; */
+    display: none;
+}
+
 /* .card-Container-view h2 {
     grid-area: titulo;
     justify-self: center;
