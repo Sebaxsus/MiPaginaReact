@@ -60,7 +60,7 @@ export function Card({ data = {}, cardClass, type }) {
         // Con tailwind se supone que la propieda para esto es
         // bg-[url(/img/mountains.jpg)] en mi caso seria bg-[url(${img.slice(1,)})]
         // Pero esto no funciona \_(シ)_/
-        <article style={{ backgroundImage: `url(${data.img})` }} aria-label={`Imagen de fondo del ${type} ${data.title}`} className={`${cardClass} aspect-[15/18] grid grid-rows-2 border border-[#f5f5f5] rounded-lg overflow-hidden text-ellipsis duration-300 bg-cover`}>
+        <article style={{ backgroundImage: `url(${data.img.startsWith('.') ? data.img.slice(1,) : data.img})` }} aria-label={`Imagen de fondo del ${type} ${data.title}`} className={`${cardClass} aspect-[15/18] grid grid-rows-2 border border-[#f5f5f5] rounded-lg overflow-hidden text-ellipsis duration-300 bg-cover`}>
 
             <h2 className="text-center justify-self-center border-b-2 border-b-[#70deff] w-4/5 backdrop-blur backdrop-brightness-75 h-fit mt-1 rounded-2xl">
                 {data.title}
@@ -71,12 +71,12 @@ export function Card({ data = {}, cardClass, type }) {
                     {data.description}
                 </p>
 
-                <ul className="flex gap-x-3 pb-1 justify-center items-end flex-wrap" aria-label={`Lista de Genero del ${type} ${data.title}`}>
+                <ul className="flex gap-x-3 pb-1 justify-center items-end flex-wrap text-xs" aria-label={`Lista de Genero del ${type} ${data.title}`}>
                     {genre.map((genero, index) => {
                         return (
                             <li
                                 key={index}
-                                className="bg-black/20 rounded-xl font-semibold backdrop-blur-[24px] brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px] text-sm"
+                                className="bg-black/20 rounded-lg font-semibold backdrop-blur-[24px] brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px]"
                             >
                                 {genero.name}
                             </li>
