@@ -73,6 +73,10 @@ export function View(props) {
         setIsModalOpen(true)
     }
 
+    function handleClickGenre(genero) {
+        props.navigate(`/Search/${routeParams.type}?genre=${genero}`)
+    }
+
     return (
         <>
             <article className="view-Container">
@@ -89,6 +93,7 @@ export function View(props) {
                                 <li
                                     key={genero.id}
                                     className="generosItem"
+                                    onClick={() => {handleClickGenre(genero.id)}}
                                 >
                                     {genero.name}
                                 </li>
