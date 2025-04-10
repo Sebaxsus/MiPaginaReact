@@ -45,7 +45,7 @@ export default function MangaPost(props) {
 
         const newManga = {
             title: formTitle,
-            desc: formDescripcion,
+            description: formDescripcion,
             img: formUrl,
             genre: formGenres,
         }

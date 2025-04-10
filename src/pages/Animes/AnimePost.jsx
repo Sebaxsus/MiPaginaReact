@@ -43,7 +43,7 @@ export default function AnimePost(props) {
 
         const newAnime = {
             title: formTitle,
-            desc: formDescripcion,
+            description: formDescripcion,
             img: formUrl,
             genre: formGenres,
         }  
@@ -81,7 +81,7 @@ export default function AnimePost(props) {
     return (
         <>
             <article className="sticky top-20 z-[1] mx-[10px] justify-items-center">
-                <button disabled id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
+                <button id="Boton Agregar" onClick={() => {setIsModalOpen(true)}} className="absolute top-28 left-5 border rounded-full hover:bg-gray-400/50 px-2 py-2 backdrop-blur-lg backdrop-brightness-50 cursor-pointer">
                     ➕
                 </button>
                 <Modal isOpen={isModalOpen} onClose={() =>  {setIsModalOpen(false)}}>
