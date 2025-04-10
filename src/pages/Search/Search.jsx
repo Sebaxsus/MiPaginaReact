@@ -9,7 +9,8 @@ import './Search.css'
 export function Search() {
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
-    const [querySting, setQuerySting] = useState({})
+    const [QueryString, setQueryString] = useState({})
+    const [searchString, setSearchString] = useState("")
     const [loading, setLoading] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams()
     const routeParams = useParams()
@@ -21,7 +22,7 @@ export function Search() {
         searchParams.forEach((value, key) => {
              newQueryString[key] = value
         })
-        setQuerySting(newQueryString)
+        setQueryString(newQueryString)
 
         Promise.all([
             controller.get(newQueryString).catch(() => []),
@@ -45,12 +46,30 @@ export function Search() {
 
     }, [routeParams, searchParams])
 
+    // action={(e) => {`./${routeParams.type}?title=${document.getElementById(`${routeParams.type}searchBar`).value}`}}
+    function handleSearchBarAction(e) {
+        e.preventDefault()
+
+        if (searchString.length === 0) {
+            setSearchParams((prev) => {
+                prev.delete("title")
+                return prev
+            },{
+                replace: true
+            })
+        } else {
+            setSearchParams((prev) => {
+                prev.set("title", searchString)
+                return prev
+            },{
+                replace: true
+            })
+        }
+    }
+
     function handelClickGenre(genero, queryGenre) {
-        console.log("querySting: ", querySting.genre, querySting.title, genero)
         if (genero === queryGenre) {
             setSearchParams((prev) => {
-                const prevParams = prev.has("title") ? prev.get("title") : "nada"
-                console.log("Prev true",prevParams)
                 prev.delete("genre")
                 return prev
             },{
@@ -58,8 +77,6 @@ export function Search() {
             })
         } else {
             setSearchParams((prev) => {
-                const prevParams = prev.has("title") ? prev.get("title") : "nada"
-                console.log("Prev false",prevParams)
                 prev.set("genre", genero.toString())
                 return prev
             },{
@@ -68,7 +85,7 @@ export function Search() {
         }
     }
 
-    const queryGenre = Number.parseInt(querySting.genre)
+    const queryGenre = Number.parseInt(QueryString.genre)
     return (
         <>
             <section className="search-Section ">
@@ -85,6 +102,16 @@ export function Search() {
                         )
                     })}
                 </ul>
+                <search>
+                    <form action={`./${routeParams.type}?`} className="search-Form">
+                        <div>
+                            <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchString(e.target.value)}}/>
+                            <button>
+                                Buscar
+                            </button>
+                        </div>
+                    </form>
+                </search>
             </section>
             {loading ? <h2>Loading...</h2> : datos.map((item, index) => {
                 return (
