@@ -63,7 +63,8 @@
 
 .nav-list ul :hover {
     color: rgb(126, 178, 255);
-    transition: 1s;
+    transform: translate3d(3px, 5px, 10px);
+    transition: 300ms ease-in-out;
 }
 
 .nav-list li {
@@ -74,4 +75,11 @@
 
 .nav-list ul a {
     text-decoration: none;
+}
+
+.nav-list ul li:has(> a.active) {
+    color: rgb(255, 255, 255);
+    outline: 1px solid rgb(0 77 255);
+    transform: translate3d(3px, 5px, 10px);
+    transition: 300ms ease-in-out;
 }

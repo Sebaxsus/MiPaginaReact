@@ -34,7 +34,7 @@ export function Anime(props) {
                         className="border-red-50"
                         key={index}
                         data={anime}
-                        cardClass={"w-4/5 hover:scale-110 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
+                        cardClass={"Card w-4/5 min-w-[250px]"}
                         type={"Anime"}
                     />
                 </Link>

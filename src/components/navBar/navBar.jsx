@@ -1,11 +1,9 @@
-import { Link,  } from 'wouter'
+import { Link, useLocation  } from 'wouter'
 
 import './navBar.css'
 
-const pag = "Mangas Library"
-
 export function NavBar() {
-
+    const [location] = useLocation()
     return (
         <>
             <nav className="nav-text">
@@ -15,7 +13,7 @@ export function NavBar() {
             </nav>
 
             <nav className='nav-Title'>
-                <h1>Pagina { pag }</h1>
+                <h1>Pagina { location.includes("Manga") ? "Mangas Library" : location.includes("Anime") ? "Anime Library" : "Library"}</h1>
             </nav>
 
             <nav className="nav-list">
@@ -35,9 +33,9 @@ export function NavBar() {
                         <Link to='link'></Link>
                     */
                     }
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/Mangas'>Mangas</Link></li>
-                    <li><Link to='/Animes'>Anime</Link></li>
+                    <li><Link className={(active) => (active ? "active" : "")} to='/'>Home</Link></li>
+                    <li><Link className={location.includes("Manga") ? "active" : ""} to='/Mangas'>Mangas</Link></li>
+                    <li><Link className={location.includes("Anime") ? "active" : ""} to='/Animes'>Animes</Link></li>
                 </ul>
             </nav>
             
