@@ -1,0 +1,42 @@
+.search-Section::-webkit-scrollbar {
+    display: block;
+    border-radius: 5px;
+    height: 5px;
+}
+
+.search-Section::-webkit-scrollbar-thumb {
+    width: 5px;
+    border-radius: 5px;
+    background-color: rgb(33, 129, 129);
+}
+
+.search-Section::-webkit-scrollbar-track {
+    margin: 2rem;
+}
+
+.search-Section::-webkit-scrollbar-track-piece {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.search-Section {
+    width: 90%;
+    overflow-x: scroll;
+    grid-area: 1 / 1 / 1 / 4;
+    padding-bottom: 4px;
+}
+
+.search-Pills {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-items: center;
+    width: max-content;
+}
+
+.search-Pill {
+    border: rgb(168, 85, 247) solid 1px;
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+}

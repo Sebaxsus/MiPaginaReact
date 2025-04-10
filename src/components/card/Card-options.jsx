@@ -17,7 +17,7 @@ function card1BackgroundImg_TextBlur ({ titulo, img, cardClass}) {
  )
 }
 
-export function Card ({index, titulo, desc = [], img, cardClass}) {
+export function Card1 ({index, titulo, desc = [], img, cardClass}) {
 
     const [card, setCard] = useState('card-Container')
     const [Desc, setDesc] = useState(desc[0])
