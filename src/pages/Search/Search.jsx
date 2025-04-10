@@ -9,20 +9,22 @@ import './Search.css'
 export function Search() {
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
+    const [querySting, setQuerySting] = useState({})
     const [loading, setLoading] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams()
     const routeParams = useParams()
 
     useEffect(() => {
         setLoading(true)
-        let querySting = {}
         const controller = routeParams.type === "Manga" ? mangasController : animesController
+        const newQueryString = {}
         searchParams.forEach((value, key) => {
-            querySting = { ...querySting, [key]: value }
+             newQueryString[key] = value
         })
+        setQuerySting(newQueryString)
 
         Promise.all([
-            controller.get(querySting).catch(() => []),
+            controller.get(newQueryString).catch(() => []),
             generosController.get().catch(() => [])
 
         ]).then(([data, genres]) => {
@@ -43,13 +45,30 @@ export function Search() {
 
     }, [routeParams, searchParams])
 
-    function handelClickGenre(genero) {
-        setSearchParams((prev) => {
-            return {...prev, genre: genero.toString()}
-        })
+    function handelClickGenre(genero, queryGenre) {
+        console.log("querySting: ", querySting.genre, querySting.title, genero)
+        if (genero === queryGenre) {
+            setSearchParams((prev) => {
+                const prevParams = prev.has("title") ? prev.get("title") : "nada"
+                console.log("Prev true",prevParams)
+                prev.delete("genre")
+                return prev
+            },{
+                replace: true
+            })
+        } else {
+            setSearchParams((prev) => {
+                const prevParams = prev.has("title") ? prev.get("title") : "nada"
+                console.log("Prev false",prevParams)
+                prev.set("genre", genero.toString())
+                return prev
+            },{
+                replace: true
+            })
+        }
     }
 
-
+    const queryGenre = Number.parseInt(querySting.genre)
     return (
         <>
             <section className="search-Section ">
@@ -57,9 +76,9 @@ export function Search() {
                     {generos.map((genero) => {
                         return (
                             <li
-                                className="search-Pill "
+                                className={`search-Pill ${genero.id === queryGenre ? "active" : ""}`}
                                 key={genero.id}
-                                onClick={() => { handelClickGenre(genero.id) }}
+                                onClick={() => { handelClickGenre(genero.id, queryGenre) }}
                             >
                                 {genero.name}
                             </li>
