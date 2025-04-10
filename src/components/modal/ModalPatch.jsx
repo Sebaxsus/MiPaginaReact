@@ -67,9 +67,9 @@ export default function Modal(props) {
             try{
                 const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
                 console.log(res)
-                if (res.code === 200) {
+                if (res.data.code === 200 || res.status === 200) {
                     console.warn(`Se modifico el ${titulo} Correctamente`)
-                    alert(res.message)
+                    alert(res.data.message)
                     // Limpiando los campos del Formulario
                     setFormTitle("");setFormDesc("");setFormUrl("");setGenres([]);
                     // Devolviendo el Formulario a su estado por defecto
