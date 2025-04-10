@@ -104,7 +104,7 @@ export function View(props) {
                 <p className='descripcion'>
                     {data.description}
                 </p>
-                <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center py-2 px-4 hover:bg-gray-400/60' onClick={() => { handleClickEdit() }}>
+                <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60' onClick={() => { handleClickEdit() }}>
                     Editar
                 </button>
                 {createPortal(

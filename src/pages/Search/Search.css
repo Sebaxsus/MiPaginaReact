@@ -40,3 +40,11 @@
     padding: 4px 8px;
     cursor: pointer;
 }
+
+.search-Pill:hover {
+    background-color: rgb(41 6 53 / 66%);
+    transform: translateZ(60px) translateY(2px) translateX(3px);
+    transition: 300ms ease-out;
+    box-shadow: #ff76ff 0px 5px 25px -5px;
+    /* box-shadow: #d800fc 0px 5px 25px -4px; */
+}

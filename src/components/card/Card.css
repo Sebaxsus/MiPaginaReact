@@ -82,9 +82,22 @@
     background-color: #242424;
 }
 
+.aside-card:hover {
+    box-shadow: 0 10px 15px -3px rgb(103 232 249 / 0.9);
+    transform: scale(1.05);
+    transition: 300ms ease-in-out;
+}
+
 .aside-card > section > p {
     /* visibility: hidden; */
     display: none;
+}
+
+.Card:hover {
+    box-shadow: 0 10px 15px -3px rgb(103 232 249 / 0.9);
+    transform: scale(1.05);
+    transition: 300ms ease-in-out;
+    /* hover:scale-110 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 */
 }
 
 /* .card-Container-view h2 {
