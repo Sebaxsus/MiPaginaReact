@@ -21,7 +21,7 @@ export function View(props) {
     useEffect(() => {
         setLoading(true)
 
-        const controller = routeParams.type === "Manga" ? mangasController : animesController
+        const controller = routeParams.type === "Mangas" ? mangasController : animesController
         Promise.all([
             controller.getById({ id: routeParams.id }).catch(() => []),
             generosController.get().catch(() => []).catch(() => [])
@@ -43,7 +43,7 @@ export function View(props) {
 
     const reloadData = () => {
         setLoading(true)
-        const controller = routeParams.type === "Manga" ? mangasController : animesController
+        const controller = routeParams.type === "Mangas" ? mangasController : animesController
         Promise.all([
             controller.getById({ id: routeParams.id }).catch(() => []),
             generosController.get().catch(() => []).catch(() => [])
@@ -74,7 +74,7 @@ export function View(props) {
     }
 
     function handleClickGenre(genero) {
-        props.navigate(`/Search/${routeParams.type}?genre=${genero}`)
+        props.navigate(`/${routeParams.type}?genre=${genero}`)
     }
 
     return (

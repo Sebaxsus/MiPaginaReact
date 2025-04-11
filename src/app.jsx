@@ -1,5 +1,5 @@
 //Imports de React
-import { Route, useLocation, Link } from 'wouter'
+import { Route, useLocation, Link, useSearchParams } from 'wouter'
 import { useEffect, useState } from 'react'
 
 //Estilos
@@ -46,6 +46,8 @@ export function App() {
     const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
     const [location, navigate] = useLocation()
+    const [searchTitle, setSearchTitle] = useState("")
+    const [, setSearchParams] = useSearchParams()
 
     const mainClass = location.includes("View") ? "view" : "main-Cards"
 
@@ -84,6 +86,56 @@ export function App() {
         // mangasController.get().then(data => {setMangasList(data);setLoading(false)})
     }, [])
 
+    function handleSearchBarAction(e) {
+        console.log("Handle, ", e)
+        e.preventDefault()
+
+        if (searchTitle.length === 0) {
+            setSearchParams((prev) => {
+                prev.delete("title")
+                return prev
+            },{
+                replace: true
+            })
+        } else {
+            setSearchParams((prev) => {
+                prev.set("title", searchTitle)
+                return prev
+            },{
+                replace: true
+            })
+        }
+    }
+
+    function handleClickGenre(genero, queryGenre) {
+        /*
+        setSearchParams((prev))
+        prev es un iterador y por ende me permite usar
+        metodos como .has(key), .delete(key), .set(key, value)
+        .get(key), con esto puedo modificar el objeto que me trae
+        prev y para actualizar SearchParams le devuelvo el objeto
+        plano prev.
+
+        Utilizo en el Objeto {} de opciones el atributo replace
+        en true para no guardar las modificaciones en el history.
+        */
+        if (genero === queryGenre) {
+            setSearchParams((prev) => {
+                prev.delete("genre")
+                return prev
+            },{
+                replace: true
+            })
+        } else {
+            setSearchParams((prev) => {
+                prev.set("genre", genero.toString())
+                return prev
+            },{
+                replace: true
+            })
+        }
+    }
+
     if (loading) {
         return (
             <h2>Cargando...</h2>
@@ -110,7 +162,7 @@ export function App() {
                     <section className='aside-cards-container'>
                         {/* Esto actualmente no tiene sentido ya que el mismo lastAdded[index] seria _ */}
                         {lastAdded.map((item, index) => {
-                            const type = index < 2 ? "Manga" : "Anime"
+                            const type = index < 2 ? "Mangas" : "Animes"
                             return (
                                 <Link key={item.id} to={`/View/${type}/${item.id}`}>
                                     <Card
@@ -133,24 +185,45 @@ export function App() {
                     {
                         <>
                             <Route path={"/"}>
-                                <Home />
+                                <Home 
+                                    handleClickGenre={handleClickGenre}
+                                    handleSearchBarAction={handleSearchBarAction}
+                                    setSearchTitle={setSearchTitle}
+                                />
                             </Route>
                             <Route
                                 path={"/Mangas"}
                             >
-                               {loading ? <h1>Cargando...</h1> : <Mangas mangaList={mangaList} reload={reloadData} generos={generos}/>}
+                               {loading ? <h1>Cargando...</h1> : 
+                                    <Mangas 
+                                        reload={reloadData}
+                                        generos={generos}
+                                        handleClickGenre={handleClickGenre}
+                                        handleSearchBarAction={handleSearchBarAction}
+                                        setSearchTitle={setSearchTitle}
+                                    />
+                                }
                                {/* <MangaPost reaload={reloadData} /> */}
-                            </Route>
-                            <Route path={`/View/:type/:id`}>
-                                <View reload={reloadData} navigate={navigate}/>
                             </Route>
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : <Anime data={animeList} reload={reloadData} generos={generos}/>}
+                                {loading ? <h1>Cargando...</h1> : 
+                                    <Anime 
+                                        reload={reloadData}
+                                        generos={generos}
+                                        handleClickGenre={handleClickGenre}
+                                        handleSearchBarAction={handleSearchBarAction}
+                                        setSearchTitle={setSearchTitle}
+                                    />
+                                }
                                 {/* <AnimePost reload={reloadData} /> */}
                             </Route>
+                            <Route path={`/View/:type/:id`}>
+                                <View reload={reloadData} navigate={navigate}/>
+                            </Route>
                             <Route path={"/Search/:type"}>
+                                {/* Deprecieado ya que de esto se encarga un componente */}
                                 {loading ? <h1>Cargando...</h1> : <Search />}
                             </Route>
                         </>
@@ -192,3 +265,38 @@ export function App() {
         </>
     )
 }
+
+// Remplazando el estado `change` por una funcion
+// Que maneje la misma logica que usar de dependencia
+// Change en el effect
+// const reloadData = () => {
+//     setLoading(true)
+
+//     Promise.all([
+//         mangasController.get("").catch(() => []),
+//         animesController.get("").catch(() => []),
+//         generosController.get().catch(() => [])
+//     ]).then(([mangas, animes, generos]) => {
+//         setMangasList(mangas)
+//         setAnimeList(animes)
+//         setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
+//         setGeneros(generos)
+//     }).finally(() => setLoading(false))
+// }
+
+// useEffect(() => {
+//     // console.log("Effect", change)
+//     setLoading(true)
+
+//     Promise.all([
+//         mangasController.get("").catch(() => []),
+//         animesController.get("").catch(() => []),
+//         generosController.get().catch(() => [])
+//     ]).then(([mangas, animes, generos]) => {
+//         setMangasList(mangas)
+//         setAnimeList(animes)
+//         setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
+//         setGeneros(generos)
+//     }).finally(() => setLoading(false))
+//     // mangasController.get().then(data => {setMangasList(data);setLoading(false)})
+// }, [])

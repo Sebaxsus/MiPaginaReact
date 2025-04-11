@@ -129,6 +129,13 @@ footer > section > ul {
     transform: scale(1.1, 1.1);
 }
 
+.search {
+    display: flex;
+    width: 90%;
+    gap: 10px;
+    grid-area: 1 / 1 / 1 / 4;
+}
+
 /* Obligatorio el responsive Muelto*/
 
 @media (width > 950px) {
