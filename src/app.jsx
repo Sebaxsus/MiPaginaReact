@@ -21,7 +21,7 @@ import { mangasController, animesController, generosController } from './service
 import { View } from './pages/View/View.jsx'
 import { Anime } from './pages/Animes/Anime.jsx'
 import { Mangas } from './pages/Mangas/Manga.jsx'
-// import { Home } from './pages/Landing/Landing.jsx'
+import { Home } from './pages/Landing/Landing.jsx'
 import { Search } from './pages/Search/Search.jsx'
 
 /*
@@ -132,6 +132,9 @@ export function App() {
                     */}
                     {
                         <>
+                            <Route path={"/"}>
+                                <Home />
+                            </Route>
                             <Route
                                 path={"/Mangas"}
                             >
