@@ -18,6 +18,22 @@ export function Search() {
     useEffect(() => {
         setLoading(true)
         const controller = routeParams.type === "Manga" ? mangasController : animesController
+        /*
+        Utilizo un objeto local en lugar de QueryString
+        ya que usar QueryString me obligaria a tenerlo 
+        como dependecia y esto me causaria un loop infinito
+        de renders por usar el setQueryString, por eso 
+        uso un objeto local y luego lo actualizo al estado
+        QueryString.
+
+        Al usar newQueryString[key] = value, evito errores
+        al declarar una variable como nombre de atributo (llave),
+        por eso asigno al objeto newQueryString la llave [key]
+        con el valor = value, esto tambien me permite mapear todos
+        los parametros de la ruta para posterior mente enviar el objeto
+        con todos los atributos y desestructurar los atributos en la API,
+        para asi usar solo los que necesito.
+        */
         const newQueryString = {}
         searchParams.forEach((value, key) => {
              newQueryString[key] = value
@@ -68,6 +84,17 @@ export function Search() {
     }
 
     function handelClickGenre(genero, queryGenre) {
+        /*
+        setSearchParams((prev))
+        prev es un iterador y por ende me permite usar
+        metodos como .has(key), .delete(key), .set(key, value)
+        .get(key), con esto puedo modificar el objeto que me trae
+        prev y para actualizar SearchParams le devuelvo el objeto
+        plano prev.
+
+        Utilizo en el Objeto {} de opciones el atributo replace
+        en true para no guardar las modificaciones en el history.
+        */
         if (genero === queryGenre) {
             setSearchParams((prev) => {
                 prev.delete("genre")
@@ -85,10 +112,19 @@ export function Search() {
         }
     }
 
+    /*
+    En el formulario no uso el -
+    action={(e) => {`./${routeParams.type}?title=${document.getElementById(`${routeParams.type}searchBar`).value}`}}
+    porque esto me eliminaria cualquiero otro parametro de -
+    ruta, y me recarga la pagina por su comportamiento de 
+    formulario, lo cual no necesito ya que debo controlar
+    y validar los valores antes de re-renderizar.
+    */
+
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
         <>
-            <section className="search-Section ">
+            <search className="search-Section ">
                 <ul className="search-Pills ">
                     {generos.map((genero) => {
                         return (
@@ -102,17 +138,15 @@ export function Search() {
                         )
                     })}
                 </ul>
-                <search>
-                    <form action={`./${routeParams.type}?`} className="search-Form">
-                        <div>
-                            <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchString(e.target.value)}}/>
-                            <button>
-                                Buscar
-                            </button>
-                        </div>
-                    </form>
-                </search>
-            </section>
+                <form onSubmit={(e) => {handleSearchBarAction(e)}} className="search-Form">
+                    <div>
+                        <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchString(e.target.value)}}/>
+                        <button>
+                            Buscar
+                        </button>
+                    </div>
+                </form>
+            </search>
             {loading ? <h2>Loading...</h2> : datos.map((item, index) => {
                 return (
                     <>

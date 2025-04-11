@@ -61,8 +61,8 @@
 
 .search-Form {
     display: flex;
-    align-items: center;
-    padding-top: 4px;
+    align-items: flex-start;
+    padding: 4px;
 }
 
 .search-Form > div {
