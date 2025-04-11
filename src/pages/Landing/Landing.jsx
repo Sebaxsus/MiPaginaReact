@@ -1,18 +1,22 @@
+// Funcionalidades
 import { Link, useSearchParams, useParams } from "wouter";
 import { useState, useEffect } from "react";
-
-import { Card } from "../../components/card/Card";
 import { searchController, generosController } from '../../services/newApi'
+import { createPortal } from "react-dom";
 
+// Componentes
+import { Card } from "../../components/card/Card";
+import { Search } from "../../components/search/Search";
+
+// Estilos
 import './Landing.css'
 
-export function Home() {
+export function Home(props) {
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
     const [QueryString, setQuerySting] = useState({})
-    const [searchString, setSearchString] = useState("")
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const routeParams = useParams()
 
     useEffect(() => {
@@ -68,56 +72,6 @@ export function Home() {
 
     }, [routeParams, searchParams])
 
-    function handelSearchBarAction(e) {
-        e.preventDefault()
-
-        if (searchString.length === 0) {
-            setSearchParams((prev) => {
-                prev.delete("title")
-                return prev
-            },
-            {
-                replace: true
-            })
-        } else {
-            setSearchParams((prev) => {
-                prev.set("title", searchString)
-                return prev
-            },
-            {
-                replace: true
-            })
-        }
-    }
-
-    function handelClickGenre(genero, queryGenre) {
-        /*
-        setSearchParams((prev))
-        prev es un iterador y por ende me permite usar
-        metodos como .has(key), .delete(key), .set(key, value)
-        .get(key), con esto puedo modificar el objeto que me trae
-        prev y para actualizar SearchParams le devuelvo el objeto
-        plano prev.
-
-        Utilizo en el Objeto {} de opciones el atributo replace
-        en true para no guardar las modificaciones en el history.
-        */
-        if (genero === queryGenre) {
-            setSearchParams((prev) => {
-                prev.delete("genre")
-                return prev
-            },
-            {
-                replace: true
-            })
-        } else {
-            setSearchParams((prev) => {
-                prev.set("genre", genero.toString())
-                return prev
-            })
-        }
-    }
-
     /*
     En el formulario no uso el -
     action={(e) => {`./${routeParams.type}?title=${document.getElementById(`${routeParams.type}searchBar`).value}`}}
@@ -130,28 +84,20 @@ export function Home() {
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
         <>
+            {
+                createPortal(
+                    {}
+
+                )
+            }
             <search className="search">
-                <ul className="search-Pills ">
-                    {generos.map((genero) => {
-                        return (
-                            <li
-                                className={`search-Pill ${genero.id === queryGenre ? "active" : ""}`}
-                                key={genero.id}
-                                onClick={() => { handelClickGenre(genero.id, queryGenre) }}
-                            >
-                                {genero.name}
-                            </li>
-                        )
-                    })}
-                </ul>
-                <form onSubmit={(e) => {handelSearchBarAction(e)}} className="search-Form">
-                    <div>
-                        <input type="search" name="title" id="homeSearchBar" onChange={(e) => {setSearchString(e.target.value)}}/>
-                        <button>
-                            Buscar
-                        </button>
-                    </div>
-                </form>
+                <Search
+                    generos={generos}
+                    queryGenre={queryGenre}
+                    handleClickGenre={props.handleClickGenre}
+                    handleSearchBarAction={props.handleSearchBarAction}
+                    setSearchTitle={props.setSearchTitle}
+                />
             </search>
             {loading ? <h2>Loading...</h2> : datos.map((item, index) => {
                 return (
