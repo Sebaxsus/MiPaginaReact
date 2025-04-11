@@ -64,6 +64,10 @@
 .nav-list ul :hover {
     color: rgb(126, 178, 255);
     transform: translate3d(3px, 5px, 10px);
+    /* 
+        Para saber mas sobre las funciones de transicion por tiempo
+        ver https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
+    */
     transition: 300ms ease-in-out;
 }
 
@@ -76,6 +80,16 @@
 .nav-list ul a {
     text-decoration: none;
 }
+
+/*
+    En el codigo de abajo lo que 
+    hago es utilizar la pseudo clase
+    de css has(), para verificar si
+    el child de li (a) tiene la clase
+    .active, para poder modificar el padre
+    (li) y lograr usar transform
+    https://stackoverflow.com/questions/1014861/is-there-a-css-parent-selector
+*/
 
 .nav-list ul li:has(> a.active) {
     color: rgb(255, 255, 255);
