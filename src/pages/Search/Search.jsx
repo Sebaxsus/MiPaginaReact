@@ -10,14 +10,14 @@ export function Search() {
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
     const [QueryString, setQueryString] = useState({})
-    const [searchString, setSearchString] = useState("")
+    const [searchTitle, setSearchTitle] = useState("")
     const [loading, setLoading] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams()
     const routeParams = useParams()
 
     useEffect(() => {
         setLoading(true)
-        const controller = routeParams.type === "Manga" ? mangasController : animesController
+        const controller = routeParams.type === "Mangas" ? mangasController : animesController
         /*
         Utilizo un objeto local en lugar de QueryString
         ya que usar QueryString me obligaria a tenerlo 
@@ -66,7 +66,7 @@ export function Search() {
     function handleSearchBarAction(e) {
         e.preventDefault()
 
-        if (searchString.length === 0) {
+        if (searchTitle.length === 0) {
             setSearchParams((prev) => {
                 prev.delete("title")
                 return prev
@@ -75,7 +75,7 @@ export function Search() {
             })
         } else {
             setSearchParams((prev) => {
-                prev.set("title", searchString)
+                prev.set("title", searchTitle)
                 return prev
             },{
                 replace: true
@@ -138,9 +138,9 @@ export function Search() {
                         )
                     })}
                 </ul>
-                <form onSubmit={(e) => {handleSearchBarAction(e)}} className="search-Form">
+                <form onSubmit={(e) => { handleSearchBarAction(e)} } className="search-Form">
                     <div>
-                        <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchString(e.target.value)}}/>
+                        <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchTitle(e.target.value)}}/>
                         <button>
                             Buscar
                         </button>
