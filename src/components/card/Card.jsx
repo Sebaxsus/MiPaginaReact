@@ -76,7 +76,7 @@ export function Card({ data = {}, cardClass, type }) {
                         return (
                             <li
                                 key={index}
-                                className="bg-black/20 rounded-lg font-semibold backdrop-blur-[24px] backdrop-brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px]"
+                                className="bg-black/20 rounded-lg font-semibold backdrop-blur-[24px] backdrop-brightness-[0.9] border border-purple-800 [box-shadow:#ff76ff_inset_-20px_-20px_10px_-25px] px-[2px] py-[4px] mb-1"
                             >
                                 {genero.name}
                             </li>
