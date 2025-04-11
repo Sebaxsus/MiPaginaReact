@@ -55,9 +55,9 @@ export default function AnimePost(props) {
             // No estoy esperando la promesa 🤨
             const res = await animesController.post({body: JSON.stringify(newAnime)})
 
-            if (res.status === 201) {
+            if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Anime Correctamente")
-                alert("Se agrego el Anime Correctamente")
+                alert(res.data.message)
                 // Limpiando los campos del Formulario
                 setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
                 // Devolviendo el Formulario a su estado por defecto
@@ -69,6 +69,7 @@ export default function AnimePost(props) {
                 props.reload()
             } else {
                 console.error("Error al crear el Anime, Code: ", res.status, " Body: ", res.data, res.headers)
+                alert("Error al agregar!: ", res.data.message, "\nCode:", res.data.code)
                 setGenres([])
             }
         } catch (err) {

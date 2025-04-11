@@ -54,9 +54,9 @@ export default function MangaPost(props) {
             // No estoy esperando la promesa 🤨
             const res = await mangasController.post(JSON.stringify(newManga))
 
-            if (res.status === 201) {
+            if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Manga Correctamente")
-                alert("Se agrego el Anime Correctamente")
+                alert(res.data.message)
                 // Limpiando los campos del Formulario
                 setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
                 // Devolviendo el Formulario a su estado por defecto
@@ -68,6 +68,7 @@ export default function MangaPost(props) {
                 props.reload()
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
+                alert("Error al agregar!: ", res.data.message, "\nCode: ", res.data.code)
                 setGenres([])
             }
         } catch (err) {

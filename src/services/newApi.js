@@ -80,7 +80,7 @@ export class mangasController {
         // console.log(id)
         try {
             const res = await axios.delete(`${BASE_URL}/mangas/${id}`)
-            return res
+            return res.data
         } catch (err) {
             console.error("Fallo el delete Manga: ", err)
             return err.response
@@ -88,6 +88,13 @@ export class mangasController {
     }
     
     static async update ({ id, body}) {
+        if (body.length === undefined) {
+            console.error(
+                "El metodo updateManga no esta recibiendo un body o esta vacio\nbody: ",
+                body,
+            )
+            return new Error("El metodo updateManga no recibio ningun dato")
+        }
         // console.log(id, body)
         try {
             const res = await axios.patch(`${BASE_URL}/mangas/${id}`, body, {
@@ -103,6 +110,8 @@ export class mangasController {
     }
 
 }
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
 export class animesController {
 
@@ -203,7 +212,7 @@ export class animesController {
                     "Content-Type": "application/json",
                 },
             })
-            return res.data
+            return res
         } catch (e) {
             console.error("Fallo el PATCH Anime, Error: ", e)
             // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
@@ -212,6 +221,8 @@ export class animesController {
         }
     }
 }
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
 
 export class generosController {
     static async get () {
@@ -225,6 +236,41 @@ export class generosController {
             console.error("Fallo el get Generos: ", e)
             // Para devolver la respuesta del servido debo acceder a la Propiedad "response"
             // Del objeto AxiosError, Ver el objeto Axios Error mas Abajo.
+            return e.response
+        }
+    }
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+
+export class searchController {
+    static async get ({title, genre}) {
+        try {
+
+            if (title === undefined && genre === undefined) {
+                const res = await axios.get(`${BASE_URL}/search`)
+
+                return res.data
+            }
+
+            if (title && genre) {
+                const res = await axios.get(`${BASE_URL}/search?title=${title}&genre=${genre}`)
+
+                return res.data
+
+            }
+
+            if (title) {
+                const res = await axios.get(`${BASE_URL}/search?title=${title}`)
+
+                return res.data
+            } else {
+                const res = await axios.get(`${BASE_URL}/search?genre=${genre}`)
+
+                return res.data
+            }
+        } catch (e) {
+            console.error("Fallo el get Search: ", e)
             return e.response
         }
     }
