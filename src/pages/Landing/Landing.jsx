@@ -84,12 +84,6 @@ export function Home(props) {
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
         <>
-            {
-                createPortal(
-                    {}
-
-                )
-            }
             <search className="search">
                 <Search
                     generos={generos}
