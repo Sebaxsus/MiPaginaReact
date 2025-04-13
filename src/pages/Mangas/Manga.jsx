@@ -1,9 +1,7 @@
 //No importo react al ser jsx
 // Funcionalidades
-import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'wouter'
+import { Link } from 'wouter'
 import { createPortal } from 'react-dom'
-import { mangasController } from '../../services/newApi'
 
 // Componentes
 import { Card } from '../../components/card/Card'
@@ -12,49 +10,19 @@ import MangaPost from './MangaPost'
 
 //Estilo
 import './Manga.css'
+import { useSearchContent } from '../../hooks/useSearchContent.jsx'
 
 //Para que react(Wooter) lo entienda como componente -No se si es cierto-
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
 //En lugar de export function NombreFunc ({ props }) { return( code )}
 //Si se usa como export func para que wooter lo renderice toca ponerlo como children <Route > children </Route>
-export function Mangas (props) {
 
-    const [datos, setDatos] = useState([])
-    const [QueryString, setQueryString] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [searchParams] = useSearchParams()
+// Quité props para que el linter no me joda con que se declaro y no se usa 😡
+export function Mangas () {
 
-    useEffect(() => {
-        setLoading(true)
+    const { datos, generos, loading, QueryString, reload, handleClickGenre, handleSearchBarAction, handleSearchInputChange } = useSearchContent("Mangas") 
 
-        const newQueryString = {}
-
-        searchParams.forEach((value, key) => {
-            newQueryString[key] = value
-
-        })
-
-        setQueryString(newQueryString)
-
-        mangasController.get(newQueryString).then((data) => {
-            setDatos(data)
-
-        }).catch((e) => {
-            alert("No se pudo obtener los Datos!")
-            console.log("Error al obtener los datos de Manga: ",e)
-
-        }).finally(
-            // Ya sea que falle o no
-            // Siempre cambiara el estado de loading
-            // a false al final
-            setLoading(false)
-
-        )
-
-    }, [searchParams])
-
-
-    // props.postM(<MangaPost reload={props.reload} />)
+    
 
     // console.log("Generos: ", props.generos)
     const queryGenre = Number.parseInt(QueryString.genre)
@@ -62,14 +30,15 @@ export function Mangas (props) {
         <>
             <search className='search'>
                 <Search
-                    generos={props.generos}
+                    generos={generos}
                     queryGenre={queryGenre}
-                    handleClickGenre={props.handleClickGenre}
-                    handleSearchBarAction={props.handleSearchBarAction}
-                    setSearchTitle={props.setSearchTitle}
+                    handleClickGenre={handleClickGenre}
+                    handleSearchBarAction={handleSearchBarAction}
+                    setSearchTitle={handleSearchInputChange}
                 />
             </search>
-            {loading ? <h1>Cargando...</h1> : datos.map( (manga, index) => {
+            {/* <button onClick={() => {reload()}} className='absolute top-2 z-10'>Reload</button> */}
+            {loading ? <h1>C...</h1> : datos.map( (manga, index) => {
                 return (
                     <>
                         <Link key={manga.id} to={`/View/Mangas/${manga.id}`} className={"justify-items-center w-full"}>
@@ -80,7 +49,7 @@ export function Mangas (props) {
                                 type={"Manga"}
                             />
                         </Link>
-                        {createPortal(<MangaPost reload={props.reload} generos={props.generos}/>, document.getElementById("modalDiv"))}
+                        {createPortal(<MangaPost reload={reload} generos={generos}/>, document.getElementById("modalDiv"))}
                     </>
                 )
             })}
@@ -168,3 +137,42 @@ export function Mangas (props) {
 //     )
 
 // }
+
+//import { useEffect, useState } from 'react'
+//import { mangasController } from '../../services/newApi'
+
+// const [datos, setDatos] = useState([])
+// const [QueryString, setQueryString] = useState([])
+// const [loading, setLoading] = useState(true)
+
+// useEffect(() => {
+    //     setLoading(true)
+
+    //     const newQueryString = {}
+
+    //     searchParams.forEach((value, key) => {
+    //         newQueryString[key] = value
+
+    //     })
+
+    //     setQueryString(newQueryString)
+
+    //     mangasController.get(newQueryString).then((data) => {
+    //         setDatos(data)
+
+    //     }).catch((e) => {
+    //         alert("No se pudo obtener los Datos!")
+    //         console.log("Error al obtener los datos de Manga: ",e)
+
+    //     }).finally(
+    //         // Ya sea que falle o no
+    //         // Siempre cambiara el estado de loading
+    //         // a false al final
+    //         setLoading(false)
+
+    //     )
+
+    // }, [searchParams])
+
+
+    // props.postM(<MangaPost reload={props.reload} />)

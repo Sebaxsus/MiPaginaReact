@@ -1,6 +1,5 @@
 //Imports de React
-import { Route, useLocation, Link, useSearchParams } from 'wouter'
-import { useEffect, useState } from 'react'
+import { Route, useLocation, Link } from 'wouter'
 
 //Estilos
 
@@ -12,17 +11,13 @@ import { NavBar } from './components/navBar/navBar.jsx'
 import { Card } from './components/card/Card.jsx'
 
 
-// Servicios
-
-// import { get } from './services/api.js'
-import { mangasController, animesController, generosController } from './services/newApi.js'
-
 // Paginas
 import { View } from './pages/View/View.jsx'
 import { Anime } from './pages/Animes/Anime.jsx'
 import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Home } from './pages/Landing/Landing.jsx'
-import { Search } from './pages/Search/Search.jsx'
+// import { Search } from './pages/Search/Search.jsx'
+import { useRecentContent } from './hooks/useRecentContent.jsx'
 
 /*
 <div className='Manga'>
@@ -38,109 +33,12 @@ export function App() {
     // const [view, setView] = useState('section-' + window.location.pathname.replace('/', ''))
     // const [location, navigate] = useLocation() // Location se usa para obtener la ruta actual de la app
     // navigate se usa para modificar la ruta de la app
-    //console.log("Ruta: ", location)
-    const [lastAdded, setLastAdded] = useState([])
-
-    const [mangaList, setMangasList] = useState([])
-    const [animeList, setAnimeList] = useState([])
-    const [generos, setGeneros] = useState([])
-    const [loading, setLoading] = useState(true)
+    
     const [location, navigate] = useLocation()
-    const [searchTitle, setSearchTitle] = useState("")
-    const [, setSearchParams] = useSearchParams()
 
     const mainClass = location.includes("View") ? "view" : "main-Cards"
+    const {data, loading} = useRecentContent(location.includes("View") ? location.slice(6,12) : location.slice(1,))
 
-    // Remplazando el estado `change` por una funcion
-    // Que maneje la misma logica que usar de dependencia
-    // Change en el effect
-    const reloadData = () => {
-        setLoading(true)
-
-        Promise.all([
-            mangasController.get("").catch(() => []),
-            animesController.get("").catch(() => []),
-            generosController.get().catch(() => [])
-        ]).then(([mangas, animes, generos]) => {
-            setMangasList(mangas)
-            setAnimeList(animes)
-            setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
-            setGeneros(generos)
-        }).finally(() => setLoading(false))
-    }
-
-    useEffect(() => {
-        // console.log("Effect", change)
-        setLoading(true)
-
-        Promise.all([
-            mangasController.get("").catch(() => []),
-            animesController.get("").catch(() => []),
-            generosController.get().catch(() => [])
-        ]).then(([mangas, animes, generos]) => {
-            setMangasList(mangas)
-            setAnimeList(animes)
-            setLastAdded([...mangas.slice(0, 2), ...animes.slice(0, 2)])
-            setGeneros(generos)
-        }).finally(() => setLoading(false))
-        // mangasController.get().then(data => {setMangasList(data);setLoading(false)})
-    }, [])
-
-    function handleSearchBarAction(e) {
-        console.log("Handle, ", e)
-        e.preventDefault()
-
-        if (searchTitle.length === 0) {
-            setSearchParams((prev) => {
-                prev.delete("title")
-                return prev
-            },{
-                replace: true
-            })
-        } else {
-            setSearchParams((prev) => {
-                prev.set("title", searchTitle)
-                return prev
-            },{
-                replace: true
-            })
-        }
-    }
-
-    function handleClickGenre(genero, queryGenre) {
-        /*
-        setSearchParams((prev))
-        prev es un iterador y por ende me permite usar
-        metodos como .has(key), .delete(key), .set(key, value)
-        .get(key), con esto puedo modificar el objeto que me trae
-        prev y para actualizar SearchParams le devuelvo el objeto
-        plano prev.
-
-        Utilizo en el Objeto {} de opciones el atributo replace
-        en true para no guardar las modificaciones en el history.
-        */
-        if (genero === queryGenre) {
-            setSearchParams((prev) => {
-                prev.delete("genre")
-                return prev
-            },{
-                replace: true
-            })
-        } else {
-            setSearchParams((prev) => {
-                prev.set("genre", genero.toString())
-                return prev
-            },{
-                replace: true
-            })
-        }
-    }
-
-    if (loading) {
-        return (
-            <h2>Cargando...</h2>
-        )
-    }
 
     // console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
 
@@ -161,15 +59,14 @@ export function App() {
                     </header>
                     <section className='aside-cards-container'>
                         {/* Esto actualmente no tiene sentido ya que el mismo lastAdded[index] seria _ */}
-                        {lastAdded.map((item, index) => {
-                            const type = index < 2 ? "Mangas" : "Animes"
+                        {data.map((item) => {
                             return (
-                                <Link key={item.id} to={`/View/${type}/${item.id}`}>
+                                <Link key={item.id} to={`/View/${item.type}/${item.id}`}>
                                     <Card
                                         key={item.id}
                                         data={item}
                                         cardClass={"aside-card text-sm w-[150px]"}
-                                        type={type}
+                                        type={item.type}
                                     />
                                 </Link>
                             )
@@ -185,47 +82,25 @@ export function App() {
                     {
                         <>
                             <Route path={"/"}>
-                                <Home 
-                                    handleClickGenre={handleClickGenre}
-                                    handleSearchBarAction={handleSearchBarAction}
-                                    setSearchTitle={setSearchTitle}
-                                />
+                                <Home />
                             </Route>
                             <Route
                                 path={"/Mangas"}
                             >
-                               {loading ? <h1>Cargando...</h1> : 
-                                    <Mangas 
-                                        reload={reloadData}
-                                        generos={generos}
-                                        handleClickGenre={handleClickGenre}
-                                        handleSearchBarAction={handleSearchBarAction}
-                                        setSearchTitle={setSearchTitle}
-                                    />
-                                }
-                               {/* <MangaPost reaload={reloadData} /> */}
+                               <Mangas />
                             </Route>
                             <Route
                                 path={"/Animes"}
                             >
-                                {loading ? <h1>Cargando...</h1> : 
-                                    <Anime 
-                                        reload={reloadData}
-                                        generos={generos}
-                                        handleClickGenre={handleClickGenre}
-                                        handleSearchBarAction={handleSearchBarAction}
-                                        setSearchTitle={setSearchTitle}
-                                    />
-                                }
-                                {/* <AnimePost reload={reloadData} /> */}
+                                <Anime />
                             </Route>
                             <Route path={`/View/:type/:id`}>
-                                <View reload={reloadData} navigate={navigate}/>
+                                <View navigate={navigate}/>
                             </Route>
-                            <Route path={"/Search/:type"}>
-                                {/* Deprecieado ya que de esto se encarga un componente */}
+                            {/* <Route path={"/Search/:type"}>
+                                {/* Deprecieado ya que de esto se encarga un componente /}
                                 {loading ? <h1>Cargando...</h1> : <Search />}
-                            </Route>
+                            </Route> */}
                         </>
                     }
                 </main>
