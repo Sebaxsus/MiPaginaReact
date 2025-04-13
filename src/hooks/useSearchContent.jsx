@@ -14,12 +14,12 @@ export function useSearchContent(type) {
     const [searchParams, setSearchParams] = useSearchParams()
 
     function handleSearchInputChange(title) {
-        console.log("HandleSearch ", title)
+        // console.log("HandleSearch ", title)
         setSearchTitle(title)
     }
 
     function handleSearchBarAction(e) {
-        console.log("Handle, ", e, " title: ",searchTitle)
+        // console.log("Handle, ", e, " title: ",searchTitle)
         e.preventDefault()
 
         if (searchTitle.length === 0) {
@@ -69,7 +69,6 @@ export function useSearchContent(type) {
     }
 
     useEffect(() => {
-        console.log("realod?: ", reload)
         setLoading(true)
         const newQueryString = {}
         const controller = type === undefined ? searchController : type === "Mangas" ? mangasController : animesController
