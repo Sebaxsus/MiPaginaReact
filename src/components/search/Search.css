@@ -59,7 +59,7 @@
 .search-Form > div {
     display: flex;
     align-items: center;
-    border:  #ff76ff solid 1px;
+    border:  rgb(168, 85, 247) solid 1px;
     border-radius: 4px;
 }
 

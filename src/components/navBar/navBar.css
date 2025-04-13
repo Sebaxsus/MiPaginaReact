@@ -63,7 +63,7 @@
 
 .nav-list ul :hover {
     color: rgb(126, 178, 255);
-    transform: translate3d(3px, 5px, 10px);
+    transform: translate3d(2px, 2px, 10px);
     /* 
         Para saber mas sobre las funciones de transicion por tiempo
         ver https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
