@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams } from 'wouter'
 
@@ -6,62 +6,18 @@ import './View.css'
 
 import Modal from '../../components/modal/ModalPatch.jsx'
 
-import { mangasController, animesController, generosController } from '../../services/newApi'
+
+import { useGetById } from '../../hooks/useGetById.jsx'
 
 export function View(props) {
-    const [data, setData] = useState({})
-    const [generos, setGeneros] = useState([])
-    const [loading, setLoading] = useState(true)
+
     const [isModalOpen, setIsModalOpen] = useState(false)
-    // Al ver que voy a usar varias veces el typo de controlador
-    // Voy a hacerlo un esto del render.
+
     const routeParams = useParams()
 
+    const {data, generos, loading, reloadData } = useGetById(routeParams)
 
-    useEffect(() => {
-        setLoading(true)
-
-        const controller = routeParams.type === "Mangas" ? mangasController : animesController
-        Promise.all([
-            controller.getById({ id: routeParams.id }).catch(() => []),
-            generosController.get().catch(() => []).catch(() => [])
-        ]).then(([data, generos]) => {
-            setData(data)
-            setGeneros(generos)
-        }).finally(() => setLoading(false))
-        // controller.getById({ id: routeParams.id }).then(data => {
-        //     // console.log("View data: ",data)
-        //     setData(data)
-        // }).catch(e => {
-        //     console.error("Error Obteniendo la informacion: ", e)
-        // })
-        //     .finally(() => {
-        //         setLoading(false)
-        //     })
-
-    }, [routeParams.id, routeParams.type])
-
-    const reloadData = () => {
-        setLoading(true)
-        const controller = routeParams.type === "Mangas" ? mangasController : animesController
-        Promise.all([
-            controller.getById({ id: routeParams.id }).catch(() => []),
-            generosController.get().catch(() => []).catch(() => [])
-        ]).then(([data, generos]) => {
-            setData(data)
-            setGeneros(generos)
-        }).finally(() => setLoading(false))
-        // controller.getById({ id: routeParams.id }).then(data => {
-        //     // console.log("View data: ",data)
-        //     setData(data)
-        // }).catch(e => {
-        //     console.error("Error Obteniendo la informacion: ", e)
-        // })
-        //     .finally(() => {
-        //         setLoading(false)
-        //     })
-        props.reload()
-    }
+    
 
     if (loading) {
         return (
@@ -119,3 +75,54 @@ export function View(props) {
         </>
     )
 }
+
+// import { useEffect } from "react"
+//import { mangasController, animesController, generosController } from '../../services/newApi'
+
+// const [data, setData] = useState({})
+// const [generos, setGeneros] = useState([])
+// const [loading, setLoading] = useState(true)
+
+// useEffect(() => {
+//     setLoading(true)
+
+//     const controller = routeParams.type === "Mangas" ? mangasController : animesController
+//     Promise.all([
+//         controller.getById({ id: routeParams.id }).catch(() => []),
+//         generosController.get().catch(() => []).catch(() => [])
+//     ]).then(([data, generos]) => {
+//         setData(data)
+//         setGeneros(generos)
+//     }).finally(() => setLoading(false))
+//     // controller.getById({ id: routeParams.id }).then(data => {
+//     //     // console.log("View data: ",data)
+//     //     setData(data)
+//     // }).catch(e => {
+//     //     console.error("Error Obteniendo la informacion: ", e)
+//     // })
+//     //     .finally(() => {
+//     //         setLoading(false)
+//     //     })
+
+// }, [routeParams.id, routeParams.type])
+
+// const reloadData = () => {
+//     setLoading(true)
+//     const controller = routeParams.type === "Mangas" ? mangasController : animesController
+//     Promise.all([
+//         controller.getById({ id: routeParams.id }).catch(() => []),
+//         generosController.get().catch(() => []).catch(() => [])
+//     ]).then(([data, generos]) => {
+//         setData(data)
+//         setGeneros(generos)
+//     }).finally(() => setLoading(false))
+//     // controller.getById({ id: routeParams.id }).then(data => {
+//     //     // console.log("View data: ",data)
+//     //     setData(data)
+//     // }).catch(e => {
+//     //     console.error("Error Obteniendo la informacion: ", e)
+//     // })
+//     //     .finally(() => {
+//     //         setLoading(false)
+//     //     })
+// }
