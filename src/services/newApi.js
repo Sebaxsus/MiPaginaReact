@@ -116,7 +116,7 @@ export class mangasController {
 export class animesController {
 
     static async get ({ title, genre }) {
-        console.log(title, genre)
+        // console.log(title, genre)
         try {
             if (title === undefined && genre === undefined) {
                 const res = await axios.get(`${BASE_URL}/animes`)
@@ -271,6 +271,22 @@ export class searchController {
             }
         } catch (e) {
             console.error("Fallo el get Search: ", e)
+            return e.response
+        }
+    }
+
+    static async getRecent({type}) {
+        // Type se espera que sea numerico
+        // 0 = All
+        // 1 = Mangas
+        // 2 = Animes
+        try {
+
+            const res = await axios.get(`${BASE_URL}/search/${type}`)
+
+            return res.data
+        } catch (e) {
+            console.error("Fallo el Get Recent Search: ", e)
             return e.response
         }
     }
