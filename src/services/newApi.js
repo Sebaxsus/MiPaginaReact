@@ -22,24 +22,24 @@ const BASE_URL = "http://localhost:3000"
 
 export class mangasController {
 
-    static async get ({title, genre}) {
+    static async get ({title, genre, page}) {
         // console.log(title, genre)
         try {
             if (title === undefined && genre === undefined) {
-                const res = await axios.get(`${BASE_URL}/mangas`)
+                const res = await axios.get(`${BASE_URL}/mangas?page=${page === undefined ? 1 : page}`)
                 return res.data
             }
 
             if (title && genre) {
-                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`)
                 return res.data
             }
 
             if (title) {
-                const res = await axios.get(`${BASE_URL}/mangas?title=${title}`)
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&page=${page === undefined ? 1 : page}`)
                 return res.data
             } else {
-                const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}&page=${page === undefined ? 1 : page}`)
                 return res.data
             }
 
@@ -115,25 +115,25 @@ export class mangasController {
 
 export class animesController {
 
-    static async get ({ title, genre }) {
+    static async get ({ title, genre, page }) {
         // console.log(title, genre)
         try {
             if (title === undefined && genre === undefined) {
-                const res = await axios.get(`${BASE_URL}/animes`)
+                const res = await axios.get(`${BASE_URL}/animes?page=${page === undefined ? 1 : page}`)
                 // console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
                 return res.data
             }
 
             if (title && genre) {
-                const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`)
                 return res.data
             }
 
             if (title) {
-                const res = await axios.get(`${BASE_URL}/animes?title=${title}`)
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}&page=${page === undefined ? 1 : page}`)
                 return res.data
             } else {
-                const res = await axios.get(`${BASE_URL}/animes?genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/animes?genre=${genre}&page=${page === undefined ? 1 : page}`)
                 return res.data
             }
 
@@ -244,28 +244,28 @@ export class generosController {
 // ----------------------------------------------------------------------------------------------------------------------------------------
 
 export class searchController {
-    static async get ({title, genre}) {
+    static async get ({title, genre, page}) {
         try {
 
             if (title === undefined && genre === undefined) {
-                const res = await axios.get(`${BASE_URL}/search`)
+                const res = await axios.get(`${BASE_URL}/search?page=${page === undefined ? 1 : page}`)
 
                 return res.data
             }
 
             if (title && genre) {
-                const res = await axios.get(`${BASE_URL}/search?title=${title}&genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/search?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`)
 
                 return res.data
 
             }
 
             if (title) {
-                const res = await axios.get(`${BASE_URL}/search?title=${title}`)
+                const res = await axios.get(`${BASE_URL}/search?title=${title}&page=${page === undefined ? 1 : page}`)
 
                 return res.data
             } else {
-                const res = await axios.get(`${BASE_URL}/search?genre=${genre}`)
+                const res = await axios.get(`${BASE_URL}/search?genre=${genre}&page=${page === undefined ? 1 : page}`)
 
                 return res.data
             }
