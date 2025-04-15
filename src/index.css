@@ -140,6 +140,21 @@ footer > section > ul {
     grid-area: 1 / 1 / 1 / 4;
 }
 
+.pageNavigation {
+    display: flex;
+    width: 90%;
+    gap: 10px;
+    grid-area: 4 / 1 / 4 / 4;
+    justify-content: space-around;
+}
+
+ul li:has(> a.active) {
+    color: rgb(255, 255, 255);
+    outline: 1px solid rgb(0 77 255);
+    transform: translate3d(3px, 5px, 10px);
+    box-shadow: #ff76ff 0px 5px 25px -5px;
+    transition: 300ms ease-out;
+}
 /* Obligatorio el responsive Muelto*/
 
 @media (width > 950px) {

@@ -36,7 +36,7 @@
     cursor: pointer;
 }
 
-.active {
+.search-Pills .active {
     background-color: rgb(41 6 53 / 66%);
     transform: translate3d(3px, 2px, 60px);
     transition: 300ms ease-out;
