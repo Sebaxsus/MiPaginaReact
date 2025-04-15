@@ -10,11 +10,23 @@ import { Search } from "../../components/search/Search";
 
 // Paginas
 import AnimePost from "./AnimePost";
+import { PageNavegation } from "../../components/pageNavegation/PageNavegation";
 
 // Quité props para que el linter no me joda con que se declaro y no se usa 😡
 export function Anime() {
     
-    const {datos, generos, loading, QueryString, reload, handleClickGenre, handleSearchBarAction, handleSearchInputChange} = useSearchContent("Animes")
+    const {
+        datos,
+        generos,
+        loading,
+        QueryString,
+        pagination,
+        reload,
+        handleClickGenre,
+        handleSearchBarAction,
+        handleSearchInputChange,
+        handlePageNav
+    } = useSearchContent("Animes")
 
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
@@ -44,6 +56,13 @@ export function Anime() {
                     </>
                 )
             })}
+            <PageNavegation
+                handlePageNav={handlePageNav}
+                hasNext={pagination.hasNext}
+                hasPrevius={pagination.hasPrevius}
+                totalPages={pagination.totalPages}
+                currentPage={pagination.currentPage}
+            />
         </>
     )
 

@@ -5,13 +5,55 @@ import { useSearchParams } from "wouter";
 import { animesController, mangasController, searchController, generosController } from "../services/newApi";
 
 export function useSearchContent(type) {
+    // Manejo de datos
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [reload, setReload] = useState(false)
     const [QueryString, setQuerySting] = useState({})
     const [searchTitle, setSearchTitle] = useState("")
+    const [pagination, setPagination] = useState({})
+    // Funcionales
+    const [loading, setLoading] = useState(true)
+    const [reload, setReload] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
+
+    function handlePageNav(navType) {
+        /*
+            Si le paso un numero significa que le pase
+            el numero de pagina, Si le paso un string
+            le pase que accion quiero hacer, si quiero
+            ir a la pagina siguiente o anterior.
+        */
+
+        if (navType === "number") {
+            
+            setSearchParams((prev) => {
+                prev.set("page", navType)
+                return prev
+            },{
+                replace: true
+            })
+            
+        } else {
+            
+            navType === "Next" ?
+                setSearchParams((prev) => {
+                    const next = pagination.currentPage + 1
+                    prev.set("page", next)
+                    return prev
+                }, {
+                    replace: true
+                }) :
+                setSearchParams((prev) => {
+                    const previus = pagination.currentPage - 1
+                    prev.set("page", previus)
+                    return prev
+                },{
+                    replace: true
+                })
+
+        }
+            
+    }
 
     function handleSearchInputChange(title) {
         // console.log("HandleSearch ", title)
@@ -25,6 +67,7 @@ export function useSearchContent(type) {
         if (searchTitle.length === 0) {
             setSearchParams((prev) => {
                 prev.delete("title")
+                prev.set("page", 1)
                 return prev
             },{
                 replace: true
@@ -32,6 +75,7 @@ export function useSearchContent(type) {
         } else {
             setSearchParams((prev) => {
                 prev.set("title", searchTitle)
+                prev.set("page", 1)
                 return prev
             },{
                 replace: true
@@ -54,6 +98,7 @@ export function useSearchContent(type) {
         if (genero === queryGenre) {
             setSearchParams((prev) => {
                 prev.delete("genre")
+                prev.set("page", 1)
                 return prev
             },{
                 replace: true
@@ -61,6 +106,7 @@ export function useSearchContent(type) {
         } else {
             setSearchParams((prev) => {
                 prev.set("genre", genero.toString())
+                prev.set("page", 1)
                 return prev
             },{
                 replace: true
@@ -104,9 +150,10 @@ export function useSearchContent(type) {
             controller.get(newQueryString).catch(() => []),
             generosController.get().catch(() => [])
 
-        ]).then(([data, genres]) => {
+        ]).then(([content, genres]) => {
 
-            setDatos(data)
+            setDatos(content.data)
+            setPagination(content.pagination)
             setGeneros(genres)
 
         }).catch((e) => {
@@ -122,15 +169,41 @@ export function useSearchContent(type) {
 
     }, [type, searchParams, reload])
 
+    /*
+    La API en peticiones getAll() ahora devuelve un objeto de dos
+    Atributos, el primero es la lista de objetos conteniendo cada
+    Registro de las tablas anime, manga.
+
+    El segundo atributo es el objeto de paginacion, que contiene
+    datos importantes para paginar como
+        la pagina actual: currentPage
+        el contenido designado por pagina: pageSize
+        la cantidad de paginas disponibles: totalPages (Cuantas veces puedo tener una pagina con el limite de contenido por respuesta)
+        la cantidad de registros encontrados: totalRows
+        si tiene una pagina siguiente: hasNext
+        si tiene una pagina previa: hasPrevius
+        "data": [],
+        "pagination": {
+            "currentPage": 2,
+            "pageSize": 6,
+            "totalPages": 1,
+            "totalRows": 2,
+            "hasNext": false,
+            "hasPrevius": true
+        }
+    */
+
     return {
         datos,
         generos,
         loading,
         QueryString,
         searchTitle,
+        pagination,
         reload: () => {setReload(!reload)},
         handleSearchInputChange,
         handleClickGenre,
-        handleSearchBarAction
+        handleSearchBarAction,
+        handlePageNav,
     }
 }

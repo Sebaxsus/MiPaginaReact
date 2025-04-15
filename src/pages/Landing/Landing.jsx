@@ -6,6 +6,7 @@ import { useSearchContent } from "../../hooks/useSearchContent.jsx";
 // Componentes
 import { Card } from "../../components/card/Card";
 import { Search } from "../../components/search/Search";
+import { PageNavegation } from "../../components/pageNavegation/PageNavegation.jsx";
 
 // Estilos
 import './Landing.css'
@@ -15,7 +16,17 @@ export function Home() {
     
     const routeParams = useParams()
 
-    const { datos, generos, loading, QueryString, handleClickGenre, handleSearchBarAction, handleSearchInputChange} = useSearchContent(routeParams.type) 
+    const { 
+        datos,
+        generos,
+        loading,
+        QueryString,
+        pagination,
+        handleClickGenre,
+        handleSearchBarAction,
+        handleSearchInputChange,
+        handlePageNav
+    } = useSearchContent(routeParams.type) 
 
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
@@ -43,6 +54,13 @@ export function Home() {
                     </>
                 )
             })}
+            <PageNavegation 
+                handlePageNav={handlePageNav}
+                hasNext={pagination.hasNext}
+                hasPrevius={pagination.hasPrevius}
+                totalPages={pagination.totalPages}
+                currentPage={pagination.currentPage}
+            />
         </>
     )
 }

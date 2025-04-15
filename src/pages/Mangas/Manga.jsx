@@ -11,6 +11,7 @@ import MangaPost from './MangaPost'
 //Estilo
 import './Manga.css'
 import { useSearchContent } from '../../hooks/useSearchContent.jsx'
+import { PageNavegation } from '../../components/pageNavegation/PageNavegation.jsx'
 
 //Para que react(Wooter) lo entienda como componente -No se si es cierto-
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
@@ -20,7 +21,18 @@ import { useSearchContent } from '../../hooks/useSearchContent.jsx'
 // Quité props para que el linter no me joda con que se declaro y no se usa 😡
 export function Mangas () {
 
-    const { datos, generos, loading, QueryString, reload, handleClickGenre, handleSearchBarAction, handleSearchInputChange } = useSearchContent("Mangas") 
+    const { 
+        datos,
+        generos,
+        loading,
+        QueryString,
+        pagination,
+        reload,
+        handleClickGenre,
+        handleSearchBarAction,
+        handleSearchInputChange,
+        handlePageNav
+    } = useSearchContent("Mangas") 
 
     
 
@@ -53,6 +65,13 @@ export function Mangas () {
                     </>
                 )
             })}
+            <PageNavegation 
+                handlePageNav={handlePageNav}
+                hasNext={pagination.hasNext}
+                hasPrevius={pagination.hasPrevius}
+                totalPages={pagination.totalPages}
+                currentPage={pagination.currentPage}
+            />
         </>
     )
 }
