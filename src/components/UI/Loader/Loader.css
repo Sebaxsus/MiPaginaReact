@@ -1,0 +1,27 @@
+.loaderContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 8rem;
+}
+
+.loaderSvg {
+    animation: spin 1s linear infinite;
+    height: 2.5rem;
+    width: 2.5rem;
+    color: #06b6d4;
+}
+
+.loaderSvg > circle {
+    opacity: 0.25;
+}
+
+.loaderSvg > path {
+    opacity: 0.75;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

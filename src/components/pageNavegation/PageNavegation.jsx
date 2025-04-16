@@ -15,7 +15,6 @@ export function PageNavegation(props) {
     */
     return (
         <section className="pageNavigation">
-            <>
                 <button onClick={() => { props.handlePageNav("Previus") }} className={`${props.hasPrevius ? "" : "invisible"}`}>
                     {"<"}
                 </button>
@@ -24,9 +23,9 @@ export function PageNavegation(props) {
                         const page = i + 1
                         return (
                             <li key={"Page " + page}>
-                                <a onClick={() => { props.handlePageNav(page) }} className={`${props.currentPage === page ? "active" : ""}`}>
+                                <button onClick={() => { props.handlePageNav(page) }} className={`${props.currentPage === page ? "active" : ""}`} aria-current={props.currentPage === page ? {page} : undefined}>
                                     {page}
-                                </a>
+                                </button>
                             </li>
                         )
                     })}
@@ -34,7 +33,6 @@ export function PageNavegation(props) {
                 <button onClick={() => { props.handlePageNav("Next") }} className={`${props.hasNext ? "" : "invisible"}`}>
                     {">"}
                 </button>
-            </>
         </section>
     )
 }

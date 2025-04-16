@@ -10,6 +10,9 @@ import './index.css'
 import { NavBar } from './components/navBar/navBar.jsx'
 import { Card } from './components/card/Card.jsx'
 
+// UI
+import { Loader } from './components/UI/Loader/Loader.jsx'
+
 
 // Paginas
 import { View } from './pages/View/View.jsx'
@@ -59,7 +62,7 @@ export function App() {
                     </header>
                     <section className='aside-cards-container'>
                         {/* Esto actualmente no tiene sentido ya que el mismo lastAdded[index] seria _ */}
-                        {data.map((item) => {
+                        {loading ? <Loader /> : data.map((item) => {
                             return (
                                 <Link key={item.id} to={`/View/${item.type}/${item.id}`}>
                                     <Card

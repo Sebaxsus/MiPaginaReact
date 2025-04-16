@@ -8,6 +8,9 @@ import { Card } from "../../components/card/Card";
 import { Search } from "../../components/search/Search";
 import { PageNavegation } from "../../components/pageNavegation/PageNavegation.jsx";
 
+// UI
+import { Loader } from "../../components/UI/Loader/Loader.jsx";
+
 // Estilos
 import './Landing.css'
 
@@ -40,7 +43,7 @@ export function Home() {
                     setSearchTitle={handleSearchInputChange}
                 />
             </search>
-            {loading ? <h2>Loading...</h2> : datos.map((item, index) => {
+            {loading ? <Loader /> : datos.map((item, index) => {
                 return (
                     <>
                         <Link key={item.id} to={`/View/${item.type}/${item.id}`} className={"justify-items-center w-full"}>

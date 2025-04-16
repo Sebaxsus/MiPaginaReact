@@ -24,7 +24,7 @@ export function useSearchContent(type) {
             ir a la pagina siguiente o anterior.
         */
 
-        if (navType === "number") {
+        if (typeof navType === "number") {
             
             setSearchParams((prev) => {
                 prev.set("page", navType)
