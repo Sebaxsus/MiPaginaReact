@@ -1,5 +1,7 @@
 import "./PageNavegation.css"
 
+import { ArrowSVG } from "../UI/Arrows/Arrow"
+
 export function PageNavegation(props) {
     /*
         Array.from({ length: props.totalPages })
@@ -16,7 +18,8 @@ export function PageNavegation(props) {
     return (
         <section className="pageNavigation">
                 <button onClick={() => { props.handlePageNav("Previus") }} className={`${props.hasPrevius ? "" : "invisible"}`}>
-                    {"<"}
+                    {/* <img src="Arrow.svg" height={10} width={10} aria-description="Icono de flecha apuntando a la izquierda" style={{transform: "rotate(180deg)"}}/> */}
+                    <ArrowSVG width={10} height={10} left={true}/>
                 </button>
                 <ul>
                     {Array.from({ length: props.totalPages }).map((_, i) => {
@@ -31,7 +34,8 @@ export function PageNavegation(props) {
                     })}
                 </ul>
                 <button onClick={() => { props.handlePageNav("Next") }} className={`${props.hasNext ? "" : "invisible"}`}>
-                    {">"}
+                    {/* <img src="Arrow.svg" height={10} width={10} aria-description="Icono de flecha apuntando a la derecha"/> */}
+                    <ArrowSVG width={10} height={10}/>
                 </button>
         </section>
     )

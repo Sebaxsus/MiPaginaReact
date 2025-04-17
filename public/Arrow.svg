@@ -1,0 +1,15 @@
+<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    aria-hidden="true" 
+    role="img" 
+    width="50" height="50"
+    viewBox="0 0 30 30"
+>
+    <path
+        stroke="white"
+        fill="black"
+        stroke-width="2"
+        d="M 20 0 L 30 15 L 20 30 L 20 28 L 28 16 L 2 16 L 2 14 L 28 14 L 20 2 Z"
+    />
+</svg>

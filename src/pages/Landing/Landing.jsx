@@ -1,5 +1,6 @@
 // Funcionalidades
 import { Link, useParams } from "wouter";
+import { createPortal } from "react-dom";
 // Hooks Personalizados
 import { useSearchContent } from "../../hooks/useSearchContent.jsx";
 
@@ -10,6 +11,7 @@ import { PageNavegation } from "../../components/pageNavegation/PageNavegation.j
 
 // UI
 import { Loader } from "../../components/UI/Loader/Loader.jsx";
+import { PopUp } from "../../components/UI/NotificationPopUp/NotificationPopUp.jsx";
 
 // Estilos
 import './Landing.css'
@@ -64,6 +66,7 @@ export function Home() {
                 totalPages={pagination.totalPages}
                 currentPage={pagination.currentPage}
             />
+            
         </>
     )
 }

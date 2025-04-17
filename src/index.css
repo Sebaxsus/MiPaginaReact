@@ -13,7 +13,7 @@
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
     background: var(--bg-edit1);
-    /* background-size: 32px 30px; /*
+    /* background-size: 32px 30px;  */
     /* Viene con bg edit 2 */
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -89,6 +89,10 @@ body {
     overflow: hidden;
     gap: 15px 5px;
     padding-left: 5px;
+
+    /* Nuevo border separador a la derechar */
+    margin-top: 1rem;
+    border-right: white solid 1px;
 }
 
 .Display-aside h1 {
@@ -141,6 +145,10 @@ footer > section > ul {
     width: 90%;
     gap: 10px;
     grid-area: 1 / 1 / 1 / 4;
+
+    /* Nuevo separador abajo */
+    padding-bottom: 1rem;
+    border-bottom: white solid 1px;
 }
 
 .pageNavigation {
@@ -149,6 +157,10 @@ footer > section > ul {
     gap: 10px;
     grid-area: 4 / 1 / 4 / 4;
     justify-content: space-around;
+
+    /* Nuevo separador arriba */
+    padding-top: 1rem;
+    border-top: white solid 1px;
 }
 
 ul li:has(> a.active) {

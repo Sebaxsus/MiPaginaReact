@@ -12,6 +12,7 @@ import { Card } from './components/card/Card.jsx'
 
 // UI
 import { Loader } from './components/UI/Loader/Loader.jsx'
+import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 
 // Paginas
@@ -21,8 +22,6 @@ import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Home } from './pages/Landing/Landing.jsx'
 // import { Search } from './pages/Search/Search.jsx'
 import { useRecentContent } from './hooks/useRecentContent.jsx'
-import { BubbleLoader, BubbleSpinner } from './components/UI/BubbleLoader/BubbleLoader.jsx'
-import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 /*
 <div className='Manga'>
@@ -55,7 +54,7 @@ export function App() {
             </header>
             <div className='sticky top-20 z-[1]' id='modalDiv'>
                 {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
-                <PopUp title="Prueba" message="Error"/>
+                <PopUp title="Error" message="Prueba" open={true}/>
             </div>
             
             <div className='Body'>

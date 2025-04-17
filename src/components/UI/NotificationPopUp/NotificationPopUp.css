@@ -1,20 +1,22 @@
-
-
 .popUpContainer {
     --Error-background-color: linear-gradient(0deg, #c44e4e 0%,#9d1616 30%,#170505 85%);
     --Error-background-color2: radial-gradient(125% 125% at 50% 10%, #000 40%, #580000  85%);
     --Error-text-color:#fffb00;
+    --animation-type: fadeIn;
     margin: 10px;
     padding: 5px 15px;
-    width: 200px;
+    width: 220px;
     height: 100px;
     position: absolute;
-    right: 0; 
+    right: 0;
+    top: 3rem;
     backdrop-filter: blur(20px);
     border: #9d1616 solid 2px;
     border-radius: 10px;
 
     background: var(--Error-background-color2);
+    animation: var(--animation-type) 800ms ease-in-out normal;
+    overflow: hidden;
 }
 
 .popUpContainer > header {
@@ -32,4 +34,32 @@
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.popUpContainer > p {
+    font-size: small;
+}
+
+@keyframes fadeIn {
+    from {
+        width: 0px;
+        opacity: 0;
+    }
+    to {
+        width: 220px;
+        opacity: 1;
+        
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        width: 220px;
+        opacity: 1;
+    }
+    to {
+        width: 0px;
+        opacity: 0;
+        
+    }
 }

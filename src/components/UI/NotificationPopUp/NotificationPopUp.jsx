@@ -1,9 +1,27 @@
+import { useState } from "react"
+
 import "./NotificationPopUp.css"
 
 export function PopUp(props) {
+    const [open, setOpen] = useState(props.open)
+
+    if (!open) return null
+
+    function close() {
+        const closeTimeoutId = setTimeout(
+            () => {setOpen(false)},
+            700
+        )
+    }
+
+    const timeoutid = setTimeout(
+        () => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()},
+        4000
+    )
+    
 
     return (
-        <section className="popUpContainer">
+        <section className="popUpContainer" id="popUpContainer">
             <header>
                 <h3>
                     {props.title}
@@ -12,6 +30,7 @@ export function PopUp(props) {
                     height={25}
                     width={25}
                     viewBox="0 0 12 12"
+                    onClick={() => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");clearTimeout(timeoutid);close()} }
                 >
                     <g
                         fill="none"
