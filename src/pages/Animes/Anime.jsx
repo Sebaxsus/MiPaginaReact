@@ -11,6 +11,7 @@ import { Search } from "../../components/search/Search";
 // Paginas
 import AnimePost from "./AnimePost";
 import { PageNavegation } from "../../components/pageNavegation/PageNavegation";
+import { Loader } from "../../components/UI/Loader/Loader";
 
 // Quité props para que el linter no me joda con que se declaro y no se usa 😡
 export function Anime() {
@@ -40,7 +41,7 @@ export function Anime() {
                     setSearchTitle={handleSearchInputChange}
                 />
             </search>
-            {loading ? <h1>Cargando...</h1> : datos.map((anime, index) => {
+            {loading ? <Loader /> : datos.map((anime, index) => {
                 return (
                     <>
                         <Link key={anime.id} to={`/View/Animes/${anime.id}`} className={"justify-items-center w-full"}>

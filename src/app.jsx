@@ -21,6 +21,8 @@ import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Home } from './pages/Landing/Landing.jsx'
 // import { Search } from './pages/Search/Search.jsx'
 import { useRecentContent } from './hooks/useRecentContent.jsx'
+import { BubbleLoader, BubbleSpinner } from './components/UI/BubbleLoader/BubbleLoader.jsx'
+import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 /*
 <div className='Manga'>
@@ -53,6 +55,7 @@ export function App() {
             </header>
             <div className='sticky top-20 z-[1]' id='modalDiv'>
                 {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
+                <PopUp title="Prueba" message="Error"/>
             </div>
             
             <div className='Body'>
@@ -84,6 +87,11 @@ export function App() {
                     */}
                     {
                         <>
+                            {/* <Route path={"/"}>
+                                <BubbleLoader />
+                                <Loader />
+                                <BubbleSpinner />
+                            </Route> */}
                             <Route path={"/"}>
                                 <Home />
                             </Route>
@@ -103,7 +111,8 @@ export function App() {
                             {/* <Route path={"/Search/:type"}>
                                 {/* Deprecieado ya que de esto se encarga un componente /}
                                 {loading ? <h1>Cargando...</h1> : <Search />}
-                            </Route> */}
+                            </Route>
+                            */}
                         </>
                     }
                 </main>

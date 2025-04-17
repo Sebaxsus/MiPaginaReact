@@ -1,0 +1,35 @@
+
+
+.popUpContainer {
+    --Error-background-color: linear-gradient(0deg, #c44e4e 0%,#9d1616 30%,#170505 85%);
+    --Error-background-color2: radial-gradient(125% 125% at 50% 10%, #000 40%, #580000  85%);
+    --Error-text-color:#fffb00;
+    margin: 10px;
+    padding: 5px 15px;
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    right: 0; 
+    backdrop-filter: blur(20px);
+    border: #9d1616 solid 2px;
+    border-radius: 10px;
+
+    background: var(--Error-background-color2);
+}
+
+.popUpContainer > header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.popUpContainer > header > svg {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.popUpContainer > svg {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}

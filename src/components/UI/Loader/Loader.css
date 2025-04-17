@@ -2,11 +2,32 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 8rem;
+    /* 
+        Si se necesita hacer mas grande
+        Multiplicar el height por 2, 8 * 2 = 16rem
+    */
+    height: 2.5rem;
+    /*
+        Ubicando el contendor del Loader / -
+        Spinner en el centro del grid en mainCards
+        del elemento main.
+    */
+    grid-area: 2 / 2 / 3 / 3;
 }
 
 .loaderSvg {
+    /*
+        Se crea una animacion de rotacion
+        para el loader, se le da un tiempo de 1s
+        y se le da un efecto de linearidad
+        para que la animacion sea constante
+    */
     animation: spin 1s linear infinite;
+    /* 
+        Si se necesita hacer mas grande
+        Multiplicar el height y width
+        por 2, 2.5 * 2 = 5rem
+    */
     height: 2.5rem;
     width: 2.5rem;
     color: #06b6d4;
@@ -17,9 +38,18 @@
 }
 
 .loaderSvg > path {
-    opacity: 0.75;
+    opacity: 1;
+    color: white;
 }
 
+/*
+    Se utiliza la propiedad @keyframes para crear
+    una animacion de rotacion, se define que la 
+    animacion va a ser de 0 a 360 grados, usando
+    la propiedad transform y la funcion rotate.
+    con la propiedad to se define el estado final
+    de la animacion, en este caso 360 grados.
+*/
 @keyframes spin {
     to {
         transform: rotate(360deg);

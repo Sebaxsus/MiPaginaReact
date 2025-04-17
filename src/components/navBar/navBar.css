@@ -95,7 +95,7 @@
 
 .nav-list ul :has(> a.active) {
     color: rgb(255, 255, 255);
-    outline: 1px solid rgb(0 77 255);
+    outline: 1px solid rgb(0, 225, 255);
     transform: translate3d(3px, 5px, 10px);
     box-shadow: #ff76ff 0px 5px 25px -5px;
     transition: 300ms ease-out;

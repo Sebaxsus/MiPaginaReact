@@ -7,11 +7,14 @@
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
-  
+    --bg-edit1: radial-gradient(125% 125% at 50% 10%, #000 40%, #63e 100%);
+    --bg-edit2: radial-gradient(#4f74be 1px, transparent 1px);
     color-scheme: light dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: #242424;
-  
+    background: var(--bg-edit1);
+    /* background-size: 32px 30px; /*
+    /* Viene con bg edit 2 */
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -150,15 +153,15 @@ footer > section > ul {
 
 ul li:has(> a.active) {
     color: rgb(255, 255, 255);
-    outline: 1px solid rgb(0 77 255);
+    outline: 1px solid rgb(0, 225, 255);
     transform: translate3d(3px, 5px, 10px);
     box-shadow: #ff76ff 0px 5px 25px -5px;
     transition: 300ms ease-out;
 }
 
-ul li:has(> button.active) {
+ul li > button.active {
     color: rgb(255, 255, 255);
-    outline: 1px solid rgb(0 77 255);
+    border: 1px solid rgb(0, 225, 255);
     transform: translate3d(3px, 5px, 10px);
     box-shadow: #ff76ff 0px 5px 25px -5px;
     transition: 300ms ease-out;

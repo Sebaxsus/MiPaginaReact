@@ -12,6 +12,7 @@ import MangaPost from './MangaPost'
 import './Manga.css'
 import { useSearchContent } from '../../hooks/useSearchContent.jsx'
 import { PageNavegation } from '../../components/pageNavegation/PageNavegation.jsx'
+import { Loader } from '../../components/UI/Loader/Loader.jsx'
 
 //Para que react(Wooter) lo entienda como componente -No se si es cierto-
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
@@ -50,7 +51,7 @@ export function Mangas () {
                 />
             </search>
             {/* <button onClick={() => {reload()}} className='absolute top-2 z-10'>Reload</button> */}
-            {loading ? <h1>C...</h1> : datos.map( (manga, index) => {
+            {loading ? <Loader /> : datos.map( (manga, index) => {
                 return (
                     <>
                         <Link key={manga.id} to={`/View/Mangas/${manga.id}`} className={"justify-items-center w-full"}>
