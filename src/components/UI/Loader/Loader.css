@@ -56,14 +56,13 @@
     }
 }
 
-/* -------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 .BubbleLoader {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.4rem;
-    height: 80px;
 }
 
 .BubbleLoader > span {
@@ -86,7 +85,18 @@
     animation-delay: 300ms;
 }
 
-/* --------------------------------------------------------- */
+@keyframes bubble {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.6;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 .BubbleSpinner {
     display: flex;
@@ -122,16 +132,6 @@
     animation-delay: 550ms;
 }
 
-@keyframes bubble {
-    0%, 80%, 100% {
-        transform: scale(0.6);
-        opacity: 0.6;
-    }
-    40% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
 
 
 @keyframes bubbleSpinner {
@@ -172,4 +172,38 @@
     100% {
         transform: translate(10px, 10px) rotate(360deg);
     } */
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+.CompleteLoader circle {
+    animation: fillCircle 2s forwards ease-in-out;
+}
+
+.CompleteLoader line {
+    animation: changeCheck 2s forwards ease-in-out;
+}
+
+@keyframes fillCircle {
+    from {
+        stroke: green;
+        fill: none;
+        stroke-width: 1;
+    }
+    to {
+        stroke: white;
+        fill: green;
+        stroke-width: 2;
+    }
+}
+
+@keyframes changeCheck {
+    from {
+        stroke: green;
+        stroke-width: 1;
+    }
+    to {
+        stroke: white;
+        stroke-width: 3;
+    }
 }

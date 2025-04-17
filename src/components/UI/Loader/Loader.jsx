@@ -76,6 +76,23 @@ export function BubbleSpinner() {
     )
 }
 
+export function CompleteLoader({size=20}) {
+    return (
+        <svg
+            height={size}
+            width={size}
+            viewBox="0 0 40 40"
+            className="CompleteLoader"
+        >
+            <g>
+                <circle cx="20" cy="20" r="19" stroke="green" strokeWidth="1" fill="none" />
+                <line x1="10" y1="20" x2="18" y2="28" stroke="green" strokeWidth="2" />
+                <line x1="18" y1="28" x2="32" y2="12" stroke="green" strokeWidth="2" />
+            </g>
+        </svg>       
+    )
+}
+
 /*
 Desgloce del SVG
 

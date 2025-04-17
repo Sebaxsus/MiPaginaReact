@@ -2,6 +2,8 @@ import { useState } from "react"
 
 import "./NotificationPopUp.css"
 
+import { BubbleLoader, CompleteLoader } from "../Loader/Loader"
+
 export function PopUp(props) {
     const [open, setOpen] = useState(props.open)
 
@@ -19,6 +21,23 @@ export function PopUp(props) {
         4000
     )
     
+    switch (props.type) {
+        case 0:
+            document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
+            document.documentElement.style.setProperty("--popUp-border-color", "#580000")
+            break
+        case 1:
+            document.documentElement.style.setProperty("--popUp-bg-color", "#014502")
+            document.documentElement.style.setProperty("--popUp-border-color", "#77ff008c")
+            break
+        case 2:
+            console.log("Case 2")
+            document.documentElement.style.setProperty("--popUp-bg-color", "#584300")
+            document.documentElement.style.setProperty("--popUp-border-color", "#ffed00")
+            break
+        default:
+            break
+    } 
 
     return (
         <section className="popUpContainer" id="popUpContainer">
@@ -43,6 +62,7 @@ export function PopUp(props) {
             <p>
                 {props.message}
             </p>
+            <CompleteLoader size={30}/>
         </section>
     )
 }

@@ -54,7 +54,7 @@ export function App() {
             </header>
             <div className='sticky top-20 z-[1]' id='modalDiv'>
                 {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
-                <PopUp title="Error" message="Prueba" open={true}/>
+                <PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>
             </div>
             
             <div className='Body'>
