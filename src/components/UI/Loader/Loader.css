@@ -177,7 +177,11 @@
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 .CompleteLoader line {
-    animation: changeCheck 2s forwards ease-in-out;
+    animation: changeIcon 2s forwards linear;
+}
+
+.ErrorLoader g {
+    animation: changeIcon 2s forwards linear;
 }
 
 /* 
@@ -216,15 +220,21 @@
     y al darle un valor a stroke-dashoffset se le da un valor de 0
     esto hace que la línea discontinua se vea como una línea continua
 
-    Por lo tanto al mover el stroke-dashoffset de 119.3 a 0
+    Por lo tanto al mover el stroke-dashoffset de 125.6 a 0
     se va rellenando la circunferencia del circulo, ya que el espacio entre la linea discontinua se va reduciendo
     y al llegar a 0 se ve como una línea continua o un circulo
 
     par mas info https://nikitahl.com/svg-circle-progress
 */
 .CompleteLoader circle {
-    stroke-dasharray: 119.3;
-    stroke-dashoffset: 119.3;
+    stroke-dasharray: 125.6;
+    stroke-dashoffset: 125.6;
+    animation: fillCircleCircunference 2s linear normal forwards;
+}
+
+.ErrorLoader circle {
+    stroke-dasharray: 125.6;
+    stroke-dashoffset: 125.6;
     animation: fillCircleCircunference 2s linear normal forwards;
 }
 
@@ -233,19 +243,18 @@
         /* 
             Aqui se usa la circunferencia
             que es C = (r x 2) x pi
-            C = (19 x 2) x pi
+            C = (20 x 2) x pi
         */
-        stroke-dashoffset: 119.3;
+        stroke-dashoffset: 125.6;
     }
     to {
         stroke-dashoffset: 0;
     }
 }
 
-@keyframes changeCheck {
+@keyframes changeIcon {
     from {
         opacity: 0.6;
-        stroke: #01ff01;
         stroke-width: 1;
     }
     to {
@@ -254,3 +263,33 @@
         stroke-width: 3;
     }
 }
+
+#triangle {
+    /* stroke-dasharray: 10 40; */
+    animation: fillTriangle 2s linear infinite;
+}
+
+/* #exclamation {
+    animation: fillExcla 2s linear infinite;
+} */
+
+@keyframes fillTriangle {
+    0% {
+        fill-opacity: 0.4;
+        stroke-dasharray: 10 40;
+    }
+    100% {
+        fill-opacity: 0.8;
+        stroke-dasharray: 150 40;
+    }
+}
+
+/* @keyframes fillExcla {
+    from {
+        fill-opacity: 0.6;
+        stroke-dasharray: 3 5;
+    }to {
+        fill-opacity: 0.8;
+        stroke-dasharray: 20 5;
+    }
+} */

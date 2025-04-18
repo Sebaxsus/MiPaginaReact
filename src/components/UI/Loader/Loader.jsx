@@ -81,11 +81,11 @@ export function CompleteLoader({size=20}) {
         <svg
             height={size}
             width={size}
-            viewBox="0 0 40 40"
+            viewBox="-2 -2 45 45"
             className="CompleteLoader"
         >
             <g className="circleGroup">
-                <circle cx="20" cy="20" r="19" stroke="#01ff01" strokeWidth="2" fill="none" />
+                <circle cx="20" cy="20" r="20" stroke="#01ff01" strokeWidth="2" fill="none" />
             </g>
             <g className="checkGroup">
                 <line x1="10" y1="20" x2="18" y2="28" stroke="#01ff01" strokeWidth="2" />

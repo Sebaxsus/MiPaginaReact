@@ -19,7 +19,7 @@
     padding: 1rem;
 }
 
-.search-Pills {
+/* .search-Pills {
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -27,6 +27,27 @@
     text-wrap: nowrap;
     overflow-x: scroll;
     padding-bottom: 4px;
+} */
+
+.search-Pills {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(80px, 1fr));
+    position: absolute;
+
+    top: 40px;
+    padding: 8px;
+    gap: 1rem;
+    z-index: 1;
+
+    border-radius: 8px;
+    border: white solid 1px;
+    backdrop-filter: blur(10px) brightness(0.5);
+
+    justify-items: center;
+    text-wrap: nowrap;
+    overflow-x: scroll;
+
+    /* animation: appear 300ms forwards; */
 }
 
 .search-Pill {
@@ -53,6 +74,9 @@
 .search-Form {
     display: flex;
     align-items: flex-start;
+    justify-content: flex-end;
+    flex-shrink: 1;
+    flex-grow: 2;
     padding: 4px;
 }
 
@@ -61,12 +85,19 @@
     align-items: center;
     border:  rgb(168, 85, 247) solid 1px;
     border-radius: 4px;
+    flex-shrink: 1;
+    flex-grow: 2;
+    justify-content: space-around;
+    max-width: 800px;
 }
 
 .search-Form input {
     background-color: #242424;
     padding-left: 2px;
     border-radius: 2px;
+    text-indent: 2ch;
+    flex-shrink: 1;
+    flex-grow: 2;
 }
 
 .search-Form input:focus {
@@ -74,6 +105,40 @@
 }
 
 .search-Form button {
-    padding-right: 2px;
+    padding-right: 6px;
     background-color: #242424;
+}
+
+.generosButton {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    border: white solid 1px;
+    border-radius: 5px;
+    padding: 0px 2px;
+    transition-duration: 300ms;
+}
+
+.generosButton:hover {
+    color: #63e;
+    transform: scale(1.1);
+}
+
+@keyframes appear {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 250px;
+    }
+}
+
+@keyframes disappear {
+    from {
+        height: 250px;
+    }
+    to {
+        height: 0px;
+    }
 }

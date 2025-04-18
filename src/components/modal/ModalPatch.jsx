@@ -4,6 +4,8 @@ import { animesController } from "../../services/newApi"
 import { useState } from "react"
 
 import { useParams } from "wouter"
+import { PopUp } from "../UI/NotificationPopUp/NotificationPopUp"
+import { createPortal } from "react-dom"
 
 function campoForm({ genero, data = [] }) {
     // console.log(genero.name, data, data.find((g) => {return g.id === genero.id}) ? true : false)
@@ -69,7 +71,7 @@ export default function Modal(props) {
                 // console.log(res)
                 if (res.data.code === 200 || res.status === 200) {
                     console.warn(`Se modifico el ${titulo} Correctamente`)
-                    alert(res.data.message)
+                    createPortal(<PopUp title="Completado" message={res.data.message} open={true} type={1}/>, document.getElementById("modalDiv"))
                     // Limpiando los campos del Formulario
                     setFormTitle("");setFormDesc("");setFormUrl("");setGenres([]);
                     // Devolviendo el Formulario a su estado por defecto
@@ -81,11 +83,12 @@ export default function Modal(props) {
                     props.reload()
                 } else {
                     console.error(`Error al modificar el ${titulo}, Code: `, res.status, " Body: ", res.data, res.headers)
-                    alert(`Error al modificar el ${titulo}, Code: `, res.status)
+                    createPortal(<PopUp title={res.data.title} message={res.data.message + " " + res.data.code} open={true} type={0}/>, document.getElementById("modalDiv"))
                     setGenres([])
                 }
             } catch (err) {
                 console.error(`Error al modificar el ${titulo}: `, err)
+                createPortal(<PopUp title="Fallo del Cliente" message={"Ocurrio un erro inesperado en el cliente"} open={true} type={2}/>, document.getElementById("modalDiv"))
                 setGenres([])
             }
     

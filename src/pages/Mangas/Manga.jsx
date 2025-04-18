@@ -6,13 +6,16 @@ import { createPortal } from 'react-dom'
 // Componentes
 import { Card } from '../../components/card/Card'
 import { Search } from '../../components/search/Search'
+import { PageNavegation } from '../../components/pageNavegation/PageNavegation.jsx'
 import MangaPost from './MangaPost'
+import { useSearchContent } from '../../hooks/useSearchContent.jsx'
+
+//UI
+import { PopUp } from '../../components/UI/NotificationPopUp/NotificationPopUp.jsx'
+import { Loader } from '../../components/UI/Loader/Loader.jsx'
 
 //Estilo
 import './Manga.css'
-import { useSearchContent } from '../../hooks/useSearchContent.jsx'
-import { PageNavegation } from '../../components/pageNavegation/PageNavegation.jsx'
-import { Loader } from '../../components/UI/Loader/Loader.jsx'
 
 //Para que react(Wooter) lo entienda como componente -No se si es cierto-
 //Toca ponerlo como export default function NombreFunc ({ props }) { return( code )}
@@ -73,6 +76,7 @@ export function Mangas () {
                 totalPages={pagination.totalPages}
                 currentPage={pagination.currentPage}
             />
+            {loading ? null : createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv")) }
         </>
     )
 }

@@ -2,6 +2,10 @@ import { useState } from "react"
 import Modal from "../../components/modal/Modal"
 // import { postManga } from "../../services/api"
 import { mangasController } from "../../services/newApi"
+import { createPortal } from "react-dom"
+import { PopUp } from "../../components/UI/NotificationPopUp/NotificationPopUp"
+
+
 
 function campoForm({ genero }) {
     return (
@@ -56,7 +60,7 @@ export default function MangaPost(props) {
 
             if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Manga Correctamente")
-                alert(res.data.message)
+                createPortal(<PopUp title="Completado" message={res.data.message} open={true} type={1}/>, document.getElementById("modalDiv"))
                 // Limpiando los campos del Formulario
                 setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
                 // Devolviendo el Formulario a su estado por defecto
@@ -68,11 +72,12 @@ export default function MangaPost(props) {
                 props.reload()
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
-                alert("Error al agregar!: ", res.data.message, "\nCode: ", res.data.code)
+                createPortal(<PopUp title={res.data.title} message={res.data.message + " " + res.data.code} open={true} type={0}/>, document.getElementById("modalDiv"))
                 setGenres([])
             }
         } catch (err) {
             console.error("Error al crear el Manga: ", err)
+            createPortal(<PopUp title="Fallo del Cliente" message={"Ocurrio un erro inesperado en el cliente"} open={true} type={2}/>, document.getElementById("modalDiv"))
             setGenres([])
         }
 

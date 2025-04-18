@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useSearchParams } from "wouter";
 
@@ -15,6 +15,13 @@ export function useSearchContent(type) {
     const [loading, setLoading] = useState(true)
     const [reload, setReload] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
+
+    const controller = useMemo(() => {
+        if (!type) {
+            return searchController
+        }
+        return type === "Mangas" ? mangasController : animesController
+    }, [type])
 
     function handlePageNav(navType) {
         /*
@@ -117,7 +124,7 @@ export function useSearchContent(type) {
     useEffect(() => {
         setLoading(true)
         const newQueryString = {}
-        const controller = type === undefined ? searchController : type === "Mangas" ? mangasController : animesController
+        
         /*
         Utilizo un objeto local en lugar de QueryString
         ya que usar QueryString me obligaria a tenerlo 
@@ -167,7 +174,7 @@ export function useSearchContent(type) {
 
 
 
-    }, [type, searchParams, reload])
+    }, [controller,searchParams, reload])
 
     /*
     La API en peticiones getAll() ahora devuelve un objeto de dos

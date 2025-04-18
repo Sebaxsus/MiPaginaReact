@@ -8,6 +8,7 @@ import Modal from '../../components/modal/ModalPatch.jsx'
 
 
 import { useGetById } from '../../hooks/useGetById.jsx'
+import { PopUp } from '../../components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 export function View(props) {
 
@@ -71,6 +72,7 @@ export function View(props) {
                         generos={generos}
                         reload={reloadData}
                     />, document.getElementById("modalDiv"))}
+                {createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv"))}
             </article>
         </>
     )

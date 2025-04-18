@@ -66,7 +66,7 @@ export function Home() {
                 totalPages={pagination.totalPages}
                 currentPage={pagination.currentPage}
             />
-            
+            {loading ? null : createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv")) }
         </>
     )
 }

@@ -12,7 +12,6 @@ import { Card } from './components/card/Card.jsx'
 
 // UI
 import { Loader } from './components/UI/Loader/Loader.jsx'
-import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 
 // Paginas
@@ -54,7 +53,6 @@ export function App() {
             </header>
             <div className='sticky top-20 z-[1]' id='modalDiv'>
                 {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
-                <PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>
             </div>
             
             <div className='Body'>

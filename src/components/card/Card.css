@@ -100,6 +100,12 @@
     /* hover:scale-110 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 */
 }
 
+.cardCont:hover {
+    .cardDescription {
+        visibility: visible;
+    }
+}
+
 /* .card-Container-view h2 {
     grid-area: titulo;
     justify-self: center;

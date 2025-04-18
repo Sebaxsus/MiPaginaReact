@@ -149,6 +149,8 @@ footer > section > ul {
     gap: 10px;
     grid-area: 1 / 1 / 1 / 4;
 
+    position: relative;
+
     /* Nuevo separador abajo */
     padding-bottom: 1rem;
     border-bottom: white solid 1px;

@@ -8,10 +8,13 @@ import { useSearchContent } from "../../hooks/useSearchContent";
 import { Card } from "../../components/card/Card";
 import { Search } from "../../components/search/Search";
 
+//UI
+import { PopUp } from "../../components/UI/NotificationPopUp/NotificationPopUp";
+import { Loader } from "../../components/UI/Loader/Loader";
+
 // Paginas
 import AnimePost from "./AnimePost";
 import { PageNavegation } from "../../components/pageNavegation/PageNavegation";
-import { Loader } from "../../components/UI/Loader/Loader";
 
 // Quité props para que el linter no me joda con que se declaro y no se usa 😡
 export function Anime() {
@@ -64,6 +67,7 @@ export function Anime() {
                 totalPages={pagination.totalPages}
                 currentPage={pagination.currentPage}
             />
+            {loading ? null : createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv")) }
         </>
     )
 

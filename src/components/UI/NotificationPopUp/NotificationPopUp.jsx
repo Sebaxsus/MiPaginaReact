@@ -1,17 +1,29 @@
 import "./NotificationPopUp.css"
 
+import { useState } from "react"
+
 import { BubbleLoader, CompleteLoader } from "../Loader/Loader"
 
 function ErrorIcon() {
     return (
-        <svg height="30" width="30" viewBox="-5 -5 20 20">
-            <circle cx="5" cy="5" r="8" stroke="red" fill="none" strokeWidth="1" />
-            <g stroke="white" strokeWidth="1">
+        <svg height="30" width="30" viewBox="-2 -2 45 45" className="ErrorLoader">
+            <circle cx="20" cy="20" r="20" stroke="red" fill="none" strokeWidth="1" />
+            <g stroke="#ff4949" strokeWidth="2">
                 <path
-                    d="M 1 1 L 9 9 M 9 1 L 1 9"
-                    r="10"
+                    d="M 10 10 L 30 32 M 30 10 L 10 32"
                 />
-                {/*<line x1="0" y1="0" x2="10" y2="10" rx="1" ry="1" /> */}
+            </g>
+        </svg>
+    )
+}
+
+function WarningIcon() {
+    return (
+        <svg height="30" width="30" viewBox="-2 -2 45 45">
+            <polygon points="20,2 40,40 0,40 20,2 " stroke="#ffee00" fill="red" id="triangle" strokeWidth={2}/>
+            <g stroke="white" fill="none" id="exclamation">
+                <path d="M 18 14 C 18 8, 22 8, 22 14 M 18 13 L 21 30 M 21 30 L 22 13"/>
+                <circle cx={21} cy={34} r={2} fill="white"/>
             </g>
         </svg>
     )
@@ -19,22 +31,32 @@ function ErrorIcon() {
 
 export function PopUp(props) {
 
-    if (!props.open) return null
+    const [open, setOpen] = useState(props.open)
+
+    if (!open) return null
 
     function close() {
         const closeTimeoutId = setTimeout(
-            () => {props.set(false)},
+            () => {setOpen(false);clearTimeout(timeoutid)},
             700
         )
     }
 
     let Icono = <ErrorIcon />
 
-    // const timeoutid = setTimeout(
-    //     () => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()},
-    //     4000
-    // )
-
+    const timeoutid = setTimeout(
+        () => {
+            const notiElement = document.getElementById("popUpContainer")
+            if (notiElement) {
+                notiElement.style.setProperty("--animation-type", "fadeOut")
+                close()
+            }
+            close()
+        },
+                
+        4000
+    )
+    
     switch (props.type) {
         case 0:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
@@ -50,6 +72,7 @@ export function PopUp(props) {
             console.log("Case 2")
             document.documentElement.style.setProperty("--popUp-bg-color", "#584300")
             document.documentElement.style.setProperty("--popUp-border-color", "#ffed00")
+            Icono = <WarningIcon />
             break
         default:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
@@ -67,7 +90,7 @@ export function PopUp(props) {
                     height={25}
                     width={25}
                     viewBox="0 0 12 12"
-                    onClick={() => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()} }
+                    onClick={() => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");clearTimeout(timeoutid);close()} }
                 >
                     <g
                         fill="none"
