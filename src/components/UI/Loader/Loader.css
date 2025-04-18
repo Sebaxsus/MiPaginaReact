@@ -176,33 +176,80 @@
 
 /* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-.CompleteLoader circle {
-    animation: fillCircle 2s forwards ease-in-out;
-}
-
 .CompleteLoader line {
     animation: changeCheck 2s forwards ease-in-out;
 }
 
-@keyframes fillCircle {
+/* 
+    Para crear una animacion que haga girar el circulo desde un punto inicial
+    y valla rellenando la circunferencia del circulo con una linea
+    se debe hallar primero la circunferencia de nuestro círculo
+
+    Para esto debemos saber que un círculo se compone de
+        1. Radio (Linea que va desde el centro cualquiera de sus puntos)
+        2. Diámetro (Longitud recta que pasa por el centro y toca dos puntos del borde de un círculo
+        3. Circunferencia (La distancia alrededor de un círculo A.K.A El perimetro del circulo)
+    
+        Ahora para calcular el Diámetro necesitamos el radio
+            Formula: Diámetro = Radio x 2
+        
+        Para Calcular la circunferencia necesitamos el Díametro.
+            Formula: Circunferencia = Diámetro x Pi
+    
+    Bonus:
+        Si se necesita el calcular la longitud de arco de un semicirculo
+        se usa la Circunferencia en terminos Pi (10Pi) dividido 2
+    
+    Para mas info https://es.khanacademy.org/math/cc-seventh-grade-math/cc-7th-geometry/cc-7th-area-circumference/a/radius-diameter-circumference
+*/
+
+/*
+    stroke-dasharray se encarga de crear una línea discontinua
+    stroke-dashoffset se encarga de crear un espacio entre la línea discontinua
+    stroke-dashoffset es el valor que se le da a la línea discontinua
+    cuando hablo de linea discontinua me refiero a la línea que se forma al dibujar el circulo
+    stroke-dasharray es el valor que se le da a la línea discontinua
+
+    para dar un efecto de relleno a la circunferencia del circulo
+    se le da un valor a stroke-dasharray y stroke-dashoffset
+    que sean iguales, esto hace que la línea discontinua se vea como una línea continua
+    y al darle un valor a stroke-dashoffset se le da un valor de 0
+    esto hace que la línea discontinua se vea como una línea continua
+
+    Por lo tanto al mover el stroke-dashoffset de 119.3 a 0
+    se va rellenando la circunferencia del circulo, ya que el espacio entre la linea discontinua se va reduciendo
+    y al llegar a 0 se ve como una línea continua o un circulo
+
+    par mas info https://nikitahl.com/svg-circle-progress
+*/
+.CompleteLoader circle {
+    stroke-dasharray: 119.3;
+    stroke-dashoffset: 119.3;
+    animation: fillCircleCircunference 2s linear normal forwards;
+}
+
+@keyframes fillCircleCircunference {
     from {
-        stroke: green;
-        fill: none;
-        stroke-width: 1;
+        /* 
+            Aqui se usa la circunferencia
+            que es C = (r x 2) x pi
+            C = (19 x 2) x pi
+        */
+        stroke-dashoffset: 119.3;
     }
     to {
-        stroke: white;
-        fill: green;
-        stroke-width: 2;
+        stroke-dashoffset: 0;
     }
 }
 
 @keyframes changeCheck {
     from {
-        stroke: green;
+        opacity: 0.6;
+        stroke: #01ff01;
         stroke-width: 1;
     }
     to {
+        opacity: 1;
         stroke: white;
         stroke-width: 3;
     }

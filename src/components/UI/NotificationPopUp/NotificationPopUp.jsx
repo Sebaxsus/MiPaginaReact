@@ -1,34 +1,50 @@
-import { useState } from "react"
-
 import "./NotificationPopUp.css"
 
 import { BubbleLoader, CompleteLoader } from "../Loader/Loader"
 
-export function PopUp(props) {
-    const [open, setOpen] = useState(props.open)
+function ErrorIcon() {
+    return (
+        <svg height="30" width="30" viewBox="-5 -5 20 20">
+            <circle cx="5" cy="5" r="8" stroke="red" fill="none" strokeWidth="1" />
+            <g stroke="white" strokeWidth="1">
+                <path
+                    d="M 1 1 L 9 9 M 9 1 L 1 9"
+                    r="10"
+                />
+                {/*<line x1="0" y1="0" x2="10" y2="10" rx="1" ry="1" /> */}
+            </g>
+        </svg>
+    )
+}
 
-    if (!open) return null
+export function PopUp(props) {
+
+    if (!props.open) return null
 
     function close() {
         const closeTimeoutId = setTimeout(
-            () => {setOpen(false)},
+            () => {props.set(false)},
             700
         )
     }
 
-    const timeoutid = setTimeout(
-        () => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()},
-        4000
-    )
-    
+    let Icono = <ErrorIcon />
+
+    // const timeoutid = setTimeout(
+    //     () => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()},
+    //     4000
+    // )
+
     switch (props.type) {
         case 0:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
             document.documentElement.style.setProperty("--popUp-border-color", "#580000")
+            Icono = <ErrorIcon />
             break
         case 1:
             document.documentElement.style.setProperty("--popUp-bg-color", "#014502")
             document.documentElement.style.setProperty("--popUp-border-color", "#77ff008c")
+            Icono = <CompleteLoader size={30}/>
             break
         case 2:
             console.log("Case 2")
@@ -36,6 +52,8 @@ export function PopUp(props) {
             document.documentElement.style.setProperty("--popUp-border-color", "#ffed00")
             break
         default:
+            document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
+            document.documentElement.style.setProperty("--popUp-border-color", "#580000")
             break
     } 
 
@@ -49,7 +67,7 @@ export function PopUp(props) {
                     height={25}
                     width={25}
                     viewBox="0 0 12 12"
-                    onClick={() => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");clearTimeout(timeoutid);close()} }
+                    onClick={() => {document.getElementById("popUpContainer").style.setProperty("--animation-type", "fadeOut");close()} }
                 >
                     <g
                         fill="none"
@@ -62,7 +80,7 @@ export function PopUp(props) {
             <p>
                 {props.message}
             </p>
-            <CompleteLoader size={30}/>
+            {Icono}
         </section>
     )
 }
