@@ -189,6 +189,10 @@ ul li > button.active {
 }
 /* Obligatorio el responsive Muelto*/
 
+input:invalid {
+    background-color: #580000;
+}
+
 @media (width > 950px) {
     .main-Cards {
         grid-template-columns: repeat(3, minmax(200px, 1fr));
