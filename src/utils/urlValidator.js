@@ -1,3 +1,17 @@
+/*
+    Al final use el atributo pattern wue viene incluido en HTML con la API The Constraint Validation API
+
+    Para poder usar este atributo con un patron personalizado de expresion regular
+    HAY QUE TENER EN CUENTA, que el patron se compilara con la bandera (flag) v
+    que es:
+
+        "Enable all unicode and character set features"
+        Source: 
+            https://regex101.com/
+            https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/pattern#overview
+    
+*/
+
 const re = /^((https?:\/\/)|www\.)[a-zA-Z0-9-]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?$|^(\/[\w\-./]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+/=]+)$/gi
 
 export function validateURL(url = "") {

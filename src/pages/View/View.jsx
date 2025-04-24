@@ -8,7 +8,7 @@ import Modal from '../../components/modal/ModalPatch.jsx'
 
 
 import { useGetById } from '../../hooks/useGetById.jsx'
-import { PopUp } from '../../components/UI/NotificationPopUp/NotificationPopUp.jsx'
+import { useMainContext } from '../../Context.jsx'
 
 export function View(props) {
 
@@ -17,6 +17,7 @@ export function View(props) {
     const routeParams = useParams()
 
     const {data, generos, loading, reloadData } = useGetById(routeParams)
+
 
     
 
@@ -33,6 +34,21 @@ export function View(props) {
     function handleClickGenre(genero) {
         props.navigate(`/${routeParams.type}?genre=${genero}`)
     }
+
+    //setIsPopUp({open: true, type: 1, title: "Completado", message: "Se cargo correctamente"})
+
+    /*
+        Array.from({ length: props.totalPages })
+        Arriba lo que hago es crear un array con un largo
+        determinado en el total de Paginas disponibles.
+
+        Como no puedo usar un for loop para devolver los elementos,
+        Ya que igual tendria que crear un arreglo y luego recorrerlo,
+        creo uno con un largo definido guardando undefined en cada posicion
+        y luego mapeo ese arreglo para devolver otro lleno de elementos html.
+
+        Esto me permite crear la cantidad de elementos que quiero usando un numero.
+    */
 
     return (
         <>
@@ -61,7 +77,22 @@ export function View(props) {
                 <p className='descripcion'>
                     {data.description}
                 </p>
-                <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60' onClick={() => { handleClickEdit() }}>
+                <details className='[grid-area:3/1/4/2;] px-2 py-3'>
+                    <summary>Capitulos Disponibles</summary>
+                    <ul className='flex gap-2 flex-col'>
+                        {Array.from({ length: data.chapter }).map((_, index) => {
+                            return (
+                                <li key={"Chapter " + index + 1} className='flex gap-5 border-b border-[#00e1ff] rounded-md px-2 py-3 m-2 justify-around items-center'>
+                                    <label htmlFor={'chapter'+index}>
+                                        {"Capitulo " + (index + 1)} 
+                                    </label>
+                                    <input type="checkbox" id={'chapter'+index}/>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </details>
+                <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60 [grid-area:3/2/4/3]' onClick={() => { handleClickEdit() }}>
                     Editar
                 </button>
                 {createPortal(
@@ -72,7 +103,6 @@ export function View(props) {
                         generos={generos}
                         reload={reloadData}
                     />, document.getElementById("modalDiv"))}
-                {createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv"))}
             </article>
         </>
     )

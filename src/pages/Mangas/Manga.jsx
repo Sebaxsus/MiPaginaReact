@@ -11,8 +11,7 @@ import MangaPost from './MangaPost'
 import { useSearchContent } from '../../hooks/useSearchContent.jsx'
 
 //UI
-import { PopUp } from '../../components/UI/NotificationPopUp/NotificationPopUp.jsx'
-import { Loader } from '../../components/UI/Loader/Loader.jsx'
+import { Loader, BubbleLoader, BubbleSpinner } from '../../components/UI/Loader/Loader.jsx'
 
 //Estilo
 import './Manga.css'
@@ -54,7 +53,7 @@ export function Mangas () {
                 />
             </search>
             {/* <button onClick={() => {reload()}} className='absolute top-2 z-10'>Reload</button> */}
-            {loading ? <Loader /> : datos.map( (manga, index) => {
+            {loading ? <BubbleSpinner /> : datos.map( (manga, index) => {
                 return (
                     <>
                         <Link key={manga.id} to={`/View/Mangas/${manga.id}`} className={"justify-items-center w-full"}>
@@ -76,7 +75,7 @@ export function Mangas () {
                 totalPages={pagination.totalPages}
                 currentPage={pagination.currentPage}
             />
-            {loading ? null : createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv")) }
+            {/*loading ? null : createPortal(<PopUp title="Completado" message="Se cargo correctamente" open={true} type={1}/>, document.getElementById("modalDiv")) */}
         </>
     )
 }

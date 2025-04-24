@@ -21,6 +21,7 @@ import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Home } from './pages/Landing/Landing.jsx'
 // import { Search } from './pages/Search/Search.jsx'
 import { useRecentContent } from './hooks/useRecentContent.jsx'
+import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 /*
 <div className='Manga'>
@@ -42,7 +43,6 @@ export function App() {
     const mainClass = location.includes("View") ? "view" : "main-Cards"
     const {data, loading} = useRecentContent(location.includes("View") ? location.slice(6,12) : location.slice(1,))
 
-
     // console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
 
     return (
@@ -52,6 +52,7 @@ export function App() {
                 <NavBar/>
             </header>
             <div className='sticky top-20 z-[1]' id='modalDiv'>
+                <PopUp />
                 {/* {location !== '/' ? ( (location === '/Mangas') ? <MangaPost reaload={reloadData}/> : ( (location.includes("View")) ? modalContent : <AnimePost reload={reloadData}/> ) ) : <></>} */}
             </div>
             

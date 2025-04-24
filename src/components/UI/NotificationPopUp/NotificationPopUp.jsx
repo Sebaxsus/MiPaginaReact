@@ -1,8 +1,8 @@
 import "./NotificationPopUp.css"
 
-import { useState } from "react"
+import { useMainContext } from "../../../Context"
 
-import { BubbleLoader, CompleteLoader } from "../Loader/Loader"
+import { CompleteLoader } from "../Loader/Loader"
 
 function ErrorIcon() {
     return (
@@ -29,15 +29,15 @@ function WarningIcon() {
     )
 }
 
-export function PopUp(props) {
-
-    const [open, setOpen] = useState(props.open)
-
-    if (!open) return null
+export function PopUp() {
+    // Desestructurar un objeto
+    const {isPopUp, setIsPopUp} = useMainContext()
+    
+    if (!isPopUp.open) return null
 
     function close() {
-        const closeTimeoutId = setTimeout(
-            () => {setOpen(false);clearTimeout(timeoutid)},
+        setTimeout(
+            () => {setIsPopUp({...isPopUp,open: false});clearTimeout(timeoutid)},
             700
         )
     }
@@ -57,7 +57,7 @@ export function PopUp(props) {
         4000
     )
     
-    switch (props.type) {
+    switch (isPopUp.type) {
         case 0:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
             document.documentElement.style.setProperty("--popUp-border-color", "#580000")
@@ -69,7 +69,6 @@ export function PopUp(props) {
             Icono = <CompleteLoader size={30}/>
             break
         case 2:
-            console.log("Case 2")
             document.documentElement.style.setProperty("--popUp-bg-color", "#584300")
             document.documentElement.style.setProperty("--popUp-border-color", "#ffed00")
             Icono = <WarningIcon />
@@ -84,7 +83,7 @@ export function PopUp(props) {
         <section className="popUpContainer" id="popUpContainer">
             <header>
                 <h3>
-                    {props.title}
+                    {isPopUp.title}
                 </h3>
                 <svg
                     height={25}
@@ -101,7 +100,7 @@ export function PopUp(props) {
                 </svg>
             </header>
             <p>
-                {props.message}
+                {isPopUp.message}
             </p>
             {Icono}
         </section>

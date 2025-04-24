@@ -1,20 +1,17 @@
-import { useState } from "react"
-import { createPortal } from "react-dom"
+import { useState, useRef } from "react"
 import { useParams } from "wouter"
 
 import { mangasController } from "../../services/newApi"
 import { animesController } from "../../services/newApi"
-import { validateURL } from "../../utils/urlValidator"
-
-import { PopUp } from "../UI/NotificationPopUp/NotificationPopUp"
+import { useMainContext } from "../../Context"
 
 function campoForm({ genero, data = [] }) {
     // console.log(genero.name, data, data.find((g) => {return g.id === genero.id}) ? true : false)
     return (
-        <div className="flex gap-2">
+        <label className="flex gap-2">
             <input type="checkbox" name="generos" id={genero.id} value={genero.id} defaultChecked={data.find((g) => {return g.id === genero.id}) ? true : false}/>
-            <label>{genero.name}</label>
-        </div>
+            {genero.name}
+        </label>
     )
 }
 
@@ -24,32 +21,36 @@ export default function Modal(props) {
     const [formDescripcion, setFormDesc] = useState(props.data.description)
     const [formUrl, setFormUrl] = useState(props.data.img)
     const [formGenres, setGenres] = useState(props.data.genre)
+    const [formChapters, setChapters] = useState(props.data.chapter)
+
+    const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
+
+    const {isPopUp, setIsPopUp} = useMainContext()
     const routeParams = useParams()
 
     if (!props.isOpen) return null
 
     const titulo = routeParams.type
-    const controller = routeParams.type === "Manga" ? mangasController : animesController
+    const controller = routeParams.type === "Mangas" ? mangasController : animesController
 
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
-        if (element.value.length === 0) {
+        if (element.value.length === 0 || element.validity.patternMismatch || element.validity.typeMismatch) {
+            //console.log("Error del validador\nLength: ", element.value.length, "\nPatternMatch: ", element.validity.patternMismatch, "\ntypeMismatch: ",element.validity.typeMismatch)
             element.placeholder = 'Debe Llenar este Campo!'
+            // El metodo setCustomValidity me permite personalizar 
+            // El mensaje de error cuando el campo esta vacio o no cumple las validaciones
+            popUpText.current.title = "Falto un Campo!"
+            popUpText.current.message = "Debe Llenar este Campo!"
+            popUpText.current.type = 2
             event.target.setCustomValidity('Debe Llenar este Campo!')
+            // El title actua como un tooltip al momento de poner el mouse encima del input
+            // element.title = "Debe Llenar este Campo!"
             element.className = "focus-visible:outline-0 text-red-300 font-bold scale-105 border rounded-md p-2 border-red-400 ml-6"
         } else {
             element.placeholder = place
-            event.target.setCustomValidity('')
+            event.target.validity.patternMismatch ? event.target.setCustomValidity("Debe ser una URL absoluta, relativa o encryptada") : event.target.setCustomValidity("")
             element.className = "focus-visible:outline-0 h-full border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
-        }
-    }
-
-    const validateFormURL = (e) => {
-        const element = document.getElementById(e.target.id)
-        if (validateURL(element.value)) {
-            setFormUrl(element.value)
-        } else {
-            element.setCustomValidity("Debe ser una url valida")
         }
     }
 
@@ -72,37 +73,41 @@ export default function Modal(props) {
                 description: formDescripcion,
                 img: formUrl,
                 genre: genreData,
+                chapter: parseInt(formChapters),
             }  
             // Limpiando los campos, Incluyendo los checkbox
             console.log("Objeto Post: ",data)
-            // e.target.reset();setFormTitle("");setFormDesc("")
-            // setFormUrl("");setGenres([]);
+            // createPortal(<PopUp title="Completado" message={"res.data.message"} ></PopUp>, document.getElementById("modalDiv"))
+            e.target.reset();setFormTitle("");setFormDesc("")
+            setFormUrl("");setGenres([]);
 
-            // try{
-            //     const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
-            //     // console.log(res)
-            //     if (res.data.code === 200 || res.status === 200) {
-            //         console.warn(`Se modifico el ${titulo} Correctamente`)
-            //         createPortal(<PopUp title="Completado" message={res.data.message} open={true} type={1}/>, document.getElementById("modalDiv"))
-            //         // Limpiando los campos del Formulario
-            //         setFormTitle("");setFormDesc("");setFormUrl("");setGenres([]);
-            //         // Devolviendo el Formulario a su estado por defecto
-            //         // Esto lo uso para reiniciar las checkbox
-            //         e.target.reset()
-            //         // Cambiando el Estado del change en App.jsx
-            //         // Para usar el Effecto que se encarga de pedir los datos a la api
-            //         // Ya que change es parte de las dependencias de este efecto
-            //         props.reload()
-            //     } else {
-            //         console.error(`Error al modificar el ${titulo}, Code: `, res.status, " Body: ", res.data, res.headers)
-            //         createPortal(<PopUp title={res.data.title} message={res.data.message + " " + res.data.code} open={true} type={0}/>, document.getElementById("modalDiv"))
-            //         setGenres([])
-            //     }
-            // } catch (err) {
-            //     console.error(`Error al modificar el ${titulo}: `, err)
-            //     createPortal(<PopUp title="Fallo del Cliente" message={"Ocurrio un erro inesperado en el cliente"} open={true} type={2}/>, document.getElementById("modalDiv"))
-            //     setGenres([])
-            // }
+            try{
+                const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
+                if (res.data.code === 200 || res.status === 200) {
+                    console.warn(`Se modifico el ${titulo} Correctamente`)
+                    popUpText.current = {title: "Completado", message: res.data.message, type: 1}
+                    // Limpiando los campos del Formulario
+                    setFormTitle("");setFormDesc("");setFormUrl("");setGenres([]);
+                    // Devolviendo el Formulario a su estado por defecto
+                    // Esto lo uso para reiniciar las checkbox
+                    e.target.reset()
+                    // Cambiando el Estado del change en App.jsx
+                    // Para usar el Effecto que se encarga de pedir los datos a la api
+                    // Ya que change es parte de las dependencias de este efecto
+                    props.reload()
+                } else {
+                    console.error(`Error al modificar el ${titulo}, Code: `, res.status, " Body: ", res.data, res.headers)
+                    popUpText.current = {title: res.data.title, message: res.data.message + " " + res.data.code, type: 0}
+                    setGenres([])
+                }
+            } catch (err) {
+                console.error(`Error al modificar el ${titulo}: `, err)
+                popUpText.current = {title: "Fallo del Cliente", message: "Ocurrio un error inesperado en el cliente", type: 2}
+                setGenres([])
+            } finally {
+                setIsPopUp({open: true, ...popUpText.current})
+                console.log(isPopUp)
+            }
     
         }
 
@@ -118,6 +123,7 @@ export default function Modal(props) {
                             <input
                                 type="text"
                                 placeholder="Titulo"
+                                title="Ingrese un titulo!"
                                 required
                                 value={formTitle}
                                 onChange={(e) => {validateFormText(e, "Titulo");setFormTitle(e.target.value)}}
@@ -130,6 +136,7 @@ export default function Modal(props) {
                             <h2>Descripcion: </h2>
                             <textarea
                                 placeholder={`Decripcion del ${titulo}`}
+                                title="Ingrese una descripcion!"
                                 required
                                 value={formDescripcion}
                                 onChange={(e) => {validateFormText(e, `Decripcion del ${titulo}`);setFormDesc(e.target.value)}}
@@ -143,12 +150,27 @@ export default function Modal(props) {
                             <input
                                 type="text"
                                 placeholder="https://ejemplo.mdn"
+                                title="Ingresa una URL!"
                                 value={formUrl}
                                 onChange={(e) => {validateFormText(e, "https://ejemplo.mdn");setFormUrl(e.target.value)}}
                                 // onKeyDown={(e) => {}}
-                                // pattern={/^((https?:\/\/)|www\.)[a-zA-Z0-9-]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?$|^(\/[\w\-./]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+/=]+)$/gi}
-                                // pattern="((https?:\/\/)|www\.)[a-zA-Z0-9-]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?|(\/[\w\-./]{3,192})|(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+/=]+)"
+                                // Doc de patter en UTILS urlValidator.js                           
+                                pattern="^((https?:\/\/)|www\.)[a-zA-Z0-9\/\-_]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?([\w\/\-_?=:;,]+)?(\.(webp|png|jpeg|jpg|gif))?$|^(\/[\w\-.\/]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+\/=]+)$"
                                 id="modalUrl"
+                                className="focus-visible:outline-0 border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
+                            />
+                        </label>
+                        <label className="flex flex-col gap-y-4">
+                            <h2>Capitulos</h2>
+                            <input 
+                                type="number"
+                                placeholder="12"
+                                title="Ingresa el numero de Capitulos Disponibles!"
+                                min={1}
+                                max={Infinity}
+                                value={formChapters}
+                                onChange={(e) => {setChapters(e.target.value)}}
+                                id="modalChapters"
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
                             />
                         </label>

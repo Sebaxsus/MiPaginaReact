@@ -10,6 +10,7 @@ export function useRecentContent(type) {
     useEffect(() => {
         setLoading(true)
         const search = type === undefined || type === "" ? "All" : type
+        let dataLoad = true
 
         Promise.all([
             searchController.getRecent({type: search}).catch(() => []),
@@ -17,11 +18,13 @@ export function useRecentContent(type) {
         ]).then(([datos, generosData]) => {
             setData(datos)
             setGeneros(generosData)
+            dataLoad = datos === undefined ? true : false
         }).catch((e) => {
-            console.error("Fallo el obtener los datos para Agregados Recientemente: ", e)
-        }).finally(
-            setLoading(false)
-        )
+            console.warn("Fallo el obtener los datos para Agregados Recientemente: ", e)
+            dataLoad = true
+        }).finally(() => {
+            setLoading(dataLoad)
+        })
 
     }, [type])
 

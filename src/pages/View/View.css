@@ -24,6 +24,8 @@
     margin: 0.5rem;
     padding: 0.5rem;
     /* justify-items: center; */
+
+    position: relative;
 }
 
 .view-Header {
@@ -99,4 +101,13 @@
     transform: translateZ(60px) translateY(2px) translateX(3px);
     transition: 300ms ease-out;
     box-shadow: #ff76ff 6px 4px 20px -5px;
+}
+
+details {
+    position: absolute;
+    width: 350px;
+    height: 175px;
+    flex-shrink: 1;
+    flex-grow: 2;
+    overflow-y: auto;
 }

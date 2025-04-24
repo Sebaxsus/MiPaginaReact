@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Modal from "../../components/modal/Modal"
 // import { postManga } from "../../services/api"
 import { mangasController } from "../../services/newApi"
 import { createPortal } from "react-dom"
 import { PopUp } from "../../components/UI/NotificationPopUp/NotificationPopUp"
+import { useMainContext } from "../../Context"
 
 
 
@@ -23,13 +24,22 @@ export default function MangaPost(props) {
     const [formUrl, setFormUrl] = useState('')
     const [formGenres, setGenres] = useState([])
 
+    const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
+
+    const {setIsPopUp} = useMainContext()
+
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
-        if (element.value.length === 0) {
+        if (element.value.length === 0 || element.validity.patternMismatch || element.validity.typeMismatch) {
             element.placeholder = 'Debe Llenar este Campo!'
             element.className = "focus-visible:outline-0 text-red-300 font-bold scale-105 border rounded-md p-2 border-red-400 ml-6"
+            popUpText.current.title = "Falto un Campo!"
+            popUpText.current.message = "Debe Llenar este Campo!"
+            popUpText.current.type = 2
+            event.target.setCustomValidity('Debe Llenar este Campo!')
         } else {
             element.placeholder = place
+            event.target.validity.patternMismatch ? event.target.setCustomValidity("Debe ser una URL absoluta, relativa o encryptada") : event.target.setCustomValidity("")
             element.className = "focus-visible:outline-0 h-full border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
         }
     }
@@ -60,7 +70,7 @@ export default function MangaPost(props) {
 
             if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Manga Correctamente")
-                createPortal(<PopUp title="Completado" message={res.data.message} open={true} type={1}/>, document.getElementById("modalDiv"))
+                popUpText.current = {title: "Completado", message: res.data.message, type: 1}
                 // Limpiando los campos del Formulario
                 setFormTitle("");setFormDesc("");setFormUrl("");setGenres([])
                 // Devolviendo el Formulario a su estado por defecto
@@ -72,13 +82,15 @@ export default function MangaPost(props) {
                 props.reload()
             } else {
                 console.error("Error al crear el Manga, Code: ", res.status, " Body: ", res.data, res.headers)
-                createPortal(<PopUp title={res.data.title} message={res.data.message + " " + res.data.code} open={true} type={0}/>, document.getElementById("modalDiv"))
+                popUpText.current = {title: res.data.title, message: res.data.message + " " + res.data.code, type: 0}
                 setGenres([])
             }
         } catch (err) {
             console.error("Error al crear el Manga: ", err)
-            createPortal(<PopUp title="Fallo del Cliente" message={"Ocurrio un erro inesperado en el cliente"} open={true} type={2}/>, document.getElementById("modalDiv"))
+            popUpText.current = {title: "Fallo del Cliente", message: "Ocurrio un error inesperado en el cliente", type: 2}
             setGenres([])
+        } finally {
+            setIsPopUp({open: true, ...popUpText})
         }
 
     }
@@ -100,8 +112,7 @@ export default function MangaPost(props) {
                                 required
                                 id="modalTitle"
                                 value={formTitle}
-                                onChange={(e) => {setFormTitle(e.target.value)}}
-                                onKeyDown={(e) => {validateFormText(e, "Titulo")}}
+                                onChange={(e) => {validateFormText(e, "Titulo");setFormTitle(e.target.value)}}
                                 className="focus-visible:outline-0 border-b ml-6 indent-2 py-2"
                              />
                         </label>
@@ -112,8 +123,7 @@ export default function MangaPost(props) {
                                 required
                                 id="modalBody"
                                 value={formDescripcion}
-                                onChange={(e) => {setFormDesc(e.target.value)}}
-                                onKeyDown={(e) => {validateFormText(e, "Descripcion del Manga")}}
+                                onChange={(e) => {validateFormText(e, "Descripcion del Manga");setFormDesc(e.target.value)}}
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-2xl indent-2 py-2 ml-6"
                             />
                         </label>
@@ -124,8 +134,7 @@ export default function MangaPost(props) {
                                 placeholder="https://ejemplo.mdn"
                                 id="modalUrl"
                                 value={formUrl}
-                                onChange={(e) => {setFormUrl(e.target.value)}}
-                                onKeyDown={(e) => {validateFormText(e, "https://ejemplo.mdn")}}
+                                onChange={(e) => {validateFormText(e, "https://ejemplo.mdn");setFormUrl(e.target.value)}}
                                 className="focus-visible:outline-0 border border-gray-300/90 rounded-xl indent-2 py-2 ml-6"
                                 />
                         </label>

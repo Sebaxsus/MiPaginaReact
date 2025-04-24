@@ -1,8 +1,10 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 
 import { useSearchParams } from "wouter";
 
 import { animesController, mangasController, searchController, generosController } from "../services/newApi";
+
+import { useMainContext } from "../Context";
 
 export function useSearchContent(type) {
     // Manejo de datos
@@ -15,6 +17,8 @@ export function useSearchContent(type) {
     const [loading, setLoading] = useState(true)
     const [reload, setReload] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
+    const {setIsPopUp} = useMainContext()
+    const popUpText = useRef({title: "Completado", message: "Se cargo correctamente122", type: 1})
 
     const controller = useMemo(() => {
         if (!type) {
@@ -124,7 +128,7 @@ export function useSearchContent(type) {
     useEffect(() => {
         setLoading(true)
         const newQueryString = {}
-        
+        let dataLoad = true
         /*
         Utilizo un objeto local en lugar de QueryString
         ya que usar QueryString me obligaria a tenerlo 
@@ -152,24 +156,28 @@ export function useSearchContent(type) {
         optimizar los tiempos de respuesta (latencia)",
         uso comillas ya que al final siguien siendo dos consultas unidas
         con el OPERADOR DE MySQL UNION ALL.
-        */
+        */   
         Promise.all([
-            controller.get(newQueryString).catch(() => []),
-            generosController.get().catch(() => [])
+            controller.get(newQueryString),
+            generosController.get()
 
         ]).then(([content, genres]) => {
-
+                
             setDatos(content.data)
             setPagination(content.pagination)
             setGeneros(genres)
-
+            popUpText.current = { type: 1, title: "Completado", message: "Se cargaron los datos con exito"}
+            dataLoad = false
         }).catch((e) => {
-
-            alert("No se pudo obtener los datos")
+            popUpText.current = { type: 0, title: "Error", message: "No se pudo obtener los datos"}
+            dataLoad = true
+            //alert("No se pudo obtener los datos")
             console.log(e)
 
-        }).finally(
-            setLoading(false)
+        }).finally(() => {
+            setIsPopUp({open: true,...popUpText.current})
+            setLoading(dataLoad)
+        }
         )
 
 
