@@ -1,0 +1,126 @@
+.modalPatch-Container {
+    position: sticky;
+    
+    margin: 0px 10px;
+    justify-items: center;
+    
+    top: 5rem;
+    z-index: 1;
+}
+
+.modalPatch {
+    display: flex;
+    flex-direction: column;
+    
+    border-radius: 1rem;
+
+    position: absolute;
+    left: 24%;
+
+    padding: 1.25rem;
+    margin-top: 0.5rem;
+    align-items: center;
+
+    width: 50%;
+    height: var(--modalHeigth);
+    /* max-height: 590px; */
+    aspect-ratio: 2 / 1;
+
+    overflow-y: scroll;
+
+    background-color: rgb(17 24 39);
+    box-shadow: 7px 2px 18px 6px rgb(29, 129, 197);
+
+    transition: all 0.3s ease-in-out;
+
+}
+
+.modalPatch > h2 {
+    padding-bottom: 0.5rem;
+
+    font-size: 1.25rem;
+    font-weight: bold;
+
+    line-height: 1.75rem;
+
+    text-decoration: #2fadcc;
+    text-decoration-line: underline;
+    text-underline-offset: 2px;
+}
+
+.modalPatch-CloseBtn {
+    position: absolute;
+    
+    padding-right: 0.5rem;
+    align-self: flex-end;
+    font-size: 20px;
+
+    cursor: pointer;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.modalPatch-Form {
+    display: flex;
+    flex-direction: column;
+
+    row-gap: 1rem;
+
+    justify-content: center;
+
+    width: 80%;
+
+    > label {
+        display: flex;
+        flex-direction: column;
+
+        row-gap: 1rem;
+    }
+
+    > label > input {
+        border-bottom: #d1d5dbe6 solid 1px;
+
+        margin-left: 1.5rem;
+        text-indent: 0.5rem;
+
+        padding: 0.5rem 0;
+    }
+
+    > label > input :focus-visible {
+        outline-width: 0;
+    }
+
+    > label > textarea {
+        border: #d1d5dbe6 solid 1px;
+        border-radius: 1rem;
+
+        text-indent: 0.5rem;
+
+        padding: 0.5rem 0;
+        margin-left: 1.5rem;
+    }
+
+    > label > textarea:focus-visible {
+        outline-width: 0;
+    }
+
+    > label > fieldset {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr) );
+        gap: 0.5rem;
+    }
+
+    > label > fieldset > label {
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+.modalPatch-Form-Btn {
+    border: #0891b2 solid 1px;
+    border-radius: 6px;
+
+    align-self: center;
+
+    padding: 0.25rem;
+}
