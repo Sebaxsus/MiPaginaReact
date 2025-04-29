@@ -32,8 +32,12 @@ function WarningIcon() {
 export function PopUp() {
     // Desestructurar un objeto
     const {isPopUp, setIsPopUp} = useMainContext()
+
+    // const start = Date.now()
     
     if (!isPopUp.open) return null
+
+    let delay = 4000
 
     function close() {
         setTimeout(
@@ -44,23 +48,11 @@ export function PopUp() {
 
     let Icono = <ErrorIcon />
 
-    const timeoutid = setTimeout(
-        () => {
-            const notiElement = document.getElementById("popUpContainer")
-            if (notiElement) {
-                notiElement.style.setProperty("--animation-type", "fadeOut")
-                close()
-            }
-            close()
-        },
-                
-        4000
-    )
-    
     switch (isPopUp.type) {
         case 0:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
             document.documentElement.style.setProperty("--popUp-border-color", "#580000")
+            delay = 12000
             Icono = <ErrorIcon />
             break
         case 1:
@@ -72,12 +64,27 @@ export function PopUp() {
             document.documentElement.style.setProperty("--popUp-bg-color", "#584300")
             document.documentElement.style.setProperty("--popUp-border-color", "#ffed00")
             Icono = <WarningIcon />
+            delay = 8000
             break
         default:
             document.documentElement.style.setProperty("--popUp-bg-color", "#580000")
             document.documentElement.style.setProperty("--popUp-border-color", "#580000")
             break
     } 
+
+    const timeoutid = setTimeout(
+        () => {
+            // console.warn("Tiempo de ejecucion tiemout: ", start - Date.now())
+            const notiElement = document.getElementById("popUpContainer")
+            if (notiElement) {
+                notiElement.style.setProperty("--animation-type", "fadeOut")
+                close()
+            }
+            close()
+        },
+                
+        delay
+    )
 
     return (
         <section className="popUpContainer" id="popUpContainer">

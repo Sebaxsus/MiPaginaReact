@@ -107,7 +107,7 @@ export default function Modal(props) {
                     props.reload()
                 } else {
                     console.error(`Error al modificar el ${titulo}, Code: `, res.status, " Body: ", res.data, res.headers)
-                    popUpText.current = {title: res.data.title, message: res.data.message + " " + res.data.code, type: 0}
+                    popUpText.current = {title: res.data.title, message: res.data.message + " " + res.status, type: 0}
                     setGenres([])
                 }
             } catch (err) {
@@ -166,7 +166,7 @@ export default function Modal(props) {
                                 onChange={(e) => {validateFormText(e, "https://ejemplo.mdn");setFormUrl(e.target.value)}}
                                 // onKeyDown={(e) => {}}
                                 // Doc de patter en UTILS urlValidator.js                           
-                                pattern="^((https?:\/\/)|www\.)[a-zA-Z0-9\/\-_]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?([\w\/\-_?=:;,]+)?(\.(webp|png|jpeg|jpg|gif))?$|^(\/[\w\-.\/]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+\/=]+)$"
+                                pattern="^((https?:\/\/)|www\.)[a-zA-Z0-9\/\-_]{3,192}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?([\w\/\&\-_?=:;,&]+)?(\.(webp|png|jpeg|jpg|gif))?$|^(\/[\w\-.\/]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+\/=]+)$"
                                 id="modalUrl"
                             />
                         </label>

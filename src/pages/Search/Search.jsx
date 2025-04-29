@@ -1,5 +1,5 @@
 import { Link, useSearchParams, useParams } from "wouter";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { Card } from "../../components/card/Card";
 import { mangasController, animesController, generosController } from '../../services/newApi'
@@ -10,7 +10,7 @@ export function Search() {
     const [datos, setDatos] = useState([])
     const [generos, setGeneros] = useState([])
     const [QueryString, setQueryString] = useState({})
-    const [searchTitle, setSearchTitle] = useState("")
+    const searchTitle = useRef(null)
     const [loading, setLoading] = useState(true)
     const [searchParams, setSearchParams] = useSearchParams()
     const routeParams = useParams()
@@ -66,7 +66,7 @@ export function Search() {
     function handleSearchBarAction(e) {
         e.preventDefault()
 
-        if (searchTitle.length === 0) {
+        if (searchTitle.current.value.length === 0) {
             setSearchParams((prev) => {
                 prev.delete("title")
                 return prev
@@ -75,7 +75,7 @@ export function Search() {
             })
         } else {
             setSearchParams((prev) => {
-                prev.set("title", searchTitle)
+                prev.set("title", searchTitle.current.value)
                 return prev
             },{
                 replace: true
@@ -140,7 +140,7 @@ export function Search() {
                 </ul>
                 <form onSubmit={(e) => { handleSearchBarAction(e)} } className="search-Form">
                     <div>
-                        <input type="search" name="title" id={`${routeParams.type}searchBar`} onChange={(e) => {setSearchTitle(e.target.value)}}/>
+                        <input type="search" name="title" id={`${routeParams.type}searchBar`} ref={searchTitle}/>
                         <button>
                             Buscar
                         </button>

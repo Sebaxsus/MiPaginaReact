@@ -83,13 +83,28 @@ export function View(props) {
                 <details className='[grid-area:3/1/4/2;] px-2 py-3'>
                     <summary>Capitulos Disponibles</summary>
                     <ul className='flex gap-2 flex-col'>
+                        {/* 
+                            https://getcssscan.com/css-checkboxes-examples
+                            DE aqui me robe el checkbox toca ver como funciona y hacer uno 🫠
+                        */}
                         {Array.from({ length: data.chapter }).map((_, index) => {
                             return (
-                                <li key={"Chapter " + index + 1} className='flex gap-5 border-b border-[#00e1ff] rounded-md px-2 py-3 m-2 justify-around items-center'>
-                                    <label htmlFor={'chapter'+index}>
+                                <li key={"Chapter " + index + 1} className='flex gap-5 rounded-md px-2 py-3 m-2 items-center'>
+                                    {/* <label htmlFor={'chapter'+index}>
                                         {"Capitulo " + (index + 1)} 
-                                    </label>
-                                    <input type="checkbox" id={'chapter'+index}/>
+                                    </label> 
+                                    <input type="checkbox" id={'chapter'+index}/> */}
+                                    <div className="checkbox-wrapper-11">
+                                        <input 
+                                            id={'chapter'+index}
+                                            type="checkbox"
+                                            name="r"
+                                            value="2"
+                                        />
+                                        <label htmlFor={'chapter'+index}>
+                                            {"Capitulo " + (index + 1)}
+                                        </label>
+                                    </div>
                                 </li>
                             )
                         })}

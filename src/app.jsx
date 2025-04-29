@@ -72,7 +72,7 @@ export function App() {
     // https://bencentra.com/code/2015/02/27/optimizing-window-resize.html
     // https://css-tricks.com/debouncing-throttling-explained-examples/
     // https://remysharp.com/2010/07/21/throttling-function-calls
-    //  https://es.linkedin.com/posts/midudev_crea-una-funci%C3%B3n-debounce-en-react-en-s%C3%B3lo-activity-7048968258250526720-AEqR#:~:text=El%20%22debouncing%22%20es%20una%20t%C3%A9cnica%20que%20se,la%20actualizaci%C3%B3n%20del%20estado%20en%20un%20componente.&text=En%20lugar%20de%20eso%2C%20con%20el%20debounce%2C,por%20si%20el%20usuario%20vuelve%20a%20escribir.
+    // https://es.linkedin.com/posts/midudev_crea-una-funci%C3%B3n-debounce-en-react-en-s%C3%B3lo-activity-7048968258250526720-AEqR#:~:text=El%20%22debouncing%22%20es%20una%20t%C3%A9cnica%20que%20se,la%20actualizaci%C3%B3n%20del%20estado%20en%20un%20componente.&text=En%20lugar%20de%20eso%2C%20con%20el%20debounce%2C,por%20si%20el%20usuario%20vuelve%20a%20escribir.
 
     El Debouncing y el Throttling son tecnicas de optimizacion
     de eventos que se utilizan para limitar la cantidad de veces que

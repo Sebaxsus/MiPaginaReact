@@ -136,9 +136,10 @@ export default function MangaPost(props) {
                         <label>
                             <h2>URL de la Imagen:</h2>
                             <input 
-                                type="url"
+                                type="text"
                                 placeholder="https://ejemplo.mdn"
                                 id="modalUrl"
+                                pattern="^((https?:\/\/)|www\.)[a-zA-Z0-9\/\-_]{3,}(\.[a-zA-Z]{2,})(\.[a-zA-Z]{2,})?([\w\/\-_?=:;,\&]+)?(\.(webp|png|jpeg|jpg|gif))?$|^(\/[\w\-.\/]{3,192})$|^(data:image\/(webp|png|jpeg|jpg|gif);base64,[a-zA-Z0-9+\/=]+)$"
                                 value={formUrl}
                                 onChange={(e) => {validateFormText(e, "https://ejemplo.mdn");setFormUrl(e.target.value)}}
                                 />
