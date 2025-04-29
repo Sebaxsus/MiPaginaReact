@@ -1,8 +1,10 @@
 import "./PageNavegation.css"
 
+import { memo } from "react"
+
 import { ArrowSVG } from "../UI/Arrows/Arrow"
 
-export function PageNavegation(props) {
+export const PageNavegation =  memo(function PageNavegation(props) {
     /*
         Array.from({ length: props.totalPages })
         Arriba lo que hago es crear un array con un largo
@@ -39,4 +41,4 @@ export function PageNavegation(props) {
                 </button>
         </section>
     )
-}
+})

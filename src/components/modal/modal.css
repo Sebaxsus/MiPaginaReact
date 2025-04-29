@@ -1,4 +1,4 @@
-.modalPatch-Container {
+.modal-Container {
     position: sticky;
     
     margin: 0px 10px;
@@ -8,7 +8,7 @@
     z-index: 1;
 }
 
-.modalPatch {
+.modal {
     display: flex;
     flex-direction: column;
     
@@ -26,7 +26,8 @@
     /* max-height: 590px; */
     aspect-ratio: 2 / 1;
 
-    overflow-y: scroll;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
 
     background-color: rgb(17 24 39);
     box-shadow: 7px 2px 18px 6px rgb(29, 129, 197);
@@ -35,7 +36,7 @@
 
 }
 
-.modalPatch > h2 {
+.modal > h2 {
     padding-bottom: 0.5rem;
 
     font-size: 1.25rem;
@@ -48,7 +49,7 @@
     text-underline-offset: 2px;
 }
 
-.modalPatch-CloseBtn {
+.modal-CloseBtn {
     position: absolute;
     
     padding-right: 0.5rem;
@@ -60,7 +61,7 @@
     background-color: transparent;
 }
 
-.modalPatch-Form {
+.modal-Form {
     display: flex;
     flex-direction: column;
 
@@ -78,16 +79,27 @@
     }
 
     > label > input {
-        border-bottom: #d1d5dbe6 solid 1px;
+        border: #d1d5dbe6 solid 1px;
+
+        border-radius: 0.75rem;
 
         margin-left: 1.5rem;
         text-indent: 0.5rem;
 
         padding: 0.5rem 0;
+
+        transition-duration: 300ms;
+        transition-timing-function: ease-in-out;
     }
 
-    > label > input :focus-visible {
-        outline-width: 0;
+    > label:first-child > input {
+        border: none;
+        border-bottom: #d1d5dbe6 solid 1px;
+    }
+
+    > label > input:focus-visible {
+        outline-width: 0.5;
+        transform: scale(1.08);
     }
 
     > label > textarea {
@@ -98,10 +110,14 @@
 
         padding: 0.5rem 0;
         margin-left: 1.5rem;
+
+        transition-duration: 300ms;
+        transition-timing-function: ease-in-out;
     }
 
     > label > textarea:focus-visible {
-        outline-width: 0;
+        outline-width: 0.5;
+        transform: scale(1.08);
     }
 
     > label > fieldset {
@@ -116,11 +132,31 @@
     }
 }
 
-.modalPatch-Form-Btn {
+.modal-Form-Btn {
     border: #0891b2 solid 1px;
     border-radius: 6px;
 
     align-self: center;
 
     padding: 0.25rem;
+}
+
+.modalPost-Btn {
+    position: absolute;
+
+    top: 7rem;
+    left: 1.25rem;
+
+    border: #d1d5dbe6 solid 1px;
+    border-radius: 9999px;
+
+    padding: 0.5rem;
+
+    backdrop-filter: blur(16px) brightness(0.5);
+
+    cursor: pointer;
+}
+
+.modalPost-Btn:hover {
+    background-color: #9ca3af80;
 }

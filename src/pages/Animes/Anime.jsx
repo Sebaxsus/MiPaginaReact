@@ -1,6 +1,7 @@
 // Funcionalidades
 import { Link } from "wouter";
 import { createPortal } from "react-dom";
+import { memo } from "react";
 // Hook Personalizado
 import { useSearchContent } from "../../hooks/useSearchContent";
 
@@ -17,7 +18,7 @@ import AnimePost from "./AnimePost";
 import { PageNavegation } from "../../components/pageNavegation/PageNavegation";
 
 // Quité props para que el linter no me joda con que se declaro y no se usa 😡
-export function Anime() {
+export const Anime =  memo(function Anime() {
     
     const {
         datos,
@@ -72,6 +73,7 @@ export function Anime() {
     )
 
 }
+)
 
 //console.log(props.data)
 // Este esta mejor estructurado pero como esta diseñado desde antes el encargado del grid es el padre

@@ -60,18 +60,30 @@ export function Card({ data = {}, cardClass, type }) {
         // Con tailwind se supone que la propieda para esto es
         // bg-[url(/img/mountains.jpg)] en mi caso seria bg-[url(${img.slice(1,)})]
         // Pero esto no funciona \_(シ)_/
-        <article style={{ backgroundImage: `url(${data.img.startsWith('.') ? data.img.slice(1,) : data.img})` }} aria-label={`Imagen de fondo del ${type} ${data.title}`} className={`${cardClass} cardCont aspect-[15/18] grid grid-rows-2 border border-[#f5f5f5] rounded-lg relative text-ellipsis duration-300 bg-cover`}>
+        <article 
+            style={{ backgroundImage: `url(${data.img.startsWith('.') ? data.img.slice(1,) : data.img})` }} 
+            aria-label={`Imagen de fondo del ${type} ${data.title}`}
+            className={`${cardClass} cardCont aspect-[15/18] grid grid-rows-2 border border-[#f5f5f5] rounded-lg relative text-ellipsis duration-300 bg-cover`}
+        >
 
-            <h2 className="text-center justify-self-center border-b-2 border-b-[#70deff] w-4/5 backdrop-blur backdrop-brightness-75 h-fit mt-1 rounded-2xl">
+            <h2 
+                className="text-center justify-self-center border-b-2 border-b-[#70deff] w-4/5 backdrop-blur backdrop-brightness-75 h-fit mt-1 rounded-2xl"
+            >
                 {data.title}
             </h2>
 
             <section className="flex flex-col gap-y-4 px-2 pt-2 justify-evenly relative">
-                <p className={data.description === undefined ? "hidden" : "cardDescription text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-2 backdrop-blur-md backdrop-brightness-[0.6] bg-[#242424d2] rounded-2xl absolute size-[220px] bottom-[75%] right-[92%] invisible duration-300"} aria-label={`Descripcion del ${type} ${data.titulo}`}>
+                <p 
+                    className={data.description === undefined ? "hidden" : "cardDescription text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-2 backdrop-blur-md backdrop-brightness-[0.6] bg-[linear-gradient(180deg,black_80%,transparent)] rounded-2xl absolute size-[220px] bottom-[75%] right-[92%] invisible duration-300"}
+                    aria-label={`Descripcion del ${type} ${data.titulo}`}
+                >
                     {data.description}
                 </p>
 
-                <ul className="flex gap-x-3 pb-1 justify-center items-end flex-wrap text-xs" aria-label={`Lista de Genero del ${type} ${data.title}`}>
+                <ul 
+                    className="flex gap-x-3 pb-1 justify-center items-end flex-wrap text-xs" 
+                    aria-label={`Lista de Genero del ${type} ${data.title}`}
+                >
                     {genre.map((genero, index) => {
                         return (
                             <li
@@ -124,3 +136,15 @@ export function Card({ data = {}, cardClass, type }) {
 //     </article>
 // )
 
+
+{/* <div className="bg-[linear-gradient(180deg,blue_70%,transparent)] absolute p-2 backdrop-blur-md backdrop-brightness-[0.6] rounded-2xl size-[220px] bottom-[75%] right-[92%] overflow-clip">
+        <p 
+            className={data.description === undefined ? "hidden" : "cardDescription text-clip overflow-auto indent-[2ch] [scrollbar-width:none] [scrollbar-gutter:stable] [scrollbar-color:#244_#242424] p-2 backdrop-blur-md backdrop-brightness-[0.6] bg-[#242424d2] absolute size-[220px] rounded-2xl invisible duration-300"}
+            aria-label={`Descripcion del ${type} ${data.titulo}`}
+        >
+            {data.description}
+        </p>
+        <div
+            className="rounded-2xl absolute bottom-[0%] right-[0%] w-full bg-black/5 p-2 backdrop-blur-md backdrop-brightness-[0.6] text-center"
+        >⬇️</div>
+    </div> */}

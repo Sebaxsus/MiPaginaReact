@@ -73,6 +73,9 @@ export function View(props) {
                             )
                         })}
                     </ul>
+                    <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60' onClick={() => { handleClickEdit() }}>
+                        Editar
+                    </button>
                 </section>
                 <p className='descripcion'>
                     {data.description}
@@ -92,9 +95,7 @@ export function View(props) {
                         })}
                     </ul>
                 </details>
-                <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60 [grid-area:3/2/4/3]' onClick={() => { handleClickEdit() }}>
-                    Editar
-                </button>
+                
                 {createPortal(
                     <Modal
                         isOpen={isModalOpen}

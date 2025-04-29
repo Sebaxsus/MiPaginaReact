@@ -11,7 +11,7 @@ import MangaPost from './MangaPost'
 import { useSearchContent } from '../../hooks/useSearchContent.jsx'
 
 //UI
-import { Loader, BubbleLoader, BubbleSpinner } from '../../components/UI/Loader/Loader.jsx'
+import { BubbleSpinner } from '../../components/UI/Loader/Loader.jsx'
 
 //Estilo
 import './Manga.css'
