@@ -51,7 +51,7 @@ export const Anime =  memo(function Anime() {
                         <Link key={anime.id} to={`/View/Animes/${anime.id}`} className={"justify-items-center w-full"}>
                             <Card
                                 className="border-red-50"
-                                key={index}
+                                key={"Anime"+index}
                                 data={anime}
                                 cardClass={"Card w-4/5 min-w-[250px]"}
                                 type={"Anime"}

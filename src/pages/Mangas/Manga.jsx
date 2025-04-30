@@ -58,7 +58,7 @@ export function Mangas () {
                     <>
                         <Link key={manga.id} to={`/View/Mangas/${manga.id}`} className={"justify-items-center w-full"}>
                             <Card
-                                key={index}
+                                key={"Manga"+index}
                                 data={manga}
                                 cardClass={"Card w-4/5 min-w-[250px]"}
                                 type={"Manga"}

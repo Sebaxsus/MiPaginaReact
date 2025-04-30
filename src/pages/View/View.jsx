@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams } from 'wouter'
 
@@ -8,7 +8,9 @@ import Modal from '../../components/modal/ModalPatch.jsx'
 
 
 import { useGetById } from '../../hooks/useGetById.jsx'
-import { useMainContext } from '../../Context.jsx'
+
+import { saveData, readData } from '../../utils/localStorageData.js'
+// import { useMainContext } from '../../Context.jsx'
 
 export function View(props) {
 
@@ -18,7 +20,15 @@ export function View(props) {
 
     const {data, generos, loading, reloadData } = useGetById(routeParams)
 
+    // const AnimeData = readAnimeData({id: routeParams.id})
 
+    const ChapterData = useMemo(() => {
+
+        return readData({id: routeParams.id, type: routeParams.type})
+
+    }, [routeParams])
+
+    // console.log("Data: ", AnimeData)
     
 
     if (loading) {
@@ -33,6 +43,29 @@ export function View(props) {
 
     function handleClickGenre(genero) {
         props.navigate(`/${routeParams.type}?genre=${genero}`)
+    }
+
+    function handleChangeCheckBox(target) {
+        // console.log("Valor: ", target.value)
+        saveData(
+            {
+                id: routeParams.id,
+                chapterViewed: target.checked ? parseInt(target.value) : parseInt(target.value) - 1,
+                type: routeParams.type,
+            }
+        )
+        if (target.checked) {
+            for (let index = 1; index < parseInt(target.value); index++) {
+                // console.log(index)
+                document.getElementById(`chapter${index}`).checked = true
+                
+            }
+        } else {
+            for (let index = parseInt(target.value); index <= data.chapter; index++) {
+                // console.log(index)
+                document.getElementById("chapter"+index).checked = false
+            }
+        }
     }
 
     //setIsPopUp({open: true, type: 1, title: "Completado", message: "Se cargo correctamente"})
@@ -80,7 +113,7 @@ export function View(props) {
                 <p className='descripcion'>
                     {data.description}
                 </p>
-                <details className='[grid-area:3/1/4/2;] px-2 py-3'>
+                <details className='[grid-area:3/1/4/2;] px-2 py-3' open>
                     <summary>Capitulos Disponibles</summary>
                     <ul className='flex gap-2 flex-col'>
                         {/* 
@@ -89,19 +122,21 @@ export function View(props) {
                         */}
                         {Array.from({ length: data.chapter }).map((_, index) => {
                             return (
-                                <li key={"Chapter " + index + 1} className='flex gap-5 rounded-md px-2 py-3 m-2 items-center'>
+                                <li key={"Chapter " + (index + 1)} className='flex gap-5 rounded-md px-2 py-3 m-2 items-center'>
                                     {/* <label htmlFor={'chapter'+index}>
                                         {"Capitulo " + (index + 1)} 
                                     </label> 
                                     <input type="checkbox" id={'chapter'+index}/> */}
                                     <div className="checkbox-wrapper-11">
                                         <input 
-                                            id={'chapter'+index}
+                                            id={'chapter'+ (index+1)}
                                             type="checkbox"
                                             name="r"
-                                            value="2"
+                                            value={index + 1}
+                                            defaultChecked={(index + 1) <= ChapterData.chapterViewed ? true : false}
+                                            onChange={(e) => {handleChangeCheckBox(e.target)}}
                                         />
-                                        <label htmlFor={'chapter'+index}>
+                                        <label htmlFor={'chapter'+ (index+1)}>
                                             {"Capitulo " + (index + 1)}
                                         </label>
                                     </div>

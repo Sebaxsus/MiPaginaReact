@@ -50,7 +50,7 @@ export function Home() {
                     <>
                         <Link key={item.id} to={`/View/${item.type}/${item.id}`} className={"justify-items-center w-full"}>
                             <Card
-                                key={index}
+                                key={"Landing"+index}
                                 data={item}
                                 cardClass={"w-4/5 hover:scale-105 hover:shadow-lg hover:shadow-cyan-300/90 duration-300 min-w-[250px]"}
                                 type={item.type}
