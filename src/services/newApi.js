@@ -291,6 +291,51 @@ export class searchController {
         }
     }
 }
+
+// ----------------------------------------------------------------------------------------------------------------------------------------
+
+export class authController {
+    // Para usar el token y pasar a contenido bloqueado se debe mandar el header
+    // 'Autorization': "basic ${token}"
+    // Res Object
+    // {
+    //   "access_token": "ab7e63c3e3c5edbcc0a31a8902da8e9e87f9cbb131324d8283c57ac76ad19d15",
+    //   "token_type": "Bearer",
+    //   "expires_in": 3600
+    // }
+    static async login({data}) {
+        console.log("PRe axios: ", data)
+        try {
+            console.log(data.email, data.password)
+            const res = await axios.post(`${BASE_URL}/auth/login`,data, {
+                headers: {
+                    'Authorization': `Basic ${btoa(`${data.email}:${data.password}`)}`
+                }
+            })
+
+            return res
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async register({ data }) {
+        // Antes de llegar aqui password debe ser un string Base64
+
+        try {
+
+            const res = await axios.post(`${BASE_URL}/auth/register`, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            return res
+        } catch (e) {
+            return e
+        }
+    }
+}
 /*
 newApi.js:82 Fallo el metodo get Anime, Error:  
 AxiosError {message: 'Network Error', name: 'AxiosError', code: 'ERR_NETWORK', config: {…}, request: XMLHttpRequest, …}

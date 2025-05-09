@@ -19,6 +19,7 @@ import { View } from './pages/View/View.jsx'
 import { Anime } from './pages/Animes/Anime.jsx'
 import { Mangas } from './pages/Mangas/Manga.jsx'
 import { Home } from './pages/Landing/Landing.jsx'
+import { Auth } from './pages/Auth/Auth.jsx'
 // import { Search } from './pages/Search/Search.jsx'
 import { useRecentContent } from './hooks/useRecentContent.jsx'
 import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
@@ -41,7 +42,10 @@ export function App() {
     const [location, navigate] = useLocation()
 
     const mainClass = location.includes("View") ? "view" : "main-Cards"
-    const {data, loading} = useRecentContent(location.includes("View") ? location.slice(6,12) : location.slice(1,))
+    // Si la url tiene View saquele "Animes" o "Mangas" de /View/Animes/7f681b26-1709-11f0-a11a-a8a15907d61f si no solo quitele "/"
+    const {data, loading} = useRecentContent(location.includes("View") ? location.slice(6,12) : location.slice(1,).includes("Login") || location.slice(1,).includes("Register") ? undefined : location.slice(1,))
+    // const {data, loading } = useRecentContent("Animes")
+    // console.log(location)
 
     // console.log(location !== '/' ? ((location === '/Mangas') ? "MangaPost" : (location.includes("View")) ? "ModalView" : "AnimePost") : "No", location)
 
@@ -190,6 +194,12 @@ export function App() {
                             </Route> */}
                             <Route path={"/"}>
                                 <Home />
+                            </Route>
+                            <Route path={"/Login"}>
+                                <Auth />
+                            </Route>
+                            <Route path={"/Register"}>
+                                <Auth />
                             </Route>
                             <Route
                                 path={"/Mangas"}

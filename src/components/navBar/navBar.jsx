@@ -1,14 +1,35 @@
 import { Link, useLocation  } from 'wouter'
 
+import { useMainContext } from '../../Context'
 import './navBar.css'
 
 export function NavBar() {
     const [location] = useLocation()
+    const { isLogged } = useMainContext()
+
+    function validateLog() {
+
+        if (isLogged.logged) {
+            return (
+                <>
+                    <img src='/Eula.jpg' alt='imagen' className='nav-logo [mask-image:radial-gradient(black_60%,transparent_80%)] aspect-square'></img>
+                    <h1>{isLogged.user.name}</h1>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
+                    <h1>Probando Siuu</h1>
+                </>
+            )
+        }
+    }
+
     return (
         <>
             <nav className="nav-text">
-                <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
-                <h1>Probando Siuu</h1>
+                {validateLog()}
                 {/* {(location === '/Mangas') ? <Post setChange={props.setChange}/> : <AnimePost setChange={props.setChange}/>} */}
             </nav>
 
