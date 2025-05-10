@@ -28,6 +28,34 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    align-items: center;
+}
+
+.nav-text-user {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid transparent;
+    width: 100px;
+    animation: fadeout-user 300ms linear normal;
+    /* transition-duration: 300ms; */
+}
+
+.nav-text-user:hover {
+    border: 1px solid currentColor;
+    width: 150px;
+    animation: fadein-user linear 300ms normal ;
+    justify-content: space-between;
+    h1 {
+        visibility: visible;
+        text-align: right;
+        padding-right: 1.5rem;
+    } 
+}
+
+.nav-text-user > h1 {
+    visibility: hidden;
 }
 
 .nav-Title {
@@ -99,4 +127,54 @@
     transform: translate3d(3px, 5px, 10px);
     box-shadow: #ff76ff 0px 5px 25px -5px;
     transition: 300ms ease-out;
+}
+
+.nav-text > button {
+    outline: 1px solid rgb(255 255 255);
+    padding: 2px;
+    border-radius: .5rem;
+    transition: 300ms ease-in-out;
+    background-color: #0000007d;
+}
+
+.nav-text > button:hover {
+    color: rgb(126, 178, 255);
+    transform: translate3d(2px, 2px, 10px);
+    /* 
+        Para saber mas sobre las funciones de transicion por tiempo
+        ver https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function
+    */
+    transition: 300ms ease-in-out;
+}
+
+.nav-text > button:focus {
+    color: rgb(255, 255, 255);
+    outline: 1px solid rgb(0, 225, 255);
+    transform: translate3d(3px, 5px, 10px);
+    box-shadow: #ff76ff 0px 5px 25px -5px;
+    transition: 300ms ease-out;
+}
+
+@keyframes fadein-user {
+    from {
+        border: 1px solid transparent;
+        width: 100px;
+        opacity: 0.7;
+    } to {
+        border: 1px solid currentColor;
+        width: 150px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout-user {
+    from {
+        border: 1px solid currentColor;
+        width: 150px;
+        opacity: 1;
+    } to {
+        border: 1px solid transparent;
+        width: 100px;
+        opacity: 0.7;
+    }
 }

@@ -4,7 +4,7 @@ import { useMainContext } from '../../Context'
 import './navBar.css'
 
 export function NavBar() {
-    const [location] = useLocation()
+    const [location, navigate] = useLocation()
     const { isLogged } = useMainContext()
 
     function validateLog() {
@@ -12,7 +12,7 @@ export function NavBar() {
         if (isLogged.logged) {
             return (
                 <>
-                    <img src='/Eula.jpg' alt='imagen' className='nav-logo [mask-image:radial-gradient(black_60%,transparent_80%)] aspect-square'></img>
+                    <img src='/Eula.jpg' alt='imagen' className='nav-logo [mask-image:radial-gradient(black_60%,transparent_80%)] aspect-square h-10'></img>
                     <h1>{isLogged.user.name}</h1>
                 </>
             )
@@ -21,6 +21,12 @@ export function NavBar() {
                 <>
                     <img src='/Eula.jpg' alt='imagen' className='nav-logo'></img>
                     <h1>Probando Siuu</h1>
+                    <button onClick={() => {navigate('/Login')}}>
+                        Login
+                    </button>
+                    <button onClick={() => {navigate('/Register')}}>
+                        Register
+                    </button>
                 </>
             )
         }
@@ -28,7 +34,7 @@ export function NavBar() {
 
     return (
         <>
-            <nav className="nav-text">
+            <nav className={isLogged.logged ? "nav-text-user border py-1 rounded-xl m-2" : "nav-text"}>
                 {validateLog()}
                 {/* {(location === '/Mangas') ? <Post setChange={props.setChange}/> : <AnimePost setChange={props.setChange}/>} */}
             </nav>

@@ -2,6 +2,7 @@
 // Funcionalidades
 import { Link } from 'wouter'
 import { createPortal } from 'react-dom'
+import { useMainContext } from '../../Context.jsx'
 
 // Componentes
 import { Card } from '../../components/card/Card'
@@ -37,7 +38,7 @@ export function Mangas () {
         handlePageNav
     } = useSearchContent("Mangas") 
 
-    
+    const { isLogged } = useMainContext()
 
     // console.log("Generos: ", props.generos)
     const queryGenre = Number.parseInt(QueryString.genre)
@@ -64,7 +65,7 @@ export function Mangas () {
                                 type={"Manga"}
                             />
                         </Link>
-                        {createPortal(<MangaPost reload={reload} generos={generos}/>, document.getElementById("modalDiv"))}
+                        {isLogged.logged ? createPortal(<MangaPost reload={reload} generos={generos}/>, document.getElementById("modalDiv")) : null}
                     </>
                 )
             })}
