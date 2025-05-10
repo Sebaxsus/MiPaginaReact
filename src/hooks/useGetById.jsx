@@ -2,18 +2,21 @@ import { useState, useEffect } from "react";
 
 import { animesController, mangasController, generosController } from "../services/newApi";
 
+import { useMainContext } from "../Context";
+
 export function useGetById(routeParams) {
     const [data, setData] = useState({})
     const [generos, setGeneros] = useState([])
     const [loading, setLoading] = useState(true)
 
+    const { isLogged } = useMainContext()
 
     useEffect(() => {
         setLoading(true)
 
         const controller = routeParams.type === "Mangas" ? mangasController : animesController
         Promise.all([
-            controller.getById({ id: routeParams.id }).catch(() => []),
+            controller.getById({ id: routeParams.id, token: isLogged.token }).catch(() => []),
             generosController.get().catch(() => []).catch(() => [])
         ]).then(([data, generos]) => {
             setData(data)
@@ -35,7 +38,7 @@ export function useGetById(routeParams) {
         setLoading(true)
         const controller = routeParams.type === "Mangas" ? mangasController : animesController
         Promise.all([
-            controller.getById({ id: routeParams.id }).catch(() => []),
+            controller.getById({ id: routeParams.id, token: isLogged.token }).catch(() => []),
             generosController.get().catch(() => []).catch(() => [])
         ]).then(([data, generos]) => {
             setData(data)

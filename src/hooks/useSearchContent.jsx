@@ -17,7 +17,7 @@ export function useSearchContent(type) {
     const [loading, setLoading] = useState(true)
     const [reload, setReload] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
-    const {setIsPopUp} = useMainContext()
+    const {setIsPopUp, isLogged} = useMainContext()
     const popUpText = useRef({title: "Completado", message: "Se cargo correctamente122", type: 1})
 
     const controller = useMemo(() => {
@@ -148,6 +148,7 @@ export function useSearchContent(type) {
         searchParams.forEach((value, key) => {
             newQueryString[key] = value
         })
+        newQueryString["token"] = isLogged.token
         setQuerySting(newQueryString)
         /*
         Aqui utlizo el controlador para la ruta

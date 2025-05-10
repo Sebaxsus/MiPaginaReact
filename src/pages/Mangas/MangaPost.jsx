@@ -33,7 +33,7 @@ export default function MangaPost(props) {
 
     const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
 
-    const {setIsPopUp} = useMainContext()
+    const {setIsPopUp, isLogged} = useMainContext()
 
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
@@ -74,7 +74,7 @@ export default function MangaPost(props) {
             // console.log(newManga)
         try{
             // No estoy esperando la promesa 🤨
-            const res = await mangasController.post(JSON.stringify(newManga))
+            const res = await mangasController.post({body: JSON.stringify(newManga), token: isLogged.token})
 
             if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Manga Correctamente")

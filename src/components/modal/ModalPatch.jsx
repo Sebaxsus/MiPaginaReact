@@ -27,7 +27,7 @@ export default function Modal(props) {
 
     const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
 
-    const {setIsPopUp} = useMainContext()
+    const {setIsPopUp, isLogged} = useMainContext()
     const routeParams = useParams()
 
     if (!props.isOpen) return null
@@ -92,7 +92,7 @@ export default function Modal(props) {
             setFormUrl("");setGenres([]);
 
             try{
-                const res = await controller.update({id: routeParams.id,body: JSON.stringify(data)})
+                const res = await controller.update({id: routeParams.id, body: JSON.stringify(data), token: isLogged.token})
                 if (res.data.code === 200 || res.status === 200) {
                     console.warn(`Se modifico el ${titulo} Correctamente`)
                     popUpText.current = {title: "Completado", message: res.data.message, type: 1}

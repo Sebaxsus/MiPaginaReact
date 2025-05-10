@@ -22,6 +22,7 @@ import { Home } from './pages/Landing/Landing.jsx'
 import { Auth } from './pages/Auth/Auth.jsx'
 // import { Search } from './pages/Search/Search.jsx'
 import { useRecentContent } from './hooks/useRecentContent.jsx'
+import { useGetToken } from './hooks/useGetToken.jsx'
 import { PopUp } from './components/UI/NotificationPopUp/NotificationPopUp.jsx'
 
 /*

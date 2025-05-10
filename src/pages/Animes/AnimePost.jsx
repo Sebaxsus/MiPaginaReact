@@ -24,7 +24,7 @@ export default function AnimePost(props) {
 
     const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
 
-    const {setIsPopUp} = useMainContext()
+    const {setIsPopUp, isLogged} = useMainContext()
 
     const validateFormText = (event, place = '') => {
         const element = document.getElementById(event.target.id)
@@ -66,7 +66,7 @@ export default function AnimePost(props) {
         // setFormUrl("");setGenres([]);
         try{
             // No estoy esperando la promesa 🤨
-            const res = await animesController.post({body: JSON.stringify(newAnime)})
+            const res = await animesController.post({body: JSON.stringify(newAnime), token: isLogged.token})
 
             if (res.status === 201 || res.data.code === 201) {
                 console.warn("Se agrego el Anime Correctamente")

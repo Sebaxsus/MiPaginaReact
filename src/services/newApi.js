@@ -22,24 +22,42 @@ const BASE_URL = "http://localhost:3000"
 
 export class mangasController {
 
-    static async get ({title, genre, page}) {
+    static async get ({title, genre, page, token}) {
         // console.log(title, genre)
+        console.log("Token: ", token)
+        // token tiene access_token, token_type, expires_in
         try {
             if (title === undefined && genre === undefined) {
-                const res = await axios.get(`${BASE_URL}/mangas?page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/mangas?page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             }
 
             if (title && genre) {
-                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             }
 
             if (title) {
-                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/mangas?title=${title}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             } else {
-                const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             }
 
@@ -51,9 +69,13 @@ export class mangasController {
         }
     }
 
-    static async getById ({ id }) {
+    static async getById ({ id, token }) {
         try {
-            const res = await axios.get(`${BASE_URL}/mangas/${id}`)
+            const res = await axios.get(`${BASE_URL}/mangas/${id}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
             return res.data
         } catch (e) {
             console.log("Fallo el get Manga By Id, Error: ", e)
@@ -61,12 +83,13 @@ export class mangasController {
         }
     }
     
-    static async post (body = {}) {
+    static async post ({body = {}, token}) {
         //console.log("data Post Manga: ", body)
         try {
             const res = await axios.post(`${BASE_URL}/mangas`, body, {
                 headers: {
                     'Content-Type': 'application/json',
+                    "Authorization": `${token.token_type} ${token.access_token}`,
                 },
             })
             return res
@@ -76,10 +99,14 @@ export class mangasController {
         }
     }
     
-    static async delete ({ id }) {
+    static async delete ({ id, token }) {
         // console.log(id)
         try {
-            const res = await axios.delete(`${BASE_URL}/mangas/${id}`)
+            const res = await axios.delete(`${BASE_URL}/mangas/${id}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
             return res.data
         } catch (err) {
             console.error("Fallo el delete Manga: ", err)
@@ -87,7 +114,7 @@ export class mangasController {
         }
     }
     
-    static async update ({ id, body}) {
+    static async update ({ id, body, token}) {
         if (body.length === undefined) {
             console.error(
                 "El metodo updateManga no esta recibiendo un body o esta vacio\nbody: ",
@@ -100,6 +127,7 @@ export class mangasController {
             const res = await axios.patch(`${BASE_URL}/mangas/${id}`, body, {
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token.token_type} ${token.access_token}`,
                 },
             })
             return res
@@ -115,25 +143,41 @@ export class mangasController {
 
 export class animesController {
 
-    static async get ({ title, genre, page }) {
+    static async get ({ title, genre, page, token }) {
         // console.log(title, genre)
         try {
             if (title === undefined && genre === undefined) {
-                const res = await axios.get(`${BASE_URL}/animes?page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/animes?page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 // console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
                 return res.data
             }
 
             if (title && genre) {
-                const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             }
 
             if (title) {
-                const res = await axios.get(`${BASE_URL}/animes?title=${title}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/animes?title=${title}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             } else {
-                const res = await axios.get(`${BASE_URL}/animes?genre=${genre}&page=${page === undefined ? 1 : page}`)
+                const res = await axios.get(`${BASE_URL}/animes?genre=${genre}&page=${page === undefined ? 1 : page}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
                 return res.data
             }
 
@@ -146,9 +190,13 @@ export class animesController {
         }
     }
 
-    static async getById ({ id }) {
+    static async getById ({ id, token }) {
         try {
-            const res = await axios.get(`${BASE_URL}/animes/${id}`)
+            const res = await axios.get(`${BASE_URL}/animes/${id}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`,
+                    }
+                })
             return res.data
         } catch (e) {
             console.error("Fallo el GET ID Anime, Error: ", e)
@@ -158,7 +206,7 @@ export class animesController {
         }
     }
 
-    static async post ({ body = {}}) {
+    static async post ({ body = {}, token}) {
         if (body.length === undefined) {
             console.error(
                 "El metodo postAnime no esta recibiendo un body o esta vacio\nBody: ",
@@ -171,6 +219,7 @@ export class animesController {
             const res = await axios.post(`${BASE_URL}/animes`, body, {
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token.token_type} ${token.access_token}`,
                 },
             })
             return res
@@ -182,9 +231,13 @@ export class animesController {
         }
     }
 
-    static async delete({ id }) {
+    static async delete({ id, token }) {
         try {
-            const res = await axios.delete(`${BASE_URL}/animes/${id}`)
+            const res = await axios.delete(`${BASE_URL}/animes/${id}`, {
+                    headers: {
+                        'Authorization': `${token.token_type} ${token.access_token}`
+                    }
+                })
             if (res.status === 204) {
                 console.log("Se elimino el anime con exito!: ",res.headers)
             }
@@ -197,7 +250,7 @@ export class animesController {
         }
     }
 
-    static async update ({id, body = {}}) {
+    static async update ({id, body = {}, token}) {
         if (body.length === undefined) {
             console.error(
                 "El metodo updateAnime no esta recibiendo un body o esta vacio\nbody: ",
@@ -210,6 +263,7 @@ export class animesController {
             const res = await axios.patch(`${BASE_URL}/animes/${id}`, body, {
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `${token.token_type} ${token.access_token}`,
                 },
             })
             return res
@@ -304,9 +358,9 @@ export class authController {
     //   "expires_in": 3600
     // }
     static async login({data}) {
-        console.log("PRe axios: ", data)
+        // console.log("PRe axios: ", data)
         try {
-            console.log(data.email, data.password)
+            // console.log(data.email, data.password)
             const res = await axios.post(`${BASE_URL}/auth/login`,data, {
                 headers: {
                     'Authorization': `Basic ${btoa(`${data.email}:${data.password}`)}`
