@@ -24,13 +24,13 @@ export class mangasController {
 
     static async get ({title, genre, page, token}) {
         // console.log(title, genre)
-        console.log("Token: ", token)
+        // console.log("Token: ", token)
         // token tiene access_token, token_type, expires_in
         try {
             if (title === undefined && genre === undefined) {
                 const res = await axios.get(`${BASE_URL}/mangas?page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
@@ -39,7 +39,7 @@ export class mangasController {
             if (title && genre) {
                 const res = await axios.get(`${BASE_URL}/mangas?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
@@ -48,14 +48,14 @@ export class mangasController {
             if (title) {
                 const res = await axios.get(`${BASE_URL}/mangas?title=${title}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
             } else {
                 const res = await axios.get(`${BASE_URL}/mangas?genre=${genre}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
@@ -73,7 +73,7 @@ export class mangasController {
         try {
             const res = await axios.get(`${BASE_URL}/mangas/${id}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
             return res.data
@@ -149,7 +149,7 @@ export class animesController {
             if (title === undefined && genre === undefined) {
                 const res = await axios.get(`${BASE_URL}/animes?page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 // console.log("Codigo de respuesta: ",res.status, " Headers: ", res.headers)
@@ -159,7 +159,7 @@ export class animesController {
             if (title && genre) {
                 const res = await axios.get(`${BASE_URL}/animes?title=${title}&genre=${genre}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
@@ -168,14 +168,14 @@ export class animesController {
             if (title) {
                 const res = await axios.get(`${BASE_URL}/animes?title=${title}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
             } else {
                 const res = await axios.get(`${BASE_URL}/animes?genre=${genre}&page=${page === undefined ? 1 : page}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
                 return res.data
@@ -194,7 +194,7 @@ export class animesController {
         try {
             const res = await axios.get(`${BASE_URL}/animes/${id}`, {
                     headers: {
-                        'Authorization': `${token.token_type} ${token.access_token}`,
+                        'Authorization': `${token ? token.token_type : ""} ${token ? token.access_token : ""}`,
                     }
                 })
             return res.data

@@ -2,6 +2,7 @@
 import { Link } from "wouter";
 import { createPortal } from "react-dom";
 import { memo } from "react";
+import { useMainContext } from "../../Context";
 // Hook Personalizado
 import { useSearchContent } from "../../hooks/useSearchContent";
 
@@ -33,6 +34,8 @@ export const Anime =  memo(function Anime() {
         handlePageNav
     } = useSearchContent("Animes")
 
+    const { isLogged } = useMainContext()
+
     const queryGenre = Number.parseInt(QueryString.genre)
     return (
         <>
@@ -57,7 +60,7 @@ export const Anime =  memo(function Anime() {
                                 type={"Anime"}
                             />
                         </Link>
-                        {createPortal(<AnimePost reload={reload} generos={generos} />, document.getElementById("modalDiv"))}
+                        {isLogged.logged ? createPortal(<AnimePost reload={reload} generos={generos} />, document.getElementById("modalDiv")) : null}
                     </>
                 )
             })}
