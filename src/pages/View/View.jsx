@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useParams } from 'wouter'
 
@@ -14,7 +14,7 @@ import { useMainContext } from '../../Context.jsx'
 
 export function View(props) {
 
-    const { isLogged } = useMainContext()
+    const { isLogged, setIsPopUp } = useMainContext()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -22,10 +22,13 @@ export function View(props) {
 
     const {data, generos, loading, reloadData } = useGetById(routeParams)
 
+    const popUpText = useRef({title: "Completado", message: "Se cargo correctamente", type: 1})
+
     // const AnimeData = readAnimeData({id: routeParams.id})
+    
+    isLogged.logged ? document.documentElement.style.setProperty("--chapter-allowed", "pointer") : document.documentElement.style.setProperty("--chapter-allowed", "not-allowed")
 
     const ChapterData = useMemo(() => {
-
         return readData({id: routeParams.id, type: routeParams.type})
 
     }, [routeParams])
@@ -49,24 +52,31 @@ export function View(props) {
 
     function handleChangeCheckBox(target) {
         // console.log("Valor: ", target.value)
-        saveData(
-            {
-                id: routeParams.id,
-                chapterViewed: target.checked ? parseInt(target.value) : parseInt(target.value) - 1,
-                type: routeParams.type,
-            }
-        )
-        if (target.checked) {
-            for (let index = 1; index < parseInt(target.value); index++) {
-                // console.log(index)
-                document.getElementById(`chapter${index}`).checked = true
-                
-            }
+        if (!isLogged.logged) {
+            popUpText.current = {title: "Debe Iniciar Sesion", message: "Para guardar los capitulos vistos debe iniciar sesion!", type: 2}
+            setIsPopUp({open: true, ...popUpText.current})
+            return
         } else {
-            for (let index = parseInt(target.value); index <= data.chapter; index++) {
-                // console.log(index)
-                document.getElementById("chapter"+index).checked = false
+            saveData(
+                {
+                    id: routeParams.id,
+                    chapterViewed: target.checked ? parseInt(target.value) : parseInt(target.value) - 1,
+                    type: routeParams.type,
+                }
+            )
+            if (target.checked) {
+                for (let index = 1; index < parseInt(target.value); index++) {
+                    // console.log(index)
+                    document.getElementById(`chapter${index}`).checked = true
+                    
+                }
+            } else {
+                for (let index = parseInt(target.value); index <= data.chapter; index++) {
+                    // console.log(index)
+                    document.getElementById("chapter"+index).checked = false
+                }
             }
+
         }
     }
 
@@ -117,14 +127,14 @@ export function View(props) {
                 </p>
                 <details className='[grid-area:3/1/4/2;] px-2 py-3' open>
                     <summary>Capitulos Disponibles</summary>
-                    <ul className='flex gap-2 flex-col'>
+                    <ul className='flex gap-2 flex-col' id='chapters-list'>
                         {/* 
                             https://getcssscan.com/css-checkboxes-examples
                             DE aqui me robe el checkbox toca ver como funciona y hacer uno 🫠
                         */}
                         {Array.from({ length: data.chapter }).map((_, index) => {
                             return (
-                                <li key={"Chapter " + (index + 1)} className='flex gap-5 rounded-md px-2 py-3 m-2 items-center'>
+                                <li key={"Chapter " + (index + 1)} className="flex gap-5 rounded-md px-2 py-3 m-2 items-center" title={isLogged.logged ? "" : "Debes iniciar sesion para guardar tu progreso!"} onClick={() => {isLogged.logged ? null : handleChangeCheckBox()}}>
                                     {/* <label htmlFor={'chapter'+index}>
                                         {"Capitulo " + (index + 1)} 
                                     </label> 
@@ -137,6 +147,7 @@ export function View(props) {
                                             value={index + 1}
                                             defaultChecked={(index + 1) <= ChapterData.chapterViewed ? true : false}
                                             onChange={(e) => {handleChangeCheckBox(e.target)}}
+                                            disabled={!isLogged.logged}
                                         />
                                         <label htmlFor={'chapter'+ (index+1)}>
                                             {"Capitulo " + (index + 1)}
