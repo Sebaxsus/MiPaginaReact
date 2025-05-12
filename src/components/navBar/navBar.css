@@ -19,7 +19,7 @@
 .nav-logo {
     display: flex;
     align-items: center;
-    min-width: 20px;
+    min-width: 40px;
     max-width: 40px;;
     border-radius: 5px;
 }
@@ -50,11 +50,16 @@
     h1 {
         visibility: visible;
         text-align: right;
+        padding-right: 2px;
+    }
+    button {
+        visibility: visible;
         padding-right: 1.5rem;
-    } 
+        color: red;
+    }
 }
 
-.nav-text-user > h1 {
+.nav-text-user > h1, .nav-text-user > button {
     visibility: hidden;
 }
 

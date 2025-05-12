@@ -375,12 +375,29 @@ export class authController {
 
     static async register({ data }) {
         // Antes de llegar aqui password debe ser un string Base64
-
+        console.log("Pre register api: ", data)
         try {
 
             const res = await axios.post(`${BASE_URL}/auth/register`, data, {
                 headers: {
                     'Content-Type': 'application/json'
+                }
+            })
+
+            return res
+        } catch (e) {
+            return e
+        }
+    }
+
+    static async refreshToken({ refreshToken, accessToken, tokenType }) {
+        console.log("Pre refresh: ", refreshToken, "\n ", accessToken, "\n ", tokenType)
+        
+        try {
+            const res = await axios.post(`${BASE_URL}/auth/refresh`, null, {
+                headers: {
+                    Authorization: `${tokenType} ${refreshToken}`,
+                    "access-token": `${tokenType} ${accessToken}`
                 }
             })
 

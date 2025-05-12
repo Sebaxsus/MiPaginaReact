@@ -54,7 +54,7 @@ export function Auth() {
         } else {
             
             try {
-                const res = await authController.register(data)
+                const res = await authController.register({data: data})
     
                 if (res.status === 201 || res.data.code === 201) {
                     popUpText.current = {title: "Completado", message: res.data.message, type: 1}

@@ -5,7 +5,7 @@ import './navBar.css'
 
 export function NavBar() {
     const [location, navigate] = useLocation()
-    const { isLogged } = useMainContext()
+    const { isLogged, logout } = useMainContext()
 
     function validateLog() {
 
@@ -14,6 +14,9 @@ export function NavBar() {
                 <>
                     <img src='/Eula.jpg' alt='imagen' className='nav-logo [mask-image:radial-gradient(black_60%,transparent_80%)] aspect-square h-10'></img>
                     <h1>{isLogged.user.name}</h1>
+                    <button onClick={() => {logout()}}>
+                        X
+                    </button>
                 </>
             )
         } else {

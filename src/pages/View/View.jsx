@@ -10,9 +10,11 @@ import Modal from '../../components/modal/ModalPatch.jsx'
 import { useGetById } from '../../hooks/useGetById.jsx'
 
 import { saveData, readData } from '../../utils/localStorageData.js'
-// import { useMainContext } from '../../Context.jsx'
+import { useMainContext } from '../../Context.jsx'
 
 export function View(props) {
+
+    const { isLogged } = useMainContext()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -106,7 +108,7 @@ export function View(props) {
                             )
                         })}
                     </ul>
-                    <button id='viewEditBtn' className='border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60' onClick={() => { handleClickEdit() }}>
+                    <button id='viewEditBtn' className={`border rounded-md border-cyan-400 self-center justify-self-center py-2 px-4 hover:bg-gray-400/60 ${isLogged.logged ? "visible" : "hidden"}`} onClick={() => { handleClickEdit() }}>
                         Editar
                     </button>
                 </section>
