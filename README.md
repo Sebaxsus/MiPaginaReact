@@ -37,6 +37,29 @@ A RESTful API and server for the MiPaginaReact client, managing anime and manga 
 
 ## Getting Started
 
+### Que son los Tokens Basic y Bearer
+
+> [!NOTE]
+> Tipos de Token en OAuth2
+>
+> Basic:
+>      Es una cadena de Texto (String) codificado en Base64 HEX que contiene
+>      usuario:contraseña, Se usa para la autenticación (Inicio de Sesión)
+>      , No debe usarse para el acceso de recursos protegidos en OAuth2
+>      Ya que este tipo de token puede ser interceptado en transito y decodificado
+>      Es el método Antiguo de Auth en OAuth, Su propósito es de uso en 
+>      Esquemas de autenticación de credenciales Simples.
+>
+> Bearer:
+>      Es una cadena de texto (String) Opaca mas Conocido como JSON Web Token (JWT)
+>      Es un token encriptado con técnicas de Criptografía comúnmente la Técnica
+>      de [Cifrado de Flujo de Clave Encadenada](https://es.wikipedia.org/wiki/Modos_de_operaci%C3%B3n_de_una_unidad_de_cifrado_por_bloques#:~:text=puntos%20de%20experiencia.-,Modo%20CBC%20(Cipher%2Dblock%20chaining),inicializaci%C3%B3n%20en%20el%20primer%20bloque.&text=CBC%20es%20el%20modo%20usado,no%20puede%20funcionar%20en%20paralelo.)
+>      Se usa el Termino "Bearer" por su significado "Portador" Que implica que
+>      el poseedor de el token puede acceder a recursos Asegurados,
+>      Dentro de el Token si es un JWT puede estar información util como
+>      ID de Usuario, Rol o Permisos; Asi evitando consultas innecesarias
+>      A la BD.
+
 ### Prerequisites
 
 - Node.js (v18+ recommended)

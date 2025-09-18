@@ -20,6 +20,25 @@ const connection = await mysql.createConnection(config)
 
 // Tambien cuenta con metodos como `.set(), .get(), .has(), .delete(), .clear()`
 // Y tienen mejor rendimiento en estructuras de datos grandes
+
+// Tipos de Token en OAuth2
+// Basic:
+//      Es una cadena de Texto (String) codificado en Base64 HEX que contiene
+//      usuario:contraseña, Se usa para la autenticación (Inicio de Sesion)
+//      , No debe usarse para el acceso de recursos protegidos en OAuth2
+//      Ya que este tipo de token puede ser interceptado en transito y decodificado
+//      Es el metodo Antiguio de Auth en OAuth, Su proposito es de uso en 
+//      Esquemas de autenticación de credenciales Simples.
+
+// Bearer:
+//      Es una cadena de texto (String) Opaca mas Conocido como JSON Web Token (JWT)
+//      Es un token encriptado con tecnicas de Cryptografia comunmente la Tecnica
+//      de [Cifrado de Flujo de Clave Encadenada](https://es.wikipedia.org/wiki/Modos_de_operaci%C3%B3n_de_una_unidad_de_cifrado_por_bloques#:~:text=puntos%20de%20experiencia.-,Modo%20CBC%20(Cipher%2Dblock%20chaining),inicializaci%C3%B3n%20en%20el%20primer%20bloque.&text=CBC%20es%20el%20modo%20usado,no%20puede%20funcionar%20en%20paralelo.)
+//      Se usa el Termino "Bearer" por su significado "Portador" Que implica que
+//      el poseedor de el token puede acceder a recursos Asegurados,
+//      Dentro de el Token si es un JWT puede estar informacion util como
+//      ID de Usuario, Rol o Permisos; Asi evitando consultas innecesarias
+//      A la BD.
 const accesstokens = new Map()
 const refreshTokens = new Map()
 

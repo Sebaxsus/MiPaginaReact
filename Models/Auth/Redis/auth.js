@@ -40,7 +40,7 @@ export class AuthModelR {
         const ip = req.ip
         const user_agent = req.headers['user-agent']
         const expiresInSeconds = 3600
-        const refreshExpirationTime = 86400
+        const refreshExpirationTime = 86400 // 1 Dia en segundos
         // En redis guardo los datos del token como Usuario, ip y user_agent como un string parseado con json -> es decir parseo el objeto a un string
         // Mantego la estructura llave: valor dentro del objecto para asegurar su nombre de llave
         await redis.set(`access:${accessToken}`, JSON.stringify({ usuario: usuario, ip: ip, user_agent: user_agent }), { expiration: { type: 'EX', value: expiresInSeconds } }) // 3600 segundos = 1hora
